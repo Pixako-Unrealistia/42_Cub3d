@@ -74,6 +74,7 @@ void	ft_lstclear(t_list **lst, void (*del)(void*));
 void	ft_lstiter(t_list *lst, void (*f)(void *));
 t_list	*ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *));
 char	*get_next_line(int fd);
+char	*super_get_next_line(int fd, char **line);
 void	*util_memset(void *str, int c, size_t n);
 char	*util_strjoin(char const *s1, char const *s2);
 void	*util_calloc(size_t nitems, size_t size);
