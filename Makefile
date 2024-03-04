@@ -81,6 +81,6 @@ fclean:
 re: fclean all
 
 valgrind: all
-	$(VALGRIND) ./$(NAME) map.cub
+	$(VALGRIND) ./$(NAME) ./maps/basic.cub
 
 .PHONY: all clean fclean
