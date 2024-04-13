@@ -28,13 +28,16 @@ void	ft_init_all(t_game *game)
 	game->map.map = NULL;
 }
 
-void	ft_map_alloc(t_game *game)
+void	ft_map_alloc(t_game *game, size_t size)
 {
-	game->map_alloc = 1;
-	game->map.map = malloc(sizeof(char *) * 2);
-	game->map.map[0] = malloc(sizeof(char) * 2);
-	game->map.map[0][0] = '\0';
-	game->map.map[1] = NULL;
+    game->map_alloc = 1;
+    game->map.map = malloc(sizeof(char *) * (size + 1));
+    for (size_t i = 0; i < size; i++)
+    {
+        game->map.map[i] = malloc(sizeof(char) * 2);
+        game->map.map[i][0] = '\0';
+    }
+    game->map.map[size] = NULL;
 }
 
 void	ft_map_free(t_game *game)
@@ -65,12 +68,14 @@ void	ft_throw(char *str,t_game *game)
 
 void	ft_map_reader(t_game *game, char *line)
 {
-	int		i;
-	char	**tmp;
+    int		i;
+    char	**tmp;
 
-	i = 0;
-	if (game->map_alloc == 0)
-		ft_map_alloc(game);
+    i = 0;
+    if (game->map_alloc == 0)
+	{
+        ft_map_alloc(game, ft_strlen_nonl(line));
+	}
 	while (game->map.map[i])
 		i++;
 	tmp = malloc(sizeof(char *) * (i + 2));
@@ -107,18 +112,49 @@ void	ft_cube_argv(int argc, char **argv, t_game *game)
 
 void flood_fill(t_game *game, int x, int y)
 {
-	if (x < 0 || y < 0 || x >= game->map.width || y >= game->map.height || game->map.map[y][x] != ' ')
-		return;
-	game->map.map[y][x] = 'V';
-	flood_fill(game, x - 1, y);
-	flood_fill(game, x + 1, y);
-	flood_fill(game, x, y - 1);
-	flood_fill(game, x, y + 1);
+    // If the current position is out of bounds or is not an empty space, return
+    if (x < 0 || y < 0 || x >= game->map.width || y >= game->map.height || game->map.map[y][x] != '0')
+        return;
+
+    // Mark the current position as visited
+    game->map.map[y][x] = 'V';
+
+    // Recursively fill the neighboring positions
+    flood_fill(game, x - 1, y);
+    flood_fill(game, x + 1, y);
+    flood_fill(game, x, y - 1);
+    flood_fill(game, x, y + 1);
 }
 
 void ft_validate_containment(t_game *game)
 {
-	
+    // Find a known empty space to start the flood fill
+    for (int y = 0; y < game->map.height; y++)
+    {
+        for (int x = 0; x < game->map.width; x++)
+        {
+            if (game->map.map[y][x] == '0')
+            {
+                flood_fill(game, x, y);
+
+                // After the flood fill, check if any edge position is marked as visited
+                for (int i = 0; i < game->map.width; i++)
+                {
+                    if (game->map.map[0][i] == 'V' || game->map.map[game->map.height - 1][i] == 'V')
+                        ft_throw("Map is not fully contained", game);
+                }
+                for (int i = 0; i < game->map.height; i++)
+                {
+                    if (game->map.map[i][0] == 'V' || game->map.map[i][game->map.width - 1] == 'V')
+                        ft_throw("Map is not fully contained", game);
+                }
+
+                return;
+            }
+        }
+    }
+
+    // If no empty space is found, the map is fully contained
 }
 
 // End of Seperation //
