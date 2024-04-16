@@ -26,6 +26,7 @@ void	ft_init_all(t_game *game)
 	game->map.f = -1;
 	game->map.c = -1;
 	game->map.map = NULL;
+	game->map_alloc = 0;
 }
 
 void	ft_map_alloc(t_game *game, size_t size)
@@ -58,7 +59,7 @@ void	ft_map_free(t_game *game)
 
 void	ft_throw(char *str,t_game *game)
 {
-	ft_printf("\nError\n%s\n", str);
+	ft_printf("Error\n%s\n", str);
 	ft_map_free(game);
 	exit(0);
 }
@@ -112,14 +113,9 @@ void	ft_cube_argv(int argc, char **argv, t_game *game)
 
 void flood_fill(t_game *game, int x, int y)
 {
-    // If the current position is out of bounds or is not an empty space, return
     if (x < 0 || y < 0 || x >= game->map.width || y >= game->map.height || game->map.map[y][x] != '0')
         return;
-
-    // Mark the current position as visited
     game->map.map[y][x] = 'V';
-
-    // Recursively fill the neighboring positions
     flood_fill(game, x - 1, y);
     flood_fill(game, x + 1, y);
     flood_fill(game, x, y - 1);
@@ -136,8 +132,6 @@ void ft_validate_containment(t_game *game)
             if (game->map.map[y][x] == '0')
             {
                 flood_fill(game, x, y);
-
-                // After the flood fill, check if any edge position is marked as visited
                 for (int i = 0; i < game->map.width; i++)
                 {
                     if (game->map.map[0][i] == 'V' || game->map.map[game->map.height - 1][i] == 'V')
@@ -148,17 +142,13 @@ void ft_validate_containment(t_game *game)
                     if (game->map.map[i][0] == 'V' || game->map.map[i][game->map.width - 1] == 'V')
                         ft_throw("Map is not fully contained", game);
                 }
-
                 return;
             }
         }
     }
-
-    // If no empty space is found, the map is fully contained
 }
 
 // End of Seperation //
-
 
 int main(int argc, char **argv)
 {
@@ -166,13 +156,13 @@ int main(int argc, char **argv)
 	char	*line;
 	int fd;
 
+	ft_init_all(&game);
 	ft_cube_argv(argc, argv, &game);
 	game.map.map = NULL;
 	game.map_alloc = 0;
 
 	fd = open(argv[1], O_RDONLY);
 	line = NULL;
-	ft_init_all(&game);
 	while (1)
 	{
 		super_get_next_line(fd, &line);
