@@ -50,8 +50,6 @@ char	*main_parse_line(char *s)
 	char		*line;
 
 	counter = 0;
-	if (!s[counter])
-		return (NULL);
 	while (s[counter] && s[counter] != '\n')
 		counter++;
 	line = util_calloc((counter + 2), sizeof(char));
@@ -62,7 +60,14 @@ char	*main_parse_line(char *s)
 		counter++;
 	}
 	if (s[counter] == '\n')
+	{
 		line[counter++] = '\n';
+		line[counter] = '\0';
+	}
+	else
+	{
+		line[counter] = '\0';
+	}
 	return (line);
 }
 
@@ -107,7 +112,7 @@ char	*main_reader(int fd, char *tmp)
 //	return (str);
 //}
 
-char	*super_get_next_line(int fd, char **line)
+int	super_get_next_line(int fd, char **line)
 {
 	static char		*tempo;
 	char			*str;
@@ -120,5 +125,5 @@ char	*super_get_next_line(int fd, char **line)
 	str = main_parse_line(tempo);
 	tempo = main_parse_next(tempo);
 	*line = str;
-	return (tempo);
+	return (ft_strlen(*line));
 }
