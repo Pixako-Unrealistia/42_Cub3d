@@ -6,13 +6,48 @@
 /*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:17 by schongte          #+#    #+#             */
-/*   Updated: 2024/03/01 14:59:17 by schongte         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:14:14 by schongte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
 //Seperate to map_util.c
+
+void	ft_map_free(t_game *game)
+{
+	if (game->map.map)
+	{
+		free(game->map.map);
+		game->map.map = NULL;
+	}
+	if (game->map.no != NULL)
+		free(game->map.no);
+	if (game->map.so != NULL)
+		free(game->map.so);
+	if (game->map.we != NULL)
+		free(game->map.we);
+	if (game->map.ea != NULL)
+		free(game->map.ea);
+	game->map_alloc = 0;
+}
+
+void	ft_throw(char *str,t_game *game, char *line)
+{
+	ft_printf("Error\n%s\n", str);
+	if (line != NULL)
+		free(line);
+	ft_map_free(game);
+	exit(0);
+}
+
+void	ft_safe_free(void *ptr) {
+	if (ptr != NULL)
+	{
+		free(ptr);
+		ptr = NULL;
+	}
+}
 
 void	ft_init_all(t_game *game)
 {
@@ -22,7 +57,6 @@ void	ft_init_all(t_game *game)
 	game->map.so = NULL;
 	game->map.we = NULL;
 	game->map.ea = NULL;
-	game->map.s = NULL;
 	game->map.f = -1;
 	game->map.c = -1;
 	game->map.map = NULL;
@@ -31,52 +65,23 @@ void	ft_init_all(t_game *game)
 
 void	ft_map_alloc(t_game *game, size_t size)
 {
-    game->map_alloc = 1;
-    game->map.map = malloc(sizeof(char *) * (size + 1));
-    for (size_t i = 0; i < size; i++)
-    {
-        game->map.map[i] = malloc(sizeof(char) * 2);
-        game->map.map[i][0] = '\0';
-    }
-    game->map.map[size] = NULL;
+	game->map.map = malloc(sizeof(char *) * 2);
+	if (game->map.map == NULL)
+	{
+		ft_throw("Memory allocation failed", game, NULL);
+	}
+	game->map.map[0] = malloc(sizeof(char) * (size + 1));
+	if (game->map.map[0] == NULL)
+	{
+		ft_throw("Memory allocation failed", game, NULL);
+	}
+	game->map.map[0][size] = '\0';
+	game->map.map[1] = NULL;
+	game->map_alloc = 1;
 }
 
-void	ft_map_free(t_game *game)
-{
-    int i;
 
-	i = 0;
-    if (game->map.map)
-    {
-        while (game->map.map[i])
-        {
-            free(game->map.map[i]);
-            i++;
-        }
-        free(game->map.map);
-		game->map.map = NULL;
-    }
-    if (game->map.no)
-        free(game->map.no);
-    if (game->map.so)
-        free(game->map.so);
-    if (game->map.we)
-        free(game->map.we);
-    if (game->map.ea)
-        free(game->map.ea);
-    if (game->map.s)
-        free(game->map.s);
-    game->map_alloc = 0;
-}
 
-void	ft_throw(char *str,t_game *game, char *line)
-{
-	ft_printf("Error\n%s\n", str);
-	if (line)
-		free(line);
-	ft_map_free(game);
-	exit(0);
-}
 
 // End of Seperation //
 // Seperate to initialise_map.c
@@ -104,7 +109,6 @@ void	ft_texture_parser(t_game *game, char *line, char **texture)
 	}
 	tmp[j] = '\0';
 	*texture = tmp;
-	ft_printf("%s\n", *texture);
 }
 
 void	ft_color_parser(t_game *game, char *line, int *color)
@@ -135,8 +139,6 @@ int	ft_header_parser(t_game *game, char *line)
 		ft_texture_parser(game, line, &game->map.we);
 	else if (line[0] == 'E' && line[1] == 'A')
 		ft_texture_parser(game, line, &game->map.ea);
-	else if (line[0] == 'S' && line[1] == ' ')
-		ft_texture_parser(game, line, &game->map.s);
 	else if (line[0] == 'F')
 		ft_color_parser(game, line, &game->map.f);
 	else if (line[0] == 'C')
@@ -156,31 +158,36 @@ int	ft_header_parser(t_game *game, char *line)
 
 void	ft_map_reader(t_game *game, char *line)
 {
-    int		i;
     char	**tmp;
 
-    i = 0;
-    if (game->map_alloc == 0)
+	if (game->map_alloc == 0)
+		ft_map_alloc(game, ft_strlen_nonl(line));
+	else
 	{
-        ft_map_alloc(game, ft_strlen_nonl(line));
+		tmp = malloc(sizeof(char *) * (game->map.height + 2));
+		if (tmp == NULL)
+			ft_throw("Memory allocation failed", game, line);
+		for (int i = 0; i < game->map.height; i++)
+			tmp[i] = game->map.map[i];
+		tmp[game->map.height] = malloc(sizeof(char) * (ft_strlen_nonl(line) + 1));
+		if (tmp[game->map.height] == NULL)
+			ft_throw("Memory allocation failed", game, line);
+		tmp[game->map.height][ft_strlen_nonl(line)] = '\0';
+		tmp[game->map.height + 1] = NULL;
+		free(game->map.map);
+		game->map.map = tmp;
 	}
-	while (game->map.map[i])
-		i++;
-	tmp = malloc(sizeof(char *) * (i + 2));
-	i = 0;
-	while (game->map.map[i])
+    if (game->map.map[game->map.height] != NULL)
 	{
-		tmp[i] = game->map.map[i];
-		i++;
-	}
-	tmp[i] = line;
-	tmp[i + 1] = NULL;
-	free(game->map.map);
-	game->map.map = tmp;
+        free(game->map.map[game->map.height]);
+		game->map.map[game->map.height] = NULL;
+    }
+    game->map.map[game->map.height] = line;
+    game->map.map[game->map.height + 1] = NULL;
 
-	game->map.height = i + 1;
-	if (game->map.width < ft_strlen_nonl(line))
-		game->map.width = ft_strlen_nonl(line);
+    game->map.height++;
+    if (game->map.width < ft_strlen_nonl(line))
+        game->map.width = ft_strlen_nonl(line);
 }
 
 // End of Seperation //
@@ -200,45 +207,45 @@ void	ft_cube_argv(int argc, char **argv, t_game *game)
 
 void	flood_fill(t_game *game, int x, int y)
 {
-    if (x < 0 || y < 0 || x >= game->map.width || y >= game->map.height || game->map.map[y][x] != '0')
-        return;
-    game->map.map[y][x] = 'V';
-    flood_fill(game, x - 1, y);
-    flood_fill(game, x + 1, y);
-    flood_fill(game, x, y - 1);
-    flood_fill(game, x, y + 1);
+	if (x < 0 || y < 0 || x >= game->map.width || y >= game->map.height || game->map.map[y][x] != '0')
+		return;
+	game->map.map[y][x] = 'V';
+	flood_fill(game, x - 1, y);
+	flood_fill(game, x + 1, y);
+	flood_fill(game, x, y - 1);
+	flood_fill(game, x, y + 1);
 }
 
 void	ft_validate_texture(t_game *game)
 {
-	if (game->map.no == NULL || game->map.so == NULL || game->map.we == NULL || game->map.ea == NULL || game->map.s == NULL || game->map.f == -1 || game->map.c == -1)
+	if (game->map.no == NULL || game->map.so == NULL || game->map.we == NULL || game->map.ea == NULL || game->map.f == -1 || game->map.c == -1)
 		ft_throw("Missing texture", game, NULL);
 }
 
 void ft_validate_containment(t_game *game)
 {
-    // Find a known empty space to start the flood fill
-    for (int y = 0; y < game->map.height; y++)
-    {
-        for (int x = 0; x < game->map.width; x++)
-        {
-            if (game->map.map[y][x] == '0')
-            {
-                flood_fill(game, x, y);
-                for (int i = 0; i < game->map.width; i++)
-                {
-                    if (game->map.map[0][i] == 'V' || game->map.map[game->map.height - 1][i] == 'V')
-                        ft_throw("Map is not fully contained", game, NULL);
-                }
-                for (int i = 0; i < game->map.height; i++)
-                {
-                    if (game->map.map[i][0] == 'V' || game->map.map[i][game->map.width - 1] == 'V')
-                        ft_throw("Map is not fully contained", game, NULL);
-                }
-                return;
-            }
-        }
-    }
+	// Find a known empty space to start the flood fill
+	for (int y = 0; y < game->map.height; y++)
+	{
+		for (int x = 0; x < game->map.width; x++)
+		{
+			if (game->map.map[y][x] == '0')
+			{
+				flood_fill(game, x, y);
+				for (int i = 0; i < game->map.width; i++)
+				{
+					if (game->map.map[0][i] == 'V' || game->map.map[game->map.height - 1][i] == 'V')
+						ft_throw("Map is not fully contained", game, NULL);
+				}
+				for (int i = 0; i < game->map.height; i++)
+				{
+					if (game->map.map[i][0] == 'V' || game->map.map[i][game->map.width - 1] == 'V')
+						ft_throw("Map is not fully contained", game, NULL);
+				}
+				return;
+			}
+		}
+	}
 }
 
 // End of Seperation //
@@ -246,10 +253,18 @@ void ft_validate_containment(t_game *game)
 void	ft_schongte(t_game *game)
 {
 	int i = 0;
+	//print NO SO EA WE
+	//ft_printf("NO : %s", game->map.no);
+	//ft_printf("SO : %s", game->map.so);
+	//ft_printf("EA : %s", game->map.ea);
+	//ft_printf("WE : %s", game->map.we);
+	////print F C
+	//ft_printf("F : %d", game->map.f);
+	//ft_printf("C : %d", game->map.c);
 
 	while (game->map.map[i])
 	{
-		ft_printf("%s\n", game->map.map[i]);
+		//printf("%s\n", game->map.map[i]);
 		i++;
 	}
 }
@@ -269,28 +284,18 @@ int main(int argc, char **argv)
 	line = NULL;
 	while (super_get_next_line(fd, &line) > 0)
 	{
-		if (line[0] == '\n')
+		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == 'F' || line[0] == 'C' || line[0] == 'S')
 		{
-			ft_printf("Empty line");
-			free(line);
-			continue;
+			if (ft_header_parser(&game, line) == 0)
+				break;
 		}
-		if (ft_header_parser(&game, line) == 0)
-		{
-			free(line);
-			ft_validate_texture(&game);
-			while (super_get_next_line(fd, &line) > 0)
-			{
-				if (line[0] == '\0')
-					break;
-				ft_map_reader(&game, line);
-				free(line);
-			}
-		}
-		free(line);
+		else
+			ft_map_reader(&game, line);
+		ft_safe_free(line);
 	}
+	ft_safe_free(line);
 	ft_validate_texture(&game);
-	ft_validate_containment(&game);
+	//ft_validate_containment(&game);
 
 	//Intregity check
 	//ft_printf("\n\n");
@@ -299,9 +304,8 @@ int main(int argc, char **argv)
 	//	ft_printf("%s", game.map.map[i]);
 	//}
 
-	//ft_schongte(&game);
+	ft_schongte(&game);
 
-	free(line);
 	ft_map_free(&game);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:59 by schongte          #+#    #+#             */
-/*   Updated: 2024/03/01 14:59:59 by schongte         ###   ########.fr       */
+/*   Updated: 2024/04/17 21:09:57 by schongte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ typedef struct s_map
 	char    *so;
 	char    *we;
 	char    *ea;
-	char    *s;
 	int     f;
 	int     c;
 	char    **map;

@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   ft_get_next_line.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schongte <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:11:34 by schongte          #+#    #+#             */
-/*   Updated: 2023/01/31 13:02:36 by schongte         ###   ########.fr       */
+/*   Updated: 2024/04/16 21:33:27 by schongte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,16 +114,21 @@ char	*main_reader(int fd, char *tmp)
 
 int	super_get_next_line(int fd, char **line)
 {
-	static char		*tempo;
-	char			*str;
+    static char		*tempo;
+    char			*str;
 
-	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-		return (NULL);
-	tempo = main_reader(fd, tempo);
-	if (!tempo)
-		return (NULL);
-	str = main_parse_line(tempo);
-	tempo = main_parse_next(tempo);
-	*line = str;
-	return (ft_strlen(*line));
+    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+        return (NULL);
+    tempo = main_reader(fd, tempo);
+    if (!tempo)
+        return (NULL);
+    str = main_parse_line(tempo);
+    tempo = main_parse_next(tempo);
+    *line = str;
+    if (tempo == NULL)
+	{
+        free(tempo);
+        tempo = NULL;
+    }
+    return (ft_strlen(*line));
 }
