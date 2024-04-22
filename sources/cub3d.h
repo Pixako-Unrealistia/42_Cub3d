@@ -6,7 +6,7 @@
 /*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:59 by schongte          #+#    #+#             */
-/*   Updated: 2024/04/17 21:09:57 by schongte         ###   ########.fr       */
+/*   Updated: 2024/04/20 21:25:27 by schongte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,19 @@ typedef struct s_game
 //# define RIGHT				3
 //# define BACK				4
 
+// utils.c
 int		ft_strlen_nonl(char *str);
 void	remove_one_nl(char **map);
 void	ft_remove_spaces(char *str);
 int		ft_abs(int n);
+
+// map_utils.c
+void	ft_safe_free(void *ptr);
+void	ft_map_free(t_game *game);
+void	ft_throw(char *str,t_game *game, char *line);
+void	ft_map_alloc(t_game *game, size_t size);
+void	ft_init_all(t_game *game);
+
+// DO NOT MOVE THE REST OF INITIALISE_MAP
 
 #endif 

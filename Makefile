@@ -34,7 +34,7 @@ VALGRIND		= valgrind --leak-check=full --show-leak-kinds=all \
 # Source Files:
 SRC_DIR       = ./sources
 OBJ_DIR       = ./objects
-SRC_C         = initialise_map.c utils.c
+SRC_C         = map_utils.c  utils.c initialise_map.c 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
 
