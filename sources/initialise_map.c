@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialise_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:17 by schongte          #+#    #+#             */
-/*   Updated: 2024/04/22 21:53:42 by schongte         ###   ########.fr       */
+/*   Updated: 2024/05/14 17:25:18 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,7 +209,7 @@ int main(int argc, char **argv)
 	line = NULL;
 	while (super_get_next_line(fd, &line) > 0)
 	{
-		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == 'F' || line[0] == 'C' || line[0] == 'S')
+		if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == 'F' || line[0] == 'C')
 		{
 			if (ft_header_parser(&game, line) == 0)
 				break;
