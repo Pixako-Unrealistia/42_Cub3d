@@ -1,0 +1,1 @@
+Image followed by -num are part of the same framesetenemy-1 enemy-2 enemy-3 will be idle looping animation
