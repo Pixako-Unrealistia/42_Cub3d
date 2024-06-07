@@ -6,13 +6,22 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:58:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/01 22:24:47 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:18:25 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* This is an attempt to create a basic raycaster, following the example from
  * https://www.youtube.com/watch?v=gYRrGTC7GtA ,
  * but using MLX42 instead of OpenGL (directly(?)). 
+ */
+
+/* COMPILE WITH:
+ * gcc main.c key_handle.c free_utils.c player.c minimap.c libmlx42.a -ldl -lglfw -pthread -lm -o cub3d
+ */
+
+/* Non; can you fix the Makefile to make the above compile mith make?
+ * Also, can you find the way to integrate your map parser with this?
+ * See the crude way I set the map up in the init_map() function.  
  */
 
 #include "prototype.h"
@@ -43,7 +52,9 @@ void	init_map(t_cub3d *cub3d)
 	cub3d->player.xpos = 80.0;
 	cub3d->player.ypos = 80.0;
 	cub3d->player.fov_deg = 60.0;
-	cub3d->player.orient_deg = 90.0;
+	cub3d->player.orient_deg = 0.0;
+	cub3d->player.delta_x = MOVE_SPEED;
+	cub3d->player.delta_y = 0.0;
 }
 
 void	draw_2d_map(t_cub3d *cub3d)
@@ -102,8 +113,8 @@ void	game_loop(void *param)
 	t_cub3d	*cub3d;
 	
 	cub3d = param;
-	cub3d->mlx_2dimg_playerdot->instances[0].x = cub3d->player.xpos;
-	cub3d->mlx_2dimg_playerdot->instances[0].y = cub3d->player.ypos;
+	cub3d->mlx_2dimg_playerdot->instances[0].x = cub3d->player.xpos - 8;
+	cub3d->mlx_2dimg_playerdot->instances[0].y = cub3d->player.ypos - 8;
 	// raycast(cub3d);
 	// mlx_image_to_window(cub3d->mlx, cub3d->mlx_3dimg, 0 , 0);
 }

@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/01 21:17:05 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:18:25 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,13 @@
 
 // Other defines
 
-# define WIN_W		1280
-# define WIN_H		720
-# define SUBUNITS	64
+# define M_PI 3.14159265358979323846
+
+# define WIN_W			1280
+# define WIN_H			720
+# define SUBUNITS		64
+# define MOVE_SPEED		2.0
+# define ROTATE_SPEED	5.0
 
 typedef struct s_player
 {
@@ -52,6 +56,8 @@ typedef struct s_player
 	float		ypos;
 	float		fov_deg;
 	float		orient_deg;
+	float		delta_x;
+	float		delta_y;
 }	t_player;
 
 typedef struct s_cub3d
@@ -67,7 +73,13 @@ typedef struct s_cub3d
 }	t_cub3d;
 
 void	key_hook(void *cub3d);
-// void	close_window(t_cub3d *cub3d);
+
 void	free_all(t_cub3d *cub3d);
+
+void	rotate_player(t_cub3d *cub3d, float angle, int clockwise);
+void    move_forward(t_cub3d *cub3d);
+void    move_backward(t_cub3d *cub3d);
+void	strafe_left(t_cub3d *cub3d);
+void	strafe_right(t_cub3d *cub3d);
 
 #endif

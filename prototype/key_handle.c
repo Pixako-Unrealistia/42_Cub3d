@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:51:34 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/06 13:51:34 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/07 19:07:39 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,21 +19,20 @@ void	key_hook(void *param)
 	cub3d = param;
 	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(cub3d->mlx);
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_UP))
-		cub3d->player.ypos -= 1;
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_DOWN))
-		cub3d->player.ypos += 1;
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_LEFT))
-		cub3d->player.xpos -= 1;
-	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT))
-		cub3d->player.xpos += 1;
-	// if (key == KEY_RIGHT)
-	// 	rotate_clockwise;
-	// if (key == KEY_LEFT)
-	// 	rotate_counterclockwise;
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_UP)
+		|| mlx_is_key_down(cub3d->mlx, MLX_KEY_W))
+		move_forward(cub3d);
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_DOWN)
+		|| mlx_is_key_down(cub3d->mlx, MLX_KEY_S))
+		move_backward(cub3d);
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_A))
+		strafe_left(cub3d);
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_D))
+		strafe_right(cub3d);
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_LEFT)
+		|| mlx_is_key_down(cub3d->mlx, MLX_KEY_Q))
+		rotate_player(cub3d, ROTATE_SPEED, 0);
+	if (mlx_is_key_down(cub3d->mlx, MLX_KEY_RIGHT)
+		|| mlx_is_key_down(cub3d->mlx, MLX_KEY_E))
+		rotate_player(cub3d, ROTATE_SPEED, 1);
 }
-
-// void	close_window(t_cub3d *cub3d)
-// {
-// 	mlx_close_window(cub3d->mlx);
-// }
