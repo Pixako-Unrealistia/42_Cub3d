@@ -34,7 +34,7 @@ VALGRIND		= valgrind --leak-check=full --show-leak-kinds=all \
 # Source Files:
 SRC_DIR       = ./
 OBJ_DIR       = ./objects
-SRC_C         = main.c key_handle.c free_utils.c
+SRC_C         = main.c key_handle.c free_utils.c player.c minimap.c 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = prototype.h
 
@@ -53,8 +53,8 @@ else
 	MINILIBX_FLAGS  = -L$(MLX_PATH) -Iinclude -ldl -lglfw -pthread -lm
 endif
 
-$(NAME): $(SRC_O) $(LIBFT)
-	$(CC) $(CFLAGS) $(SRC_O) $(LIBFT) $(MINILIBX_FLAGS) -o $(NAME)
+$(NAME): $(SRC_O) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(SRC_O) $(LIBFT) $(MLX) $(MINILIBX_FLAGS) -o $(NAME)
 	@printf "$(_SUCCESS) $(NAME) created.\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/$(HEADER) | $(OBJ_DIR)
