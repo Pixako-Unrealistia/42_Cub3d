@@ -11,50 +11,71 @@
 /* ************************************************************************** */
 
 /* This is an attempt to create a basic raycaster, following the example from
- * https://www.youtube.com/watch?v=gYRrGTC7GtA ,
- * but using MLX42 instead of OpenGL (directly(?)). 
- */
+* https://www.youtube.com/watch?v=gYRrGTC7GtA ,
+* but using MLX42 instead of OpenGL (directly(?)). 
+*/
 
 /* COMPILE WITH:
- * gcc main.c key_handle.c free_utils.c player.c minimap.c libmlx42.a -ldl -lglfw -pthread -lm -o cub3d
- */
+* gcc main.c key_handle.c free_utils.c player.c minimap.c libmlx42.a -ldl -lglfw -pthread -lm -o cub3d
+*/
 
 /* Non; can you fix the Makefile to make the above compile mith make?
- * Also, can you find the way to integrate your map parser with this?
- * See the crude way I set the map up in the init_map() function.  
- */
+* Also, can you find the way to integrate your map parser with this?
+* See the crude way I set the map up in the init_map() function.  
+*/
 
 #include "prototype.h"
 
-void	init_map(t_cub3d *cub3d)
+//void	init_map(t_cub3d *cub3d, t_game *game)
+//{
+//	int	i;
+//	int map[]=
+//	{
+//		1,1,1,1,1,1,1,1,
+//		1,0,1,0,0,0,0,1,
+//		1,0,1,0,0,0,0,1,
+//		1,0,1,0,0,0,0,1,
+//		1,0,0,0,0,0,0,1,
+//		1,0,0,0,0,1,0,1,
+//		1,0,0,0,0,0,0,1,
+//		1,1,1,1,1,1,1,1,	
+//	};
+//	cub3d->map_width = 8;
+//	cub3d->map_height = 8;
+//	cub3d->map = malloc(sizeof(int *) * cub3d->map_height);
+//	i = -1;
+//	while (++i < cub3d->map_height)
+//		cub3d->map[i] = malloc(sizeof(int) * cub3d->map_width);
+//	i = -1;
+//	while (++i < cub3d->map_height * cub3d->map_width)
+//		cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = map[i];
+//	cub3d->player.xpos = 80.0;
+//	cub3d->player.ypos = 80.0;
+//	cub3d->player.fov_deg = 60.0;
+//	cub3d->player.orient_deg = 0.0;
+//	cub3d->player.delta_x = MOVE_SPEED;
+//	cub3d->player.delta_y = 0.0;
+//}
+
+void	init_map(t_cub3d *cub3d, t_game *game)
 {
-	int	i;
-	int map[]=           //the map array. Edit to change level but keep the outer walls
-	{
-		1,1,1,1,1,1,1,1,
-		1,0,1,0,0,0,0,1,
-		1,0,1,0,0,0,0,1,
-		1,0,1,0,0,0,0,1,
-		1,0,0,0,0,0,0,1,
-		1,0,0,0,0,1,0,1,
-		1,0,0,0,0,0,0,1,
-		1,1,1,1,1,1,1,1,	
-	};
-	cub3d->map_width = 8;
-	cub3d->map_height = 8;
-	cub3d->map = malloc(sizeof(int *) * cub3d->map_height);
-	i = -1;
-	while (++i < cub3d->map_height)
-		cub3d->map[i] = malloc(sizeof(int) * cub3d->map_width);
-	i = -1;
-	while (++i < cub3d->map_height * cub3d->map_width)
-		cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = map[i];
-	cub3d->player.xpos = 80.0;
-	cub3d->player.ypos = 80.0;
-	cub3d->player.fov_deg = 60.0;
-	cub3d->player.orient_deg = 0.0;
-	cub3d->player.delta_x = MOVE_SPEED;
-	cub3d->player.delta_y = 0.0;
+    int	i;
+
+    cub3d->map_width = game->map.width;
+    cub3d->map_height = game->map.height;
+    cub3d->map = malloc(sizeof(char *) * cub3d->map_height);
+    i = -1;
+    while (++i < cub3d->map_height)
+        cub3d->map[i] = malloc(sizeof(char) * cub3d->map_width);
+    i = -1;
+    while (++i < cub3d->map_height * cub3d->map_width)
+        cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = game->map.map[i / game->map.width][i % game->map.width];
+    cub3d->player.xpos = 80.0;
+    cub3d->player.ypos = 80.0;
+    cub3d->player.fov_deg = 60.0;
+    cub3d->player.orient_deg = 0.0;
+    cub3d->player.delta_x = MOVE_SPEED;
+    cub3d->player.delta_y = 0.0;
 }
 
 void	draw_2d_map(t_cub3d *cub3d)
@@ -119,12 +140,12 @@ void	game_loop(void *param)
 	// mlx_image_to_window(cub3d->mlx, cub3d->mlx_3dimg, 0 , 0);
 }
 
-int	main(void)
+int	cub3d_main(t_game *game)
 {
 	t_cub3d	*cub3d;
 	
 	cub3d = malloc(sizeof(t_cub3d));
-	init_map(cub3d);
+	init_map(cub3d, game);
 	init_mlx_stuff(cub3d);
 	mlx_loop_hook(cub3d->mlx, &key_hook, cub3d);
 	mlx_loop_hook(cub3d->mlx, &game_loop, cub3d);

@@ -24,6 +24,7 @@
 # include <math.h>
 # include "../libft/libft.h"
 # include "MLX42.h"
+# include "cub3d.h"
 
 // MLX Linux keyboard values
 
@@ -66,9 +67,9 @@ typedef struct s_cub3d
 	mlx_image_t	*mlx_2dimg_playerdot;
 	mlx_image_t	*mlx_2dimg;
 	// mlx_image_t	*mlx_3dimg;
-	int			**map;
+	char		**map;
 	int			map_width;
-	int			map_height;			
+	int			map_height;
 	t_player	player;
 }	t_cub3d;
 
@@ -81,5 +82,8 @@ void    move_forward(t_cub3d *cub3d);
 void    move_backward(t_cub3d *cub3d);
 void	strafe_left(t_cub3d *cub3d);
 void	strafe_right(t_cub3d *cub3d);
+
+//main.c
+int		cub3d_main(t_game *game);
 
 #endif
