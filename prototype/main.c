@@ -63,7 +63,7 @@ void	init_map(t_cub3d *cub3d, t_game *game)
 
     cub3d->map_width = game->map.width;
     cub3d->map_height = game->map.height;
-    cub3d->map = malloc(sizeof(char *) * cub3d->map_height);
+    cub3d->map = game->map.map;
     i = -1;
     while (++i < cub3d->map_height)
         cub3d->map[i] = malloc(sizeof(char) * cub3d->map_width);

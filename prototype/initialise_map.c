@@ -132,7 +132,9 @@ void	ft_map_reader(t_game *game, char *line)
 	}
 	game->map.map[game->map.height] = strdup(line);
 	game->map.map[game->map.height + 1] = NULL;
-	game->map.height++;
+	//if line is not empty, increase height, preferably move this someone else but I'll do it when we refactor
+	if (ft_strlen_nonl(line) > 0)
+		game->map.height++;
 	if (game->map.width < ft_strlen_nonl(line))
 		game->map.width = ft_strlen_nonl(line);
 }
@@ -229,6 +231,11 @@ int main(int argc, char **argv)
 	{
 		ft_printf("%s", game.map.map[i]);
 	}
+
+	//print map height
+	ft_printf("map height : %d\n", game.map.height);
+	//print map width
+	ft_printf("map width : %d\n", game.map.width);
 
 	ft_schongte(&game);
 
