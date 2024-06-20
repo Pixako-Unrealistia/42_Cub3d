@@ -6,7 +6,7 @@
 #    By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 14:39:46 by schongte          #+#    #+#              #
-#    Updated: 2024/05/30 20:04:41 by tnualman         ###   ########.fr        #
+#    Updated: 2024/06/20 22:14:50 by tnualman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,14 @@ VALGRIND		= valgrind --leak-check=full --show-leak-kinds=all \
 # Source Files:
 SRC_DIR       = ./
 OBJ_DIR       = ./objects
-SRC_C         = main.c key_handle.c free_utils.c player.c minimap.c 
+SRC_C         = main.c \
+				key_handle.c \
+				free_utils.c \
+				player.c \
+				draw_line.c \
+				draw_line_utils.c \
+				raycast_utils.c \
+
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = prototype.h
 
