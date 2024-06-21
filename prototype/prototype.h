@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/20 22:36:15 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/21 17:12:55 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,30 +27,18 @@
 
 # include <stdio.h>
 
-// MLX Linux keyboard values
-
-# define KEY_W		119
-# define KEY_A		97
-# define KEY_S		115
-# define KEY_D		100
-
-# define KEY_UP  	65362
-# define KEY_LEFT  	65361
-# define KEY_RIGHT 	65363
-# define KEY_DOWN  	65364
-
-# define KEY_Q		113
-# define KEY_ESC  	65307
-
-// Other defines
-
 # define PI 3.14159265358979323846
 
-# define WIN_W			1280
-# define WIN_H			720
+# define WIN_W			1920
+# define WIN_H			1080
+# define VIEW_W			1280
+# define VIEW_H			960
 # define SUBUNITS		64
+
 # define MOVE_SPEED		2.0
 # define ROTATE_SPEED	1.0
+
+# define COLOR_42		0x01babcff
 
 typedef struct s_player
 {
@@ -89,24 +77,18 @@ typedef struct s_cub3d
 	mlx_t		*mlx;
 	mlx_image_t	*mlx_2dimg_playerdot;
 	mlx_image_t	*mlx_2dimg;
-	// mlx_image_t	*mlx_3dimg;
+	mlx_image_t	*mlx_3dimg;
 	int			**map;
 	int			map_width;
 	int			map_height;			
 	t_player	player;
 	int			no_key_pressed;
+	int			pix_per_seg;
 }	t_cub3d;
 
 void	key_hook(void *cub3d);
 
 void	free_all(t_cub3d *cub3d);
-
-// raycast_utils
-float	angle_inrange_deg(float angle);
-float	angle_inrange_rad(float angle);
-float	deg_to_rad(float angle);
-float   ray_distance(t_player p, t_ray r);
-void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color);
 
 // player movement
 void	rotate_player(t_cub3d *cub3d, float angle, int clockwise);
@@ -119,5 +101,19 @@ void	strafe_right(t_cub3d *cub3d);
 void	draw_line(mlx_image_t *img, t_pixel start, t_pixel end);
 int		ft_abs_int(int value);
 int		diy_int_sign(int value);
+
+// raycast_utils
+float	angle_inrange_deg(float angle);
+float	angle_inrange_rad(float angle);
+float	deg_to_rad(float angle);
+float   ray_distance(t_player p, t_ray r);
+void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color);
+
+// raycast_1ray
+void	raycast_1h(t_cub3d *cub3d, t_ray *r, int i);
+void	raycast_1v(t_cub3d *cub3d, t_ray *r, int i);
+
+// raycast
+void	raycast(t_cub3d *cub3d);
 
 #endif

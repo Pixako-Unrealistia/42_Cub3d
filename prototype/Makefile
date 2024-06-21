@@ -6,7 +6,7 @@
 #    By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 14:39:46 by schongte          #+#    #+#              #
-#    Updated: 2024/06/20 22:14:50 by tnualman         ###   ########.fr        #
+#    Updated: 2024/06/21 16:05:35 by tnualman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,6 +41,8 @@ SRC_C         = main.c \
 				draw_line.c \
 				draw_line_utils.c \
 				raycast_utils.c \
+				raycast_1ray.c \
+				raycast.c
 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = prototype.h
