@@ -83,6 +83,7 @@ int		ft_strlen_nonl(char *str);
 void	remove_one_nl(char **map);
 void	ft_remove_spaces(char *str);
 int		ft_abs(int n);
+int		ft_is_line_empty(char *line);
 
 // map_utils.c
 void	ft_safe_free(void *ptr);

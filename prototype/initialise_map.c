@@ -103,10 +103,13 @@ int	ft_header_parser(t_game *game, char *line)
 	return (1);
 }
 
-void	ft_map_reader(t_game *game, char *line)
+void	ft_map_reader(t_game *game, char *line, int *found)
 {
 	char	**tmp;
 
+	if (ft_strlen_nonl(line) == 0 && game->map_alloc == 0)
+		return ;
+	*found = 1;
 	if (game->map_alloc == 0)
 		ft_map_alloc(game, ft_strlen_nonl(line));
 	else
@@ -132,9 +135,7 @@ void	ft_map_reader(t_game *game, char *line)
 	}
 	game->map.map[game->map.height] = ft_strdup(line);
 	game->map.map[game->map.height + 1] = NULL;
-	//if line is not empty, increase height, preferably move this someone else but I'll do it when we refactor
-	if (ft_strlen_nonl(line) > 0)
-		game->map.height++;
+	game->map.height++;
 	if (game->map.width < ft_strlen_nonl(line))
 		game->map.width = ft_strlen_nonl(line);
 }
@@ -195,19 +196,68 @@ void	ft_schongte(t_game *game)
 		printf("%s", game->map.map[i]);
 		i++;
 	}
+	printf("line count : %d\n", i);
 }
+
+void flood_fill(char **map, int x, int y, int width, int height)
+{
+	if (x < 0 || x >= width || y < 0 || y >= height || map[y][x] != ' ')
+		return;
+	map[y][x] = 'd';
+	flood_fill(map, x + 1, y, width, height);
+	flood_fill(map, x - 1, y, width, height);
+	flood_fill(map, x, y + 1, width, height);
+	flood_fill(map, x, y - 1, width, height);
+}
+
+void fill_irregular_map(t_game *game)
+{
+    //flood fill from top edges
+	for (int i = 0; i < game->map.width; i++)
+	{
+		if (game->map.map[0][i] == ' ')
+			flood_fill(game->map.map, i, 0, game->map.width, game->map.height);
+	}
+	
+}
+
+//void ft_map_standardise(t_game *game)
+//{
+//	//each line should be the same length
+//	for (int i = 0; i < game->map.height; i++)
+//	{
+//		if (ft_strlen(game->map.map[i]) < game->map.width)
+//		{
+//			char *tmp = malloc(sizeof(char) * (game->map.width + 1));
+//			if (tmp == NULL)
+//				ft_throw("Memory allocation failed", game, NULL);
+//			for (int j = 0; j < game->map.width; j++)
+//			{
+//				if (j < ft_strlen(game->map.map[i]))
+//					tmp[j] = game->map.map[i][j];
+//				else
+//					tmp[j] = ' ';
+//			}
+//			tmp[game->map.width] = '\0';
+//			free(game->map.map[i]);
+//			game->map.map[i] = tmp;
+//		}
+//	}
+//}
 
 int main(int argc, char **argv)
 {
 	t_game	game;
 	char	*line;
-	int fd;
+	int		fd;
+	int		found = 0;
 
 	ft_init_all(&game);
 	ft_cube_argv(argc, argv, &game);
 	game.map.map = NULL;
 	game.map_alloc = 0;
 
+	printf("argv[1] : %s\n", argv[1]);
 	fd = open(argv[1], O_RDONLY);
 	line = NULL;
 	while (super_get_next_line(fd, &line) > 0)
@@ -218,7 +268,12 @@ int main(int argc, char **argv)
 				break;
 		}
 		else
-			ft_map_reader(&game, line);
+		{
+			if (ft_strlen_nonl(line) > 1)
+				ft_map_reader(&game, line, &found);
+			else if (found == 1)
+				break;
+		}
 		ft_safe_free(line);
 	}
 	ft_safe_free(line);
@@ -227,10 +282,8 @@ int main(int argc, char **argv)
 
 	//Intregity check
 	//ft_printf("\n\n");
-	for (int i = 0; game.map.map[i]; i++)
-	{
-		ft_printf("%s", game.map.map[i]);
-	}
+
+	//ft_map_standardise(&game);
 
 	//print map height
 	ft_printf("map height : %d\n", game.map.height);
@@ -238,6 +291,10 @@ int main(int argc, char **argv)
 	ft_printf("map width : %d\n", game.map.width);
 
 	ft_schongte(&game);
+
+	//fill_irregular_map(&game);
+
+	//ft_schongte(&game);
 
 	//cub3d_main(&game);
 

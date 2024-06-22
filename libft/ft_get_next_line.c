@@ -6,7 +6,7 @@
 /*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/13 12:11:34 by schongte          #+#    #+#             */
-/*   Updated: 2024/04/16 21:33:27 by schongte         ###   ########.fr       */
+/*   Updated: 2024/06/22 21:48:16 by schongte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,17 +118,12 @@ int	super_get_next_line(int fd, char **line)
     char			*str;
 
     if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-        return (NULL);
+        return (-1);
     tempo = main_reader(fd, tempo);
     if (!tempo)
-        return (NULL);
+        return (-1);
     str = main_parse_line(tempo);
     tempo = main_parse_next(tempo);
     *line = str;
-    if (tempo == NULL)
-	{
-        free(tempo);
-        tempo = NULL;
-    }
     return (ft_strlen(*line));
 }

@@ -81,7 +81,7 @@ $(LIBFT):
 all: ${NAME} ${BONUS_NAME}
 
 clean:
-	make clean -C ${LIBFT_PATH}
+	make fclean -C ${LIBFT_PATH}
 	${RM} ${NAME}
 	${RM} -r ${OBJ_DIR}
 	@printf "$(_INFO) object files removed.\n"
