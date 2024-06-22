@@ -24,6 +24,7 @@
 # include <math.h>
 # include "../libft/libft.h"
 # include "MLX42.h"
+# include "cub3d.h"
 
 # include <stdio.h>
 
@@ -78,9 +79,9 @@ typedef struct s_cub3d
 	mlx_image_t	*mlx_2dimg_playerdot;
 	mlx_image_t	*mlx_2dimg;
 	mlx_image_t	*mlx_3dimg;
-	int			**map;
+	char		**map;
 	int			map_width;
-	int			map_height;			
+	int			map_height;
 	t_player	player;
 	int			no_key_pressed;
 	int			pix_per_seg;
@@ -115,5 +116,7 @@ void	raycast_1v(t_cub3d *cub3d, t_ray *r, int i);
 
 // raycast
 void	raycast(t_cub3d *cub3d);
+//main.c
+int		cub3d_main(t_game *game);
 
 #endif

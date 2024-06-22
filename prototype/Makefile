@@ -45,7 +45,7 @@ SRC_C         = main.c \
 				raycast.c
 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
-HEADER    	  = prototype.h
+HEADER    	  = prototype.h cub3d.h
 
 # Colors:
 GREEN		=	\e[38;5;118m
