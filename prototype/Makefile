@@ -42,7 +42,10 @@ SRC_C         = main.c \
 				draw_line_utils.c \
 				raycast_utils.c \
 				raycast_1ray.c \
-				raycast.c
+				raycast.c \
+				utils.c \
+				map_utils.c \
+				initialise_map.c
 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = prototype.h cub3d.h

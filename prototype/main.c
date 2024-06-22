@@ -84,17 +84,17 @@ void	init_map(t_cub3d *cub3d, t_game *game)
 	//cub3d->pix_per_seg = (int)(VIEW_W / cub3d->player.fov_deg);
 
 	// ^^ Your original function, I resolved the merge conflict but in case there's problem roll it back.
-    int	i;
+	int	i;
 
-    cub3d->map_width = game->map.width;
-    cub3d->map_height = game->map.height;
-    cub3d->map = game->map.map;
-    i = -1;
-    while (++i < cub3d->map_height)
-        cub3d->map[i] = malloc(sizeof(char) * cub3d->map_width);
-    i = -1;
-    while (++i < cub3d->map_height * cub3d->map_width)
-        cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = game->map.map[i / game->map.width][i % game->map.width];
+	cub3d->map_width = game->map.width;
+	cub3d->map_height = game->map.height;
+	cub3d->map = game->map.map;
+	i = -1;
+	while (++i < cub3d->map_height)
+		cub3d->map[i] = malloc(sizeof(char) * cub3d->map_width);
+	i = -1;
+	while (++i < cub3d->map_height * cub3d->map_width)
+		cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = game->map.map[i / game->map.width][i % game->map.width];
 	cub3d->player.x = SUBUNITS + 32.0;
 	cub3d->player.y = SUBUNITS + 32.0;
 	cub3d->player.fov_deg = 60.0;

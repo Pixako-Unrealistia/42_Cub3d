@@ -12,10 +12,15 @@
 
 #include "cub3d.h"
 
-void	ft_map_free(t_game *game)
-{
-	if (game->map.map)
-	{
+#include "cub3d.h"
+
+void ft_map_free(t_game *game) {
+	if (game->map.map) {
+		for (int i = 0; i < game->map.height; i++) {
+			if (game->map.map[i] != NULL) {
+				free(game->map.map[i]);
+			}
+		}
 		free(game->map.map);
 		game->map.map = NULL;
 	}
