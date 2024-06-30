@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 14:03:28 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/21 16:04:55 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:27:52 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,13 @@ float	ray_distance(t_player p, t_ray r)
 	return (sqrt((r.x - p.x) * (r.x - p.x) + (r.y - p.y) * (r.y - p.y)));
 }
 
-void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color)
+void	draw_pixel_column(mlx_image_t *img, t_pixel pix, int len)
 {
-	t_pixel	pixel[2];
+	int	i;
 
-	pixel[0].x = p.x;
-	pixel[0].y = p.y;
-	pixel[0].color = color;
-	pixel[1].x = r.x;
-	pixel[1].y = r.y;
-	pixel[1].color = color;
-	draw_line(img, pixel[0], pixel[1]);
+	if (len <= 0)
+		return ;
+	i = -1;
+	while (++i < len)
+		mlx_put_pixel(img, pix.x, pix.y + i, pix.color);
 }

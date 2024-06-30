@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:38:44 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/21 15:53:24 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:29:52 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,12 +36,12 @@ static void raycast_1h_case(t_cub3d *cub3d, t_player p, t_ray *r)
 	}
 }
 
-void	raycast_1h(t_cub3d *cub3d, t_ray *r, int i)
+void	raycast_1h(t_cub3d *cub3d, t_ray *r, int a)
 {
 	t_player	p;
 
 	p = cub3d->player;
-	r->angle_deg = angle_inrange_deg(p.orient_deg + i);
+	r->angle_deg = angle_inrange_deg(p.orient_deg + a);
 	r->angle_tan = tan(deg_to_rad(r->angle_deg));
 	r->step = 0;
 	raycast_1h_case(cub3d, p, r);
@@ -87,12 +87,12 @@ static void raycast_1v_case(t_cub3d *cub3d, t_player p, t_ray *r)
 	}
 }
 
-void	raycast_1v(t_cub3d *cub3d, t_ray *r, int i)
+void	raycast_1v(t_cub3d *cub3d, t_ray *r, int a)
 {
 	t_player	p;
 
 	p = cub3d->player;
-	r->angle_deg = angle_inrange_deg(p.orient_deg + i);
+	r->angle_deg = angle_inrange_deg(p.orient_deg + a);
 	r->angle_tan = tan(deg_to_rad(r->angle_deg));
 	r->step = 0;
 	raycast_1v_case(cub3d, p, r);
@@ -112,4 +112,17 @@ void	raycast_1v(t_cub3d *cub3d, t_ray *r, int i)
 		}
 	}
 	r->dist = ray_distance(p, *r);
+}
+
+void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color)
+{
+	t_pixel	pixel[2];
+
+	pixel[0].x = p.x;
+	pixel[0].y = p.y;
+	pixel[0].color = color;
+	pixel[1].x = r.x;
+	pixel[1].y = r.y;
+	pixel[1].color = color;
+	draw_line(img, pixel[0], pixel[1]);
 }

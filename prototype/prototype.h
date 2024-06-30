@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/21 17:12:55 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:28:47 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,18 @@ typedef struct s_ray
 	float	dist;
 }	t_ray;
 
+typedef struct s_raycast
+{
+	t_ray	ray[2];
+	int		selected_ray;
+	int		pix_per_seg;
+	int		ray_dist;
+	int		seg_height;
+	int		seg_offset;
+	t_pixel col_top;
+	t_pixel	col_wall_top;
+	t_pixel	col_floor_top;
+}	t_raycast;
 
 typedef struct s_cub3d
 {
@@ -84,7 +96,12 @@ typedef struct s_cub3d
 	int			map_height;
 	t_player	player;
 	int			no_key_pressed;
-	int			pix_per_seg;
+	int			color_floor;
+	int			color_ceiling;
+	int			color_north;
+	int			color_west;
+	int			color_south;
+	int			color_east;
 }	t_cub3d;
 
 void	key_hook(void *cub3d);
@@ -108,11 +125,12 @@ float	angle_inrange_deg(float angle);
 float	angle_inrange_rad(float angle);
 float	deg_to_rad(float angle);
 float   ray_distance(t_player p, t_ray r);
-void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color);
+void	draw_pixel_column(mlx_image_t *img, t_pixel pix, int len);
 
 // raycast_1ray
 void	raycast_1h(t_cub3d *cub3d, t_ray *r, int i);
 void	raycast_1v(t_cub3d *cub3d, t_ray *r, int i);
+void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color);
 
 // raycast
 void	raycast(t_cub3d *cub3d);

@@ -6,74 +6,85 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:43:15 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/21 17:13:43 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:27:54 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prototype.h"
 
-void    draw_wall_segment(t_cub3d *cub3d, float dist, int i, int color);
-
-void    blacken_image(mlx_image_t *img)
-{
-    int i;
-
-    i = -1;
-    while (++i < (int)(img->width * img->height))
-		mlx_put_pixel(img, i % img->width, i / img->width, 255);
-}
+static void	draw_segment(t_cub3d *cub3d, t_raycast rc, int a);
+static void	set_pixels(t_cub3d *cub3d, t_raycast *rc, int a, int i);
+static void	draw_texture_column(t_cub3d *cub3d, t_raycast *rc);
 
 void	raycast(t_cub3d *cub3d)
 {
-	t_ray	r[2];
-	float	dist;
-    int     color;
-	int		i;
+	t_raycast   rc;
+	int         a;
 
-	blacken_image(cub3d->mlx_3dimg);
-    i = -(int)cub3d->player.fov_deg / 2 - 1;
-	while (++i < (int)cub3d->player.fov_deg / 2)
+	rc.pix_per_seg = (int)(VIEW_W / cub3d->player.fov_deg);
+	a = -(int)cub3d->player.fov_deg / 2 - 1;
+	while (++a < (int)cub3d->player.fov_deg / 2)
 	{
-		raycast_1h(cub3d, r + 0, i);
-		raycast_1v(cub3d, r + 1, i);
-		if (r[0].dist <= r[1].dist)
+		raycast_1h(cub3d, rc.ray + 0, a);
+		raycast_1v(cub3d, rc.ray + 1, a);
+		if (rc.ray[0].dist <= rc.ray[1].dist)
 		{
-            dist = r[0].dist;
-			draw_1ray(cub3d->mlx_2dimg, cub3d->player, r[0], 255 << 16 | 255);
-            color = 255 << 8 | 255;
+			rc.selected_ray = 0;
+			draw_1ray(cub3d->mlx_2dimg, cub3d->player, rc.ray[0], 0x00ff00ff);
 		}
 		else
 		{
-			dist = r[1].dist;
-			draw_1ray(cub3d->mlx_2dimg, cub3d->player, r[1], 255 << 16 | 255);
-            color = 255 << 24 | 255 << 16 | 255;
+			rc.selected_ray = 1;
+			draw_1ray(cub3d->mlx_2dimg, cub3d->player, rc.ray[1], 0x00ff00ff);
 		}
-        draw_wall_segment(cub3d, dist, i, color);
+		draw_segment(cub3d, rc, a);
 	}
 }
 
-void    draw_wall_segment(t_cub3d *cub3d, float dist, int i, int color)
+static void	draw_segment(t_cub3d *cub3d, t_raycast rc, int a)
 {
-    float   seg_height;
-    float   seg_offset;
-    t_pixel pixel[2];
-    int     j;
+	int     i;
 
-    dist *= cos(deg_to_rad((float)i));
-    i += (int)cub3d->player.fov_deg / 2;
-    seg_height = SUBUNITS * VIEW_H / dist;
-    if (seg_height > VIEW_H)
-        seg_height = VIEW_H;
-    seg_offset = (VIEW_H - seg_height) / 2;
-    j = -1;
-    while (++j < cub3d->pix_per_seg)
-    {
-        pixel[0].x = i * cub3d->pix_per_seg + j;
-        pixel[0].y = seg_offset;
-        pixel[0].color = color;
-        pixel[1].x = i * cub3d->pix_per_seg + j;
-        pixel[1].y = seg_height + seg_offset;
-        pixel[1].color = color;
-        draw_line(cub3d->mlx_3dimg, pixel[0], pixel[1]);
-    }
+	rc.ray_dist = rc.ray[rc.selected_ray].dist * cos(deg_to_rad((float)a));
+	a += (int)(cub3d->player.fov_deg / 2);
+	rc.seg_height = SUBUNITS * VIEW_H / (rc.ray_dist + 1.0);
+	if (rc.seg_height > VIEW_H)
+		rc.seg_height = VIEW_H;
+	rc.seg_offset = (VIEW_H - rc.seg_height) / 2;
+	i = -1;
+	while (++i < rc.pix_per_seg)
+	{
+		set_pixels(cub3d, &rc, a, i);
+		draw_pixel_column(cub3d->mlx_3dimg, rc.col_top, rc.seg_offset);
+		draw_texture_column(cub3d, &rc);
+		draw_pixel_column(cub3d->mlx_3dimg, rc.col_floor_top, rc.seg_offset);
+	}
+}
+
+static void	set_pixels(t_cub3d *cub3d, t_raycast *rc, int a, int i)
+{
+	rc->col_top.x = a * rc->pix_per_seg + i;
+	rc->col_top.y = 0;
+	rc->col_top.color = cub3d->color_ceiling;
+	rc->col_wall_top.x = a * rc->pix_per_seg + i;
+	rc->col_wall_top.y = rc->seg_offset;
+	rc->col_wall_top.color = 0x000000ff;
+	rc->col_floor_top.x = a * rc->pix_per_seg + i;
+	rc->col_floor_top.y = rc->seg_height + rc->seg_offset;
+	rc->col_floor_top.color = cub3d->color_floor;
+}
+
+static void	draw_texture_column(t_cub3d *cub3d, t_raycast *rc)
+{
+	if (rc->selected_ray == 0 && rc->ray[0].angle_deg < 180.0)
+		rc->col_wall_top.color = cub3d->color_south;
+	if (rc->selected_ray == 0 && rc->ray[0].angle_deg >= 180.0)
+		rc->col_wall_top.color = cub3d->color_north;
+	if (rc->selected_ray == 1 
+		&& (rc->ray[0].angle_deg < 90.0 || rc->ray[0].angle_deg > 270.0))
+		rc->col_wall_top.color = cub3d->color_east;
+	if (rc->selected_ray == 1 
+		&& rc->ray[0].angle_deg >= 90.0 && rc->ray[0].angle_deg <= 270.0)
+		rc->col_wall_top.color = cub3d->color_west;
+	draw_pixel_column(cub3d->mlx_3dimg, rc->col_wall_top, rc->seg_height);
 }

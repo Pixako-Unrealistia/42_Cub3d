@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:58:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/21 17:12:46 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 17:25:42 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,12 @@ void	init_map(t_cub3d *cub3d, t_game *game)
 	cub3d->player.orient_deg = 0.0;
 	cub3d->player.delta_x = MOVE_SPEED;
 	cub3d->player.delta_y = 0.0;
-	cub3d->pix_per_seg = (int)(VIEW_W / cub3d->player.fov_deg);
+	cub3d->color_floor = 0x1f1f1fff;
+	cub3d->color_ceiling = 0x01babcff;
+	cub3d->color_north = 0xbfbf00ff;
+	cub3d->color_west = 0x0000ffff;
+	cub3d->color_south = 0x00ff00ff;
+	cub3d->color_east = 0xff0000ff;
 }
 
 void	draw_2d_map(t_cub3d *cub3d)
