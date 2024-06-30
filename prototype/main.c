@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:58:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/30 17:25:42 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 21:01:49 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ void	init_map(t_cub3d *cub3d, t_game *game)
 
 	cub3d->map_width = game->map.width;
 	cub3d->map_height = game->map.height;
-	cub3d->map = game->map.map;
+	cub3d->map = malloc(sizeof(char *) * cub3d->map_height);
 	i = -1;
 	while (++i < cub3d->map_height)
 		cub3d->map[i] = malloc(sizeof(char) * cub3d->map_width);
@@ -117,7 +117,7 @@ void	draw_2d_map(t_cub3d *cub3d)
 	i[0] = -1;
 	while (++i[0] < cub3d->map_width * cub3d->map_height)
 	{
-		if (cub3d->map[i[0] / cub3d->map_width][i[0] % cub3d->map_width] == 1)
+		if (cub3d->map[i[0] / cub3d->map_width][i[0] % cub3d->map_width] == '1')
 			color = 255 << 24 | 255 << 16 | 255 << 8 | 255;
 		else
 			color = 255;

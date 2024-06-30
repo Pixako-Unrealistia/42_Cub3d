@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:17 by schongte          #+#    #+#             */
-/*   Updated: 2024/06/30 17:34:53 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 21:02:01 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -318,7 +318,7 @@ int main(int argc, char **argv)
 		printf("%s", game.map.map[i]);
 	}
 
-	fill_irregular_map(&game);
+	// fill_irregular_map(&game);
 
 
 	printf("\n\n");
@@ -329,8 +329,7 @@ int main(int argc, char **argv)
 
 
 	//ft_schongte(&game);
-
-	// cub3d_main(&game);
+	cub3d_main(&game);
 
 	ft_map_free(&game);
 	return (0);

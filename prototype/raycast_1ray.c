@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:38:44 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/30 17:29:52 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 20:59:15 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ static void raycast_1h_case(t_cub3d *cub3d, t_player p, t_ray *r)
 	}
 }
 
-void	raycast_1h(t_cub3d *cub3d, t_ray *r, int a)
+void	raycast_1h(t_cub3d *cub3d, t_ray *r, float a)
 {
 	t_player	p;
 
@@ -51,7 +51,7 @@ void	raycast_1h(t_cub3d *cub3d, t_ray *r, int a)
 		r->y_map = (int)(r->y / SUBUNITS);
 		if (r->x_map < 0 || r->x_map >= cub3d->map_width 
 			|| r->y_map < 0 || r->y_map >= cub3d->map_height
-			|| cub3d->map[r->y_map][r->x_map] == 1)
+			|| cub3d->map[r->y_map][r->x_map] == '1')
 			r->step = cub3d->map_height;
 		else
 		{
@@ -87,7 +87,7 @@ static void raycast_1v_case(t_cub3d *cub3d, t_player p, t_ray *r)
 	}
 }
 
-void	raycast_1v(t_cub3d *cub3d, t_ray *r, int a)
+void	raycast_1v(t_cub3d *cub3d, t_ray *r, float a)
 {
 	t_player	p;
 
@@ -96,14 +96,14 @@ void	raycast_1v(t_cub3d *cub3d, t_ray *r, int a)
 	r->angle_tan = tan(deg_to_rad(r->angle_deg));
 	r->step = 0;
 	raycast_1v_case(cub3d, p, r);
-	while (r->step < cub3d->map_height)
+	while (r->step < cub3d->map_width)
 	{
 		r->x_map = (int)(r->x / SUBUNITS);
 		r->y_map = (int)(r->y / SUBUNITS);
 		if (r->x_map < 0 || r->x_map >= cub3d->map_width 
 			|| r->y_map < 0 || r->y_map >= cub3d->map_height
-			|| cub3d->map[r->y_map][r->x_map] == 1)
-			r->step = cub3d->map_height;
+			|| cub3d->map[r->y_map][r->x_map] == '1')
+			r->step = cub3d->map_width;
 		else
 		{
 			r->x += r->x_offset;

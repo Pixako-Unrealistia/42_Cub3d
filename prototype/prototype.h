@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/30 17:28:47 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 20:59:55 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,8 +128,8 @@ float   ray_distance(t_player p, t_ray r);
 void	draw_pixel_column(mlx_image_t *img, t_pixel pix, int len);
 
 // raycast_1ray
-void	raycast_1h(t_cub3d *cub3d, t_ray *r, int i);
-void	raycast_1v(t_cub3d *cub3d, t_ray *r, int i);
+void	raycast_1h(t_cub3d *cub3d, t_ray *r, float a);
+void	raycast_1v(t_cub3d *cub3d, t_ray *r, float a);
 void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color);
 
 // raycast

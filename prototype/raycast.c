@@ -6,24 +6,24 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:43:15 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/30 17:27:54 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/06/30 20:59:30 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "prototype.h"
 
-static void	draw_segment(t_cub3d *cub3d, t_raycast rc, int a);
-static void	set_pixels(t_cub3d *cub3d, t_raycast *rc, int a, int i);
+static void	draw_segment(t_cub3d *cub3d, t_raycast rc, float a);
+static void	set_pixels(t_cub3d *cub3d, t_raycast *rc, float a, int i);
 static void	draw_texture_column(t_cub3d *cub3d, t_raycast *rc);
 
 void	raycast(t_cub3d *cub3d)
-{
-	t_raycast   rc;
-	int         a;
+{	
+	t_raycast	rc;
+	float		a;
 
 	rc.pix_per_seg = (int)(VIEW_W / cub3d->player.fov_deg);
-	a = -(int)cub3d->player.fov_deg / 2 - 1;
-	while (++a < (int)cub3d->player.fov_deg / 2)
+	a = -cub3d->player.fov_deg / 2;
+	while (a < cub3d->player.fov_deg / 2)
 	{
 		raycast_1h(cub3d, rc.ray + 0, a);
 		raycast_1v(cub3d, rc.ray + 1, a);
@@ -38,10 +38,11 @@ void	raycast(t_cub3d *cub3d)
 			draw_1ray(cub3d->mlx_2dimg, cub3d->player, rc.ray[1], 0x00ff00ff);
 		}
 		draw_segment(cub3d, rc, a);
+		a += 0.5;
 	}
 }
 
-static void	draw_segment(t_cub3d *cub3d, t_raycast rc, int a)
+static void	draw_segment(t_cub3d *cub3d, t_raycast rc, float a)
 {
 	int     i;
 
@@ -61,7 +62,7 @@ static void	draw_segment(t_cub3d *cub3d, t_raycast rc, int a)
 	}
 }
 
-static void	set_pixels(t_cub3d *cub3d, t_raycast *rc, int a, int i)
+static void	set_pixels(t_cub3d *cub3d, t_raycast *rc, float a, int i)
 {
 	rc->col_top.x = a * rc->pix_per_seg + i;
 	rc->col_top.y = 0;
