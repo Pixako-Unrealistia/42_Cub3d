@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/30 20:59:55 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/02 20:00:53 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,6 @@
 
 # define MOVE_SPEED		2.0
 # define ROTATE_SPEED	1.0
-
-# define COLOR_42		0x01babcff
 
 typedef struct s_player
 {

@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:58:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/30 21:01:49 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/02 19:55:55 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,74 +16,13 @@
 */
 
 /* COMPILE WITH:
-* gcc main.c key_handle.c free_utils.c player.c minimap.c libmlx42.a -ldl -lglfw -pthread -lm -o cub3d
+* gcc main.c (*.c) libmlx42.a -ldl -lglfw -pthread -lm -o cub3d
 */
 
 #include "prototype.h"
 
-//void	init_map(t_cub3d *cub3d, t_parser *parser)
-//{
-//	int	i;
-//	int map[]=
-//	{
-//		1,1,1,1,1,1,1,1,
-//		1,0,1,0,0,0,0,1,
-//		1,0,1,0,0,0,0,1,
-//		1,0,1,0,0,0,0,1,
-//		1,0,0,0,0,0,0,1,
-//		1,0,0,0,0,1,0,1,
-//		1,0,0,0,0,0,0,1,
-//		1,1,1,1,1,1,1,1,	
-//	};
-//	cub3d->map_width = 8;
-//	cub3d->map_height = 8;
-//	cub3d->map = malloc(sizeof(int *) * cub3d->map_height);
-//	i = -1;
-//	while (++i < cub3d->map_height)
-//		cub3d->map[i] = malloc(sizeof(int) * cub3d->map_width);
-//	i = -1;
-//	while (++i < cub3d->map_height * cub3d->map_width)
-//		cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = map[i];
-//	cub3d->player.xpos = 80.0;
-//	cub3d->player.ypos = 80.0;
-//	cub3d->player.fov_deg = 60.0;
-//	cub3d->player.orient_deg = 0.0;
-//	cub3d->player.delta_x = MOVE_SPEED;
-//	cub3d->player.delta_y = 0.0;
-//}
-
-void	init_map(t_cub3d *cub3d, t_parser *parser)
+void	init_renderer(t_cub3d *cub3d, t_parser *parser)
 {
-	//int	i;
-	//int map[]= 
-	//{
-	//	1,1,1,1,1,1,1,1,
-	//	1,0,0,0,0,1,0,1,
-	//	1,0,0,0,0,1,0,1,
-	//	1,0,0,0,0,1,0,1,
-	//	1,0,0,0,0,0,0,1,
-	//	1,0,0,0,0,1,0,1,
-	//	1,0,0,0,0,0,0,1,
-	//	1,1,1,1,1,1,1,1,	
-	//};
-	//cub3d->map_width = 8;
-	//cub3d->map_height = 8;
-	//cub3d->map = malloc(sizeof(int *) * cub3d->map_height);
-	//i = -1;
-	//while (++i < cub3d->map_height)
-	//	cub3d->map[i] = malloc(sizeof(int) * cub3d->map_width);
-	//i = -1;
-	//while (++i < cub3d->map_height * cub3d->map_width)
-	//	cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = map[i];
-	//cub3d->player.x = SUBUNITS + 32.0;
-	//cub3d->player.y = SUBUNITS + 32.0;
-	//cub3d->player.fov_deg = 60.0;
-	//cub3d->player.orient_deg = 0.0;
-	//cub3d->player.delta_x = MOVE_SPEED;
-	//cub3d->player.delta_y = 0.0;
-	//cub3d->pix_per_seg = (int)(VIEW_W / cub3d->player.fov_deg);
-
-	// ^^ Your original function, I resolved the merge conflict but in case there's problem roll it back.
 	int	i;
 
 	cub3d->map_width = parser->map.width;
@@ -94,19 +33,29 @@ void	init_map(t_cub3d *cub3d, t_parser *parser)
 		cub3d->map[i] = malloc(sizeof(char) * cub3d->map_width);
 	i = -1;
 	while (++i < cub3d->map_height * cub3d->map_width)
-		cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = parser->map.map[i / parser->map.width][i % parser->map.width];
-	cub3d->player.x = SUBUNITS + 32.0;
-	cub3d->player.y = SUBUNITS + 32.0;
-	cub3d->player.fov_deg = 60.0;
-	cub3d->player.orient_deg = 0.0;
-	cub3d->player.delta_x = MOVE_SPEED;
-	cub3d->player.delta_y = 0.0;
+		cub3d->map[i / cub3d->map_width][i % cub3d->map_width]
+			= parser->map.map[i / parser->map.width][i % parser->map.width];
 	cub3d->color_floor = 0x1f1f1fff;
 	cub3d->color_ceiling = 0x01babcff;
 	cub3d->color_north = 0xbfbf00ff;
 	cub3d->color_west = 0x0000ffff;
 	cub3d->color_south = 0x00ff00ff;
 	cub3d->color_east = 0xff0000ff;
+}
+
+void	init_player(t_cub3d *cub3d, t_parser *parser)
+{
+	cub3d->player.x = (parser->map.start_x - 1) * SUBUNITS + 32.0;
+	cub3d->player.y = (parser->map.start_y - 1) * SUBUNITS + 32.0;
+	cub3d->player.fov_deg = 60.0;
+	cub3d->player.orient_deg = 0.0;
+	if (parser->map.start_dir == 'N')
+		cub3d->player.orient_deg = 90.0;
+	if (parser->map.start_dir == 'W')
+		cub3d->player.orient_deg = 180.0;
+	if (parser->map.start_dir == 'S')
+		cub3d->player.orient_deg = 270.0;
+	rotate_player(cub3d, 0, 0);
 }
 
 void	draw_2d_map(t_cub3d *cub3d)
@@ -133,7 +82,7 @@ void	draw_2d_map(t_cub3d *cub3d)
 	}
 }
 
-void	init_mlx_stuff(t_cub3d *cub3d)
+void	init_mlx_stuff(t_cub3d *cub3d) 
 {
 	int	i;
 
@@ -176,7 +125,8 @@ int	cub3d_main(t_parser *parser)
 	t_cub3d	*cub3d;
 	
 	cub3d = malloc(sizeof(t_cub3d));
-	init_map(cub3d, parser);
+	init_renderer(cub3d, parser);
+	init_player(cub3d, parser);
 	init_mlx_stuff(cub3d);
 	mlx_loop_hook(cub3d->mlx, &key_hook, cub3d);
 	mlx_loop_hook(cub3d->mlx, &parser_loop, cub3d);
