@@ -13,7 +13,7 @@
 #DEP : https://github.com/codam-coding-college/MLX42
 
 # Binary Names:
-NAME			= cub3d
+NAME			= cub3D
 
 # Libft
 LIBFT_PATH 		= ../libft

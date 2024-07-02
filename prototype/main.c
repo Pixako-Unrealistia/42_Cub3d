@@ -21,7 +21,7 @@
 
 #include "prototype.h"
 
-//void	init_map(t_cub3d *cub3d, t_game *game)
+//void	init_map(t_cub3d *cub3d, t_parser *parser)
 //{
 //	int	i;
 //	int map[]=
@@ -52,7 +52,7 @@
 //	cub3d->player.delta_y = 0.0;
 //}
 
-void	init_map(t_cub3d *cub3d, t_game *game)
+void	init_map(t_cub3d *cub3d, t_parser *parser)
 {
 	//int	i;
 	//int map[]= 
@@ -86,15 +86,15 @@ void	init_map(t_cub3d *cub3d, t_game *game)
 	// ^^ Your original function, I resolved the merge conflict but in case there's problem roll it back.
 	int	i;
 
-	cub3d->map_width = game->map.width;
-	cub3d->map_height = game->map.height;
+	cub3d->map_width = parser->map.width;
+	cub3d->map_height = parser->map.height;
 	cub3d->map = malloc(sizeof(char *) * cub3d->map_height);
 	i = -1;
 	while (++i < cub3d->map_height)
 		cub3d->map[i] = malloc(sizeof(char) * cub3d->map_width);
 	i = -1;
 	while (++i < cub3d->map_height * cub3d->map_width)
-		cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = game->map.map[i / game->map.width][i % game->map.width];
+		cub3d->map[i / cub3d->map_width][i % cub3d->map_width] = parser->map.map[i / parser->map.width][i % parser->map.width];
 	cub3d->player.x = SUBUNITS + 32.0;
 	cub3d->player.y = SUBUNITS + 32.0;
 	cub3d->player.fov_deg = 60.0;
@@ -156,7 +156,7 @@ void	init_mlx_stuff(t_cub3d *cub3d)
 
 
 
-void	game_loop(void *param)
+void	parser_loop(void *param)
 {
 	t_cub3d	*cub3d;
 	
@@ -171,15 +171,15 @@ void	game_loop(void *param)
 	cub3d->no_key_pressed = 1;
 }
 
-int	cub3d_main(t_game *game)
+int	cub3d_main(t_parser *parser)
 {
 	t_cub3d	*cub3d;
 	
 	cub3d = malloc(sizeof(t_cub3d));
-	init_map(cub3d, game);
+	init_map(cub3d, parser);
 	init_mlx_stuff(cub3d);
 	mlx_loop_hook(cub3d->mlx, &key_hook, cub3d);
-	mlx_loop_hook(cub3d->mlx, &game_loop, cub3d);
+	mlx_loop_hook(cub3d->mlx, &parser_loop, cub3d);
 	mlx_loop(cub3d->mlx);
 	mlx_terminate(cub3d->mlx);
 	free_all(cub3d);

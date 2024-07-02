@@ -37,13 +37,15 @@ typedef struct s_map
 	int     f;
 	int     c;
 	char    **map;
+	int	 	start_x;
+	int	 	start_y;
 }           t_map;
 
-typedef struct s_game
+typedef struct s_parser
 {
 	t_map   map;
 	int     map_alloc;
-}           t_game;
+}           t_parser;
 
 // Linux
  #  define KEY_W				119
@@ -87,10 +89,10 @@ int		ft_is_line_empty(char *line);
 
 // map_utils.c
 void	ft_safe_free(void *ptr);
-void	ft_map_free(t_game *game);
-void	ft_throw(char *str,t_game *game, char *line);
-void	ft_map_alloc(t_game *game, size_t size);
-void	ft_init_all(t_game *game);
+void	ft_map_free(t_parser *parser);
+void	ft_throw(char *str,t_parser *parser, char *line);
+void	ft_map_alloc(t_parser *parser, size_t size);
+void	ft_init_all(t_parser *parser);
 
 // DO NOT MOVE THE REST OF INITIALISE_MAP
 

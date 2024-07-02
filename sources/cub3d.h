@@ -6,7 +6,7 @@
 /*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:59 by schongte          #+#    #+#             */
-/*   Updated: 2024/04/20 21:25:27 by schongte         ###   ########.fr       */
+/*   Updated: 2024/07/02 14:54:39 by schongte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ typedef struct s_game
 {
 	t_map   map;
 	int     map_alloc;
-}           t_game;
+}           t_parser;
 
 // Linux
  #  define KEY_W				119
@@ -86,10 +86,10 @@ int		ft_abs(int n);
 
 // map_utils.c
 void	ft_safe_free(void *ptr);
-void	ft_map_free(t_game *game);
-void	ft_throw(char *str,t_game *game, char *line);
-void	ft_map_alloc(t_game *game, size_t size);
-void	ft_init_all(t_game *game);
+void	ft_map_free(t_parser *game);
+void	ft_throw(char *str,t_parser *game, char *line);
+void	ft_map_alloc(t_parser *game, size_t size);
+void	ft_init_all(t_parser *game);
 
 // DO NOT MOVE THE REST OF INITIALISE_MAP
 

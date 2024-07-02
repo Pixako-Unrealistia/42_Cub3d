@@ -135,6 +135,6 @@ void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color);
 // raycast
 void	raycast(t_cub3d *cub3d);
 //main.c
-int		cub3d_main(t_game *game);
+int		cub3d_main(t_parser *parser);
 
 #endif

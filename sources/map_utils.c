@@ -12,30 +12,30 @@
 
 #include "cub3d.h"
 
-void	ft_map_free(t_game *game)
+void	ft_map_free(t_parser *parser)
 {
-	if (game->map.map)
+	if (parser->map.map)
 	{
-		free(game->map.map);
-		game->map.map = NULL;
+		free(parser->map.map);
+		parser->map.map = NULL;
 	}
-	if (game->map.no != NULL)
-		free(game->map.no);
-	if (game->map.so != NULL)
-		free(game->map.so);
-	if (game->map.we != NULL)
-		free(game->map.we);
-	if (game->map.ea != NULL)
-		free(game->map.ea);
-	game->map_alloc = 0;
+	if (parser->map.no != NULL)
+		free(parser->map.no);
+	if (parser->map.so != NULL)
+		free(parser->map.so);
+	if (parser->map.we != NULL)
+		free(parser->map.we);
+	if (parser->map.ea != NULL)
+		free(parser->map.ea);
+	parser->map_alloc = 0;
 }
 
-void	ft_throw(char *str,t_game *game, char *line)
+void	ft_throw(char *str,t_parser *parser, char *line)
 {
 	ft_printf("Error\n%s\n", str);
 	if (line != NULL)
 		free(line);
-	ft_map_free(game);
+	ft_map_free(parser);
 	exit(0);
 }
 
@@ -48,17 +48,17 @@ void	ft_safe_free(void *ptr)
 	}
 }
 
-void	ft_init_all(t_game *game)
+void	ft_init_all(t_parser *parser)
 {
-	game->map.height = 0;
-	game->map.width = 0;
-	game->map.no = NULL;
-	game->map.so = NULL;
-	game->map.we = NULL;
-	game->map.ea = NULL;
-	game->map.f = -1;
-	game->map.c = -1;
-	game->map.map = NULL;
-	game->map_alloc = 0;
+	parser->map.height = 0;
+	parser->map.width = 0;
+	parser->map.no = NULL;
+	parser->map.so = NULL;
+	parser->map.we = NULL;
+	parser->map.ea = NULL;
+	parser->map.f = -1;
+	parser->map.c = -1;
+	parser->map.map = NULL;
+	parser->map_alloc = 0;
 }
 
