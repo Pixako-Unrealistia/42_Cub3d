@@ -12,10 +12,15 @@
 
 #include "cub3d.h"
 
-void	ft_map_free(t_parser *parser)
-{
-	if (parser->map.map)
-	{
+#include "cub3d.h"
+
+void ft_map_free(t_parser *parser) {
+	if (parser->map.map) {
+		for (int i = 0; i < parser->map.height; i++) {
+			if (parser->map.map[i] != NULL) {
+				free(parser->map.map[i]);
+			}
+		}
 		free(parser->map.map);
 		parser->map.map = NULL;
 	}

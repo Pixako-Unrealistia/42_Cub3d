@@ -1,7 +1,0 @@
-/mnt/c/Users/soraw/Documents/GitHub/42_Cube3d/mlx/build/CMakeFiles/mlx42.dir
-/mnt/c/Users/soraw/Documents/GitHub/42_Cube3d/mlx/build/CMakeFiles/edit_cache.dir
-/mnt/c/Users/soraw/Documents/GitHub/42_Cube3d/mlx/build/CMakeFiles/rebuild_cache.dir
-/mnt/c/Users/soraw/Documents/GitHub/42_Cube3d/mlx/build/CMakeFiles/list_install_components.dir
-/mnt/c/Users/soraw/Documents/GitHub/42_Cube3d/mlx/build/CMakeFiles/install.dir
-/mnt/c/Users/soraw/Documents/GitHub/42_Cube3d/mlx/build/CMakeFiles/install/local.dir
-/mnt/c/Users/soraw/Documents/GitHub/42_Cube3d/mlx/build/CMakeFiles/install/strip.dir

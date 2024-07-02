@@ -6,7 +6,7 @@
 /*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:59 by schongte          #+#    #+#             */
-/*   Updated: 2024/07/02 14:54:39 by schongte         ###   ########.fr       */
+/*   Updated: 2024/06/09 17:28:59 by schongte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,11 @@ typedef struct s_map
 	int     f;
 	int     c;
 	char    **map;
+	int	 	start_x;
+	int	 	start_y;
 }           t_map;
 
-typedef struct s_game
+typedef struct s_parser
 {
 	t_map   map;
 	int     map_alloc;
@@ -83,13 +85,14 @@ int		ft_strlen_nonl(char *str);
 void	remove_one_nl(char **map);
 void	ft_remove_spaces(char *str);
 int		ft_abs(int n);
+int		ft_is_line_empty(char *line);
 
 // map_utils.c
 void	ft_safe_free(void *ptr);
-void	ft_map_free(t_parser *game);
-void	ft_throw(char *str,t_parser *game, char *line);
-void	ft_map_alloc(t_parser *game, size_t size);
-void	ft_init_all(t_parser *game);
+void	ft_map_free(t_parser *parser);
+void	ft_throw(char *str,t_parser *parser, char *line);
+void	ft_map_alloc(t_parser *parser, size_t size);
+void	ft_init_all(t_parser *parser);
 
 // DO NOT MOVE THE REST OF INITIALISE_MAP
 

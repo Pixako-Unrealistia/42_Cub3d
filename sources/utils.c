@@ -22,6 +22,20 @@ int	ft_strlen_nonl(char *str)
 	return (i);
 }
 
+int ft_is_line_empty(char *line)
+{
+	int i;
+
+	i = 0;
+	while (line[i])
+	{
+		if (line[i] != ' ')
+			return (1);
+		i++;
+	}
+	return (0);
+}
+
 void	remove_one_nl(char **map)
 {
 	int	i;

@@ -21,7 +21,7 @@ LIBFT		= $(LIBFT_PATH)/libft.a
 
 # MLX Variables:
 MLX				= libmlx42.a
-MLX_PATH		= ./mlx/build
+MLX_PATH		= ./
 INCLUDES 		= -Imlx -I$(MLX_PATH)
 
 # Compiling Variables:
@@ -34,7 +34,18 @@ VALGRIND		= valgrind --leak-check=full --show-leak-kinds=all \
 # Source Files:
 SRC_DIR       = ./sources
 OBJ_DIR       = ./objects
-SRC_C         = map_utils.c  utils.c initialise_map.c 
+SRC_C         = main.c \
+				key_handle.c \
+				free_utils.c \
+				player.c \
+				draw_line.c \
+				draw_line_utils.c \
+				raycast_utils.c \
+				raycast_1ray.c \
+				raycast.c \
+				utils.c \
+				map_utils.c \
+				initialise_map.c
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
 
@@ -48,13 +59,13 @@ _INFO		=	[$(YELLOW)INFO$(RESET)]
 
 
 ifeq ($(shell uname), Darwin)
-	MINILIBX_FLAGS  = -L$(MLX_PATH) -Iinclude -lglfw
+	MINILIBX_FLAGS  = -L$(MLX_PATH) -Iinclude
 else
 	MINILIBX_FLAGS  = -L$(MLX_PATH) -Iinclude -ldl -lglfw -pthread -lm
 endif
 
-$(NAME): $(SRC_O) $(LIBFT)
-	$(CC) $(CFLAGS) $(SRC_O) $(LIBFT) $(MINILIBX_FLAGS) -o $(NAME)
+$(NAME): $(SRC_O) $(LIBFT) $(MLX)
+	$(CC) $(CFLAGS) $(SRC_O) $(LIBFT) $(MLX) $(MINILIBX_FLAGS) -o $(NAME)
 	@printf "$(_SUCCESS) $(NAME) created.\n"
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c $(SRC_DIR)/$(HEADER) | $(OBJ_DIR)
