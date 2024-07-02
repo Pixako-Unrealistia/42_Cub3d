@@ -39,6 +39,7 @@ typedef struct s_map
 	char    **map;
 	int	 	start_x;
 	int	 	start_y;
+	char	start_dir;
 }           t_map;
 
 typedef struct s_parser
