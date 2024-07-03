@@ -17,7 +17,7 @@ int	ft_strlen_nonl(char *str)
 	int	i;
 
 	i = 0;
-	while (str[i] != '\n' && str[i])
+	while (str[i] != '\n' && str[i] && str[i] != '\0' && str[i] != '\r')
 		i++;
 	return (i);
 }

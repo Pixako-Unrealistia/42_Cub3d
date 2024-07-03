@@ -257,28 +257,48 @@ void fill_irregular_map(t_parser *parser)
 	//flood fill from right edges
 	for (int i = 0; i < parser->map.height; i++)
 	{
-		if (parser->map.map[i][parser->map.width - 1] == ' ')
-			flood_fill(parser->map.map, parser->map.width - 1, i, parser->map.width, parser->map.height);
+		//printf("map : %d\n", parser->map.width - 2);
+		if (parser->map.map[i][parser->map.width - 2] == ' ')
+			flood_fill(parser->map.map, parser->map.width - 2, i, parser->map.width, parser->map.height);
 	}
 }
 
 void ft_width_realloc(t_parser *parser)
 {
+	int initial_width = 0;
 	for (int i = 0; i < parser->map.height; i++)
 	{
-		if ((int)ft_strlen(parser->map.map[i]) < parser->map.width)
+		//print width and actual width
+		printf("line : %s\n", parser->map.map[i]);
+		printf("actual width : %d ", ft_strlen_nonl(parser->map.map[i]));
+		printf("max width : %d\n", parser->map.width);
+		
+		initial_width = ft_strlen_nonl(parser->map.map[i]);
+
+		//if the actual width is less than the max width, realloc the line
+		if (initial_width != parser->map.width)
 		{
 			char *tmp = malloc(sizeof(char) * (parser->map.width + 1));
-			for (int j = 0; j < parser->map.width; j++)
+			int j = 0;
+			while (j < initial_width)
 			{
-				if (j < (int)ft_strlen(parser->map.map[i]))
-					tmp[j] = parser->map.map[i][j];
-				else
-					tmp[j] = ' ';
+				tmp[j] = parser->map.map[i][j];
+				j++;
+			}
+			while (j < parser->map.width)
+			{
+				tmp[j] = 'd';
+				j++;
 			}
 			tmp[parser->map.width] = '\0';
 			free(parser->map.map[i]);
-			parser->map.map[i] = tmp;
+			parser->map.map[i] = malloc(sizeof(char) * (parser->map.width));
+			ft_strlcpy(parser->map.map[i], tmp, parser->map.width);
+			free(tmp);
+		}
+		else if (initial_width == parser->map.width)
+		{
+			parser->map.map[i][parser->map.width] = '\0';
 		}
 	}
 }
@@ -358,7 +378,12 @@ int main(int argc, char **argv)
 	//Intregity check
 	//ft_printf("\n\n");
 
-	//ft_width_realloc(&parser);
+	for (int i = 0; i < parser.map.height; i++)
+	{
+		printf(">%s\n", parser.map.map[i]);
+	}
+
+	ft_width_realloc(&parser);
 
 	//print map height
 	ft_printf("map height : %d\n", parser.map.height);
@@ -369,7 +394,7 @@ int main(int argc, char **argv)
 
 	for (int i = 0; i < parser.map.height; i++)
 	{
-		printf("%s", parser.map.map[i]);
+		printf(">%s\n", parser.map.map[i]);
 	}
 	printf("\n\n");
 
@@ -378,7 +403,7 @@ int main(int argc, char **argv)
 	//printf("\n\n");
 	for (int i = 0; i < parser.map.height; i++)
 	{
-		printf("%s", parser.map.map[i]);
+		printf("%s\n", parser.map.map[i]);
 	}
 
 	//ft_schongte(&parser);

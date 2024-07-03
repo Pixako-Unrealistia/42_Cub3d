@@ -26,6 +26,9 @@
 #include <math.h>
 #include "../libft/libft.h"
 
+
+// Height will be 1...n, for example if the height is 5, the map will be 5 lines high
+// Width will be 1...n+1, for example if the width is 5, the map will be 6 characters wide
 typedef struct s_map
 {
 	int     height;
