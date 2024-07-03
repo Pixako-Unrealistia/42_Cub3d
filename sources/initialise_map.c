@@ -264,25 +264,23 @@ void fill_irregular_map(t_parser *parser)
 
 void ft_width_realloc(t_parser *parser)
 {
-	char	**tmp;
-	int		i;
-
-	tmp = malloc(sizeof(char *) * (parser->map.height + 1));
-	if (tmp == NULL)
-		ft_throw("Memory allocation failed", parser, NULL);
-	for (i = 0; i < parser->map.height; i++)
+	for (int i = 0; i < parser->map.height; i++)
 	{
-		tmp[i] = malloc(sizeof(char) * (parser->map.width + 2));
-		if (tmp[i] == NULL)
-			ft_throw("Memory allocation failed", parser, NULL);
-		ft_memset(tmp[i], ' ', parser->map.width);
-		tmp[i][parser->map.width] = '\0';
-		ft_strlcpy(tmp[i], parser->map.map[i], ft_strlen(parser->map.map[i]) + 1);
-		free(parser->map.map[i]);
+		if ((int)ft_strlen(parser->map.map[i]) < parser->map.width)
+		{
+			char *tmp = malloc(sizeof(char) * (parser->map.width + 1));
+			for (int j = 0; j < parser->map.width; j++)
+			{
+				if (j < (int)ft_strlen(parser->map.map[i]))
+					tmp[j] = parser->map.map[i][j];
+				else
+					tmp[j] = ' ';
+			}
+			tmp[parser->map.width] = '\0';
+			free(parser->map.map[i]);
+			parser->map.map[i] = tmp;
+		}
 	}
-	tmp[i] = NULL;
-	free(parser->map.map);
-	parser->map.map = tmp;
 }
 
 //void ft_validate_no_empty_line(t_parser *parser)
@@ -360,9 +358,7 @@ int main(int argc, char **argv)
 	//Intregity check
 	//ft_printf("\n\n");
 
-
-
-	ft_width_realloc(&parser);
+	//ft_width_realloc(&parser);
 
 	//print map height
 	ft_printf("map height : %d\n", parser.map.height);
@@ -375,19 +371,18 @@ int main(int argc, char **argv)
 	{
 		printf("%s", parser.map.map[i]);
 	}
+	printf("\n\n");
 
-	// fill_irregular_map(&parser);
-
+	fill_irregular_map(&parser);
 
 	//printf("\n\n");
-	//for (int i = 0; i < parser.map.height; i++)
-	//{
-	//	printf("%s", parser.map.map[i]);
-	//}
-
+	for (int i = 0; i < parser.map.height; i++)
+	{
+		printf("%s", parser.map.map[i]);
+	}
 
 	//ft_schongte(&parser);
-	cub3d_main(&parser);
+	//cub3d_main(&parser);
 
 	ft_map_free(&parser);
 	return (0);

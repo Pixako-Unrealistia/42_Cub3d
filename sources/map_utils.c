@@ -66,4 +66,3 @@ void	ft_init_all(t_parser *parser)
 	parser->map.map = NULL;
 	parser->map_alloc = 0;
 }
-
