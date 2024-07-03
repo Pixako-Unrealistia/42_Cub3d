@@ -380,8 +380,9 @@ int main(int argc, char **argv)
 
 	for (int i = 0; i < parser.map.height; i++)
 	{
-		printf(">%s\n", parser.map.map[i]);
+		printf(">%s", parser.map.map[i]);
 	}
+	printf("\n\n");
 
 	ft_width_realloc(&parser);
 
