@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/02 20:00:53 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/03 23:35:24 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,10 @@ typedef struct s_cub3d
 	int			color_west;
 	int			color_south;
 	int			color_east;
+	int			**texture_north;
+	int			**texture_west;
+	int			**texture_south;
+	int			**texture_east;
 }	t_cub3d;
 
 void	key_hook(void *cub3d);
