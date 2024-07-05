@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: schongte <schongte@student.42.fr>          +#+  +:+       +#+         #
+#    By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 14:39:46 by schongte          #+#    #+#              #
-#    Updated: 2024/03/01 14:39:46 by schongte         ###   ########.fr        #
+#    Updated: 2024/07/05 17:42:47 by tnualman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,11 +35,12 @@ VALGRIND		= valgrind --leak-check=full --show-leak-kinds=all \
 SRC_DIR       = ./sources
 OBJ_DIR       = ./objects
 SRC_C         = main.c \
-				key_handle.c \
+				key_hook.c \
 				free_utils.c \
 				player.c \
 				draw_line.c \
 				draw_line_utils.c \
+				raycast_math_utils.c \
 				raycast_utils.c \
 				raycast_1ray.c \
 				raycast.c \

@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:43:15 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/30 20:59:30 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:48:20 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,9 @@ static void	set_pixels(t_cub3d *cub3d, t_raycast *rc, float a, int i)
 
 static void	draw_texture_column(t_cub3d *cub3d, t_raycast *rc)
 {
+	int	i;
+
+	i = -1;
 	if (rc->selected_ray == 0 && rc->ray[0].angle_deg < 180.0)
 		rc->col_wall_top.color = cub3d->color_south;
 	if (rc->selected_ray == 0 && rc->ray[0].angle_deg >= 180.0)
@@ -87,5 +90,7 @@ static void	draw_texture_column(t_cub3d *cub3d, t_raycast *rc)
 	if (rc->selected_ray == 1 
 		&& rc->ray[0].angle_deg >= 90.0 && rc->ray[0].angle_deg <= 270.0)
 		rc->col_wall_top.color = cub3d->color_west;
-	draw_pixel_column(cub3d->mlx_3dimg, rc->col_wall_top, rc->seg_height);
+	// draw_pixel_column(cub3d->mlx_3dimg, rc->col_wall_top, rc->seg_height);
+	while (++i < rc->seg_height)
+		mlx_put_pixel(cub3d->mlx_3dimg, rc->col_wall_top.x, rc->col_wall_top.y + i, rc->col_wall_top.color);
 }

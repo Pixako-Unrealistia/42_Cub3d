@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:17 by schongte          #+#    #+#             */
-/*   Updated: 2024/07/03 18:20:43 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/05 15:52:14 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -413,7 +413,7 @@ int main(int argc, char **argv)
 	}
 
 	//ft_schongte(&parser);
-	//cub3d_main(&parser);
+	cub3d_main(&parser);
 
 	ft_map_free(&parser);
 	return (0);

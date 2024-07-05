@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/03 23:35:24 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/05 17:42:47 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,21 +122,23 @@ void	draw_line(mlx_image_t *img, t_pixel start, t_pixel end);
 int		ft_abs_int(int value);
 int		diy_int_sign(int value);
 
-// raycast_utils
+// raycast_math_utils
 float	angle_inrange_deg(float angle);
 float	angle_inrange_rad(float angle);
 float	deg_to_rad(float angle);
 float   ray_distance(t_player p, t_ray r);
+
+// raycast_utils.c
 void	draw_pixel_column(mlx_image_t *img, t_pixel pix, int len);
 
-// raycast_1ray
+// raycast_1ray.c
 void	raycast_1h(t_cub3d *cub3d, t_ray *r, float a);
 void	raycast_1v(t_cub3d *cub3d, t_ray *r, float a);
 void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color);
 
-// raycast
+// raycast.c
 void	raycast(t_cub3d *cub3d);
-//main.c
+// main.c
 int		cub3d_main(t_parser *parser);
 
 #endif
