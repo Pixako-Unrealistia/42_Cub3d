@@ -223,15 +223,25 @@ void	ft_schongte(t_parser *parser)
 	//printf("line count : %d\n", i);
 }
 
-void flood_fill(char **map, int x, int y, int width, int height)
+void flood_fill(t_parser *parser, int x, int y, int width, int height)
 {
-	if (x < 0 || x >= width || y < 0 || y >= height || map[y][x] != ' ')
+	if (x < 0 || x >= width || y < 0 || y >= height || (parser->map.map[y][x] != ' ' && parser->map.map[y][x] != '0'))
 		return;
-	map[y][x] = 'd';
-	flood_fill(map, x + 1, y, width, height);
-	flood_fill(map, x - 1, y, width, height);
-	flood_fill(map, x, y + 1, width, height);
-	flood_fill(map, x, y - 1, width, height);
+	if (parser->map.map[y][x] == '0')
+		ft_throw("Map is not surrounded by walls", parser, NULL);
+	parser->map.map[y][x] = 'd';
+	flood_fill(parser, x + 1, y, width, height);
+	flood_fill(parser, x - 1, y, width, height);
+	flood_fill(parser, x, y + 1, width, height);
+	flood_fill(parser, x, y - 1, width, height);
+}
+
+void util_irregular(t_parser *parser, int i, int j)
+{
+	if (parser->map.map[i][j] == '0')
+		ft_throw("Map is not surrounded by walls", parser, NULL);
+	if (parser->map.map[i][j] == ' ')
+		flood_fill(parser, i, j, parser->map.width, parser->map.height);
 }
 
 void fill_irregular_map(t_parser *parser)
@@ -239,27 +249,22 @@ void fill_irregular_map(t_parser *parser)
 	//flood fill from top edges
 	for (int i = 0; i < parser->map.width; i++)
 	{
-		if (parser->map.map[0][i] == ' ')
-			flood_fill(parser->map.map, i, 0, parser->map.width, parser->map.height);
+		util_irregular(parser, 0, i);
 	}
 	//flood fill from bottom edges
 	for (int i = 0; i < parser->map.width; i++)
 	{
-		if (parser->map.map[parser->map.height - 1][i] == ' ')
-			flood_fill(parser->map.map, i, parser->map.height - 1, parser->map.width, parser->map.height);
+		util_irregular(parser, parser->map.height - 1, i);
 	}
 	//flood fill from left edges
 	for (int i = 0; i < parser->map.height; i++)
 	{
-		if (parser->map.map[i][0] == ' ')
-			flood_fill(parser->map.map, 0, i, parser->map.width, parser->map.height);
+		util_irregular(parser, i, 0);
 	}
 	//flood fill from right edges
 	for (int i = 0; i < parser->map.height; i++)
 	{
-		//printf("map : %d\n", parser->map.width - 2);
-		if (parser->map.map[i][parser->map.width - 2] == ' ')
-			flood_fill(parser->map.map, parser->map.width - 2, i, parser->map.width, parser->map.height);
+		util_irregular(parser, i, parser->map.width - 2);
 	}
 }
 
@@ -408,7 +413,7 @@ int main(int argc, char **argv)
 	}
 
 	//ft_schongte(&parser);
-	cub3d_main(&parser);
+	//cub3d_main(&parser);
 
 	ft_map_free(&parser);
 	return (0);
