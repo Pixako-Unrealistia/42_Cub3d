@@ -183,28 +183,6 @@ void	ft_cube_argv(int argc, char **argv, t_parser *parser)
 		ft_throw("Expected .cub", parser, NULL);
 }
 
-void	ft_validate_texture(t_parser *parser)
-{
-	if (parser->map.no == NULL || parser->map.so == NULL || parser->map.we == NULL || parser->map.ea == NULL || parser->map.f == -1 || parser->map.c == -1)
-		ft_throw("Missing texture", parser, NULL);
-}
-
-void ft_validate_containment(t_parser *parser)
-{
-	int i, j;
-	for (i = 0; i < parser->map.height; i++)
-	{
-		if (parser->map.map[i][0] != '1' || parser->map.map[i][parser->map.width - 1] != '1')
-			ft_throw("Map is not surrounded by walls", parser, NULL);
-		for (j = 0; j < parser->map.width; j++)
-		{
-			char c = parser->map.map[i][j];
-			if (c != '0' && c != '1' && c != 'N' && c != 'S' && c != 'E' && c != 'W')
-				ft_throw("Map contains invalid character", parser, NULL);
-		}
-	}
-}
-
 // End of Seperation //
 
 void	ft_schongte(t_parser *parser)
@@ -223,17 +201,19 @@ void	ft_schongte(t_parser *parser)
 	//printf("line count : %d\n", i);
 }
 
-void flood_fill(t_parser *parser, int x, int y, int width, int height)
+void flood_fill(t_parser *parser, int x, int y)
 {
-	if (x < 0 || x >= width || y < 0 || y >= height || (parser->map.map[y][x] != ' ' && parser->map.map[y][x] != '0'))
+	if (x < 0 || x >= parser->map.height || y < 0 || y >= parser->map.width)
 		return;
-	if (parser->map.map[y][x] == '0')
+	if (parser->map.map[x][y] == '0')
 		ft_throw("Map is not surrounded by walls", parser, NULL);
-	parser->map.map[y][x] = 'd';
-	flood_fill(parser, x + 1, y, width, height);
-	flood_fill(parser, x - 1, y, width, height);
-	flood_fill(parser, x, y + 1, width, height);
-	flood_fill(parser, x, y - 1, width, height);
+	if (parser->map.map[x][y] == '1' || parser->map.map[x][y] == 'd')
+		return;
+	parser->map.map[x][y] = 'd';
+	flood_fill(parser, x + 1, y);
+	flood_fill(parser, x - 1, y);
+	flood_fill(parser, x, y + 1);
+	flood_fill(parser, x, y - 1);
 }
 
 void util_irregular(t_parser *parser, int i, int j)
@@ -241,7 +221,7 @@ void util_irregular(t_parser *parser, int i, int j)
 	if (parser->map.map[i][j] == '0')
 		ft_throw("Map is not surrounded by walls", parser, NULL);
 	if (parser->map.map[i][j] == ' ')
-		flood_fill(parser, i, j, parser->map.width, parser->map.height);
+		flood_fill(parser, i, j);
 }
 
 void fill_irregular_map(t_parser *parser)
@@ -413,7 +393,7 @@ int main(int argc, char **argv)
 	}
 
 	//ft_schongte(&parser);
-	cub3d_main(&parser);
+	//cub3d_main(&parser);
 
 	ft_map_free(&parser);
 	return (0);

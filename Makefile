@@ -37,7 +37,7 @@ OBJ_DIR       = ./objects
 SRC_C         = main.c \
 				key_hook.c \
 				free_utils.c \
-				player.c \
+				player_movement.c \
 				draw_line.c \
 				draw_line_utils.c \
 				raycast_math_utils.c \
@@ -46,7 +46,8 @@ SRC_C         = main.c \
 				raycast.c \
 				utils.c \
 				map_utils.c \
-				initialise_map.c
+				initialise_map.c \
+				validators.c
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
 

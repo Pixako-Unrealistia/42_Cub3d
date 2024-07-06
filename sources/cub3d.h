@@ -98,6 +98,11 @@ void	ft_throw(char *str,t_parser *parser, char *line);
 void	ft_map_alloc(t_parser *parser, size_t size);
 void	ft_init_all(t_parser *parser);
 
+// validators.c
+void	ft_validate_texture(t_parser *parser);
+void	ft_validate_containment(t_parser *parser);
+
+
 // DO NOT MOVE THE REST OF INITIALISE_MAP
 
 #endif 
