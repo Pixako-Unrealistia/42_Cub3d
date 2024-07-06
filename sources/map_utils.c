@@ -14,7 +14,8 @@
 
 #include "cub3d.h"
 
-void ft_map_free(t_parser *parser) {
+void ft_map_free(t_parser *parser)
+{
 	if (parser->map.map) {
 		for (int i = 0; i < parser->map.height; i++) {
 			if (parser->map.map[i] != NULL) {
@@ -65,4 +66,5 @@ void	ft_init_all(t_parser *parser)
 	parser->map.c = -1;
 	parser->map.map = NULL;
 	parser->map_alloc = 0;
+	parser->line = NULL;
 }

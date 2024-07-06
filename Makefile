@@ -13,7 +13,7 @@
 #DEP : https://github.com/codam-coding-college/MLX42
 
 # Binary Names:
-NAME			= cub3d
+NAME			= cub3D
 
 # Libft
 LIBFT_PATH 		= ./libft
@@ -79,7 +79,7 @@ $(OBJ_DIR):
 $(LIBFT):
 	make -C $(LIBFT_PATH)
 
-all: ${NAME} ${BONUS_NAME}
+all: ${NAME} ${BONUS_NAME} ${LIBFT}
 
 clean:
 	make clean -C ${LIBFT_PATH}

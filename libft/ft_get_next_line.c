@@ -97,21 +97,6 @@ char	*main_reader(int fd, char *tmp)
 	return (tmp);
 }
 
-//char	*get_next_line(int fd)
-//{
-//	static char		*tempo;
-//	char			*str;
-
-//	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-//		return (NULL);
-//	tempo = main_reader(fd, tempo);
-//	if (!tempo)
-//		return (NULL);
-//	str = main_parse_line(tempo);
-//	tempo = main_parse_next(tempo);
-//	return (str);
-//}
-
 int	super_get_next_line(int fd, char **line)
 {
     static char		*tempo;

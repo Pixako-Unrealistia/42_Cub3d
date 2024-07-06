@@ -49,6 +49,7 @@ typedef struct s_parser
 {
 	t_map   map;
 	int     map_alloc;
+	char	*line;
 }           t_parser;
 
 // Linux

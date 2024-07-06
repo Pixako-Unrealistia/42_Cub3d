@@ -123,7 +123,7 @@ void	ft_find_starting_position(t_parser *parser, char *line)
 	}
 }
 
-void	ft_map_reader(t_parser *parser, char *line)
+void	ft_map_reader(t_parser *parser)
 {
 	char	**tmp;
 	int		i;
@@ -131,22 +131,22 @@ void	ft_map_reader(t_parser *parser, char *line)
 	//if (ft_strlen_nonl(line) == 0 && parser->map_alloc == 0)
 	//	return ;
 	if (parser->map_alloc == 0)
-		ft_map_alloc(parser, ft_strlen_nonl(line));
+		ft_map_alloc(parser, ft_strlen_nonl(parser->line));
 	else
 	{
 		tmp = malloc(sizeof(char *) * (parser->map.height + 2));
 		if (tmp == NULL)
-			ft_throw("Memory allocation failed", parser, line);
+			ft_throw("Memory allocation failed", parser, parser->line);
 		i = 0;
 		while (i < parser->map.height)
 		{
 			tmp[i] = parser->map.map[i];
 			i++;
 		}
-		tmp[parser->map.height] = malloc(sizeof(char) * (ft_strlen_nonl(line) + 1));
+		tmp[parser->map.height] = malloc(sizeof(char) * (ft_strlen_nonl(parser->line) + 1));
 		if (tmp[parser->map.height] == NULL)
-			ft_throw("Memory allocation failed", parser, line);
-		tmp[parser->map.height][ft_strlen_nonl(line)] = '\0';
+			ft_throw("Memory allocation failed", parser, parser->line);
+		tmp[parser->map.height][ft_strlen_nonl(parser->line)] = '\0';
 		tmp[parser->map.height + 1] = NULL;
 		free(parser->map.map);
 		parser->map.map = tmp;
@@ -157,15 +157,15 @@ void	ft_map_reader(t_parser *parser, char *line)
 		free(parser->map.map[parser->map.height]);
 		parser->map.map[parser->map.height] = NULL;
 	}
-	parser->map.map[parser->map.height] = ft_strdup(line);
+	parser->map.map[parser->map.height] = ft_strdup(parser->line);
 	parser->map.map[parser->map.height + 1] = NULL;
 	parser->map.height++;
-	if (parser->map.width < ft_strlen_nonl(line))
-		parser->map.width = ft_strlen_nonl(line);
+	if (parser->map.width < ft_strlen_nonl(parser->line))
+		parser->map.width = ft_strlen_nonl(parser->line);
 
 	//THIS WHOLE FUNCTION WILL BE REWRITTEN HERE'S A BANDAGE
 	//loop through ever char of line, if the char is NSEW, set the start_x and start_y
-	ft_find_starting_position(parser, line);
+	ft_find_starting_position(parser, parser->line);
 }
 
 // End of Seperation //
@@ -207,7 +207,7 @@ void flood_fill(t_parser *parser, int x, int y)
 		return;
 	if (parser->map.map[x][y] == '0')
 		ft_throw("Map is not surrounded by walls", parser, NULL);
-	if (parser->map.map[x][y] == '1' || parser->map.map[x][y] == 'd')
+	if (parser->map.map[x][y] != ' ')
 		return;
 	parser->map.map[x][y] = 'd';
 	flood_fill(parser, x + 1, y);
@@ -305,7 +305,6 @@ void ft_width_realloc(t_parser *parser)
 int main(int argc, char **argv)
 {
 	t_parser	parser;
-	char	*line;
 	int		fd;
 
 	ft_init_all(&parser);
@@ -315,7 +314,6 @@ int main(int argc, char **argv)
 
 	printf("argv[1] : %s\n", argv[1]);
 	fd = open(argv[1], O_RDONLY);
-	line = NULL;
 	//while (super_get_next_line(fd, &line))
 	//{
 	//	if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == 'F' || line[0] == 'C')
@@ -337,21 +335,22 @@ int main(int argc, char **argv)
 	//}
 
 	//parse header first
-	while (super_get_next_line(fd, &line))
+	while (super_get_next_line(fd, &parser.line))
 	{
-		if (ft_header_parser(&parser, line) == 0)
+		if (ft_header_parser(&parser, parser.line) == 0)
 		{
-			ft_map_reader(&parser, line);
-			ft_safe_free(line);
-			while (super_get_next_line(fd, &line))
+			//if line contain something other than 0, 1, N,S,E,W, or space, throw error
+			ft_map_reader(&parser);
+			ft_safe_free(parser.line);
+			while (super_get_next_line(fd, &parser.line))
 			{
-				ft_map_reader(&parser, line);
-				ft_safe_free(line);
+				ft_map_reader(&parser);
+				ft_safe_free(parser.line);
 			}
 		}
-		ft_safe_free(line);
+		ft_safe_free(parser.line);
 	}
-	ft_safe_free(line);
+	ft_safe_free(parser.line);
 
 	close(fd);
 	ft_validate_texture(&parser);
