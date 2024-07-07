@@ -33,6 +33,10 @@ void ft_map_free(t_parser *parser)
 		free(parser->map.we);
 	if (parser->map.ea != NULL)
 		free(parser->map.ea);
+	if (parser->map.f != NULL)
+		free(parser->map.f);
+	if (parser->map.c != NULL)
+		free(parser->map.c);
 	parser->map_alloc = 0;
 }
 
@@ -62,8 +66,8 @@ void	ft_init_all(t_parser *parser)
 	parser->map.so = NULL;
 	parser->map.we = NULL;
 	parser->map.ea = NULL;
-	parser->map.f = -1;
-	parser->map.c = -1;
+	parser->map.f = NULL;
+	parser->map.c = NULL;
 	parser->map.map = NULL;
 	parser->map_alloc = 0;
 	parser->line = NULL;

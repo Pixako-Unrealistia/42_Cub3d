@@ -37,8 +37,8 @@ typedef struct s_map
 	char    *so;
 	char    *we;
 	char    *ea;
-	int     f;
-	int     c;
+	int     *f;
+	int     *c;
 	char    **map;
 	int	 	start_x;
 	int	 	start_y;
@@ -58,10 +58,10 @@ typedef struct s_parser
  #  define KEY_S				115
  #  define KEY_D				100
 
- #  define KEY_UP  			65362
- #  define KEY_LEFT  		65361
- #  define KEY_RIGHT 		65363
- #  define KEY_DOWN  		65364
+ #  define KEY_UP  				65362
+ #  define KEY_LEFT  			65361
+ #  define KEY_RIGHT 			65363
+ #  define KEY_DOWN  			65364
 
  #  define KEY_Q				113
  #  define KEY_ESC  			65307
@@ -72,7 +72,7 @@ typedef struct s_parser
 //# define KEY_S				1
 //# define KEY_D				2
 
-//# define KEY_UP  			126
+//# define KEY_UP  				126
 //# define KEY_LEFT  			123
 //# define KEY_RIGHT 			124
 //# define KEY_DOWN  			125
@@ -81,9 +81,9 @@ typedef struct s_parser
 //# define KEY_ESC  			53
 
 //# define FRONT				1
-//# define LEFT				2
+//# define LEFT					2
 //# define RIGHT				3
-//# define BACK				4
+//# define BACK					4
 
 // utils.c
 int		ft_strlen_nonl(char *str);

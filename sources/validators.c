@@ -17,7 +17,7 @@ void	ft_validate_texture(t_parser *parser)
 {
 	if (parser->map.no == NULL || parser->map.so == NULL
 		|| parser->map.we == NULL || parser->map.ea == NULL
-		|| parser->map.f == -1 || parser->map.c == -1)
+		|| parser->map.f == NULL || parser->map.c == NULL)
 		ft_throw("Missing texture", parser, NULL);
 }
 

@@ -58,22 +58,34 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 	*texture = tmp;
 }
 
-void	ft_color_parser(t_parser *parser, char *line, int *color)
-{
-	int i = 0;
-	int j = 0;
-	int tmp;
+void ft_color_parser(t_parser *parser, char *line, int **color) {
+	int i = 0, valueCount = 0, tmp;
+	char *start;
 
-	while (line[i] != ' ')
-		i++;
+	if (*color != NULL)
+		ft_throw("Color already realised", parser, line);
+	*color = (int *)malloc(3 * sizeof(int));
+	if (*color == NULL)
+		ft_throw("Memory allocation failed", parser, line);
 	while (line[i] == ' ')
 		i++;
-	while (line[i + j] != '\0')
-		j++;
-	tmp = ft_atoi(&line[i]);
-	if (tmp < 0 || tmp > 255)
-		ft_throw("Invalid color range", parser, line);
-	*color = tmp;
+	start = &line[i];
+	while (line[i] != '\0') {
+		if (line[i] == ',' || line[i+1] == '\0') {
+			if (line[i+1] == '\0' && line[i] != ',')
+				i++;
+			tmp = ft_atoi(start);
+			if (tmp < 0 || tmp > 255)
+				ft_throw("Invalid color range", parser, line);
+			(*color)[valueCount++] = tmp;
+			if (valueCount > 3)
+				ft_throw("Too many values for RGB", parser, line);\
+			start = &line[i+1];
+		}
+		i++;
+	}
+	if (valueCount != 3)
+		ft_throw("Invalid number of values for RGB", parser, line);
 }
 
 int	ft_header_parser(t_parser *parser, char *line)
@@ -193,8 +205,8 @@ void	ft_schongte(t_parser *parser)
 	ft_printf("EA : %s", parser->map.ea);
 	ft_printf("WE : %s", parser->map.we);
 	////print F C
-	ft_printf("F : %d\n", parser->map.f);
-	ft_printf("C : %d\n", parser->map.c);
+	ft_printf("F : %d %d %d\n", parser->map.f[0], parser->map.f[1], parser->map.f[2]);
+	ft_printf("C : %d %d %d\n", parser->map.c[0], parser->map.c[1], parser->map.c[2]);
 	ft_printf("start_x : %d\n", parser->map.start_x);
 	ft_printf("start_y : %d\n", parser->map.start_y);
 	ft_printf("start_dir : %c\n", parser->map.start_dir);
