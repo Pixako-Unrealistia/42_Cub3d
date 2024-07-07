@@ -58,9 +58,18 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 	*texture = tmp;
 }
 
-void ft_color_parser(t_parser *parser, char *line, int **color) {
+void ft_before_throw(char *word, t_parser *parser, char *line, char **to_free)
+{
+	for (int i = 0; to_free[i] != NULL; i++)
+		free(to_free[i]);
+	free(to_free);
+	ft_throw(word, parser, line);
+}
+
+void ft_color_parser(t_parser *parser, char *line, int **color)
+{
 	int i = 0, valueCount = 0, tmp;
-	char *start;
+	char **split_tmp;
 
 	if (*color != NULL)
 		ft_throw("Color already realised", parser, line);
@@ -69,23 +78,23 @@ void ft_color_parser(t_parser *parser, char *line, int **color) {
 		ft_throw("Memory allocation failed", parser, line);
 	while (line[i] == ' ')
 		i++;
-	start = &line[i];
-	while (line[i] != '\0') {
-		if (line[i] == ',' || line[i+1] == '\0') {
-			if (line[i+1] == '\0' && line[i] != ',')
-				i++;
-			tmp = ft_atoi(start);
-			if (tmp < 0 || tmp > 255)
-				ft_throw("Invalid color range", parser, line);
-			(*color)[valueCount++] = tmp;
-			if (valueCount > 3)
-				ft_throw("Too many values for RGB", parser, line);\
-			start = &line[i+1];
-		}
-		i++;
+	split_tmp = ft_split(line, ',');
+	if (split_tmp == NULL)
+		ft_throw("Memory allocation failed", parser, line);
+	while (split_tmp[valueCount] != NULL)
+	{
+		tmp = ft_atoi(split_tmp[valueCount]);
+		if (tmp < 0 || tmp > 255)
+			ft_before_throw("Invalid color range", parser, line, split_tmp);
+		(*color)[valueCount++] = tmp;
+		if (valueCount > 3)
+			ft_before_throw("Too many values for RGB", parser, line, split_tmp);
 	}
 	if (valueCount != 3)
-		ft_throw("Invalid number of values for RGB", parser, line);
+		ft_before_throw("Invalid number of values for RGB", parser, line, split_tmp);
+	for (int i = 0; split_tmp[i] != NULL; i++)
+		free(split_tmp[i]);
+	free(split_tmp);
 }
 
 int	ft_header_parser(t_parser *parser, char *line)
@@ -404,7 +413,7 @@ int main(int argc, char **argv)
 	}
 
 	//ft_schongte(&parser);
-	cub3d_main(&parser);
+	//cub3d_main(&parser);
 
 	ft_map_free(&parser);
 	return (0);
