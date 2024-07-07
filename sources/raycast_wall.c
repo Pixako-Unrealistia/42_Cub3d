@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/07 21:21:50 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/07 23:00:30 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/07 23:19:28 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,9 @@ void	draw_wall_column(t_cub3d *cub3d, t_raycast rc)
 	if (rc.selected_ray == 0)
 	{
 		tx = (int)rc.ray[0].x % SUBUNITS * cub3d->texture_width / SUBUNITS;
-		if (cub3d->player.orient_deg < 180.0)
+		if (rc.ray[0].angle_deg < 180.0)
 			tx = cub3d->texture_width - 1 - tx;
-		if (cub3d->player.orient_deg < 180.0)
+		if (rc.ray[0].angle_deg < 180.0)
 			texture = cub3d->texture_south;
 		else
 			texture = cub3d->texture_north;
@@ -33,9 +33,9 @@ void	draw_wall_column(t_cub3d *cub3d, t_raycast rc)
 	else
 	{
 		tx = (int)rc.ray[1].y % SUBUNITS * cub3d->texture_width / SUBUNITS;
-		if (90 < cub3d->player.orient_deg && cub3d->player.orient_deg < 270.0)
+		if (90 < rc.ray[1].angle_deg && rc.ray[1].angle_deg < 270.0)
 			tx = cub3d->texture_width - 1 - tx;
-		if (90 < cub3d->player.orient_deg && cub3d->player.orient_deg < 270.0)
+		if (90 < rc.ray[1].angle_deg && rc.ray[1].angle_deg < 270.0)
 			texture = cub3d->texture_west;
 		else
 			texture = cub3d->texture_east;
