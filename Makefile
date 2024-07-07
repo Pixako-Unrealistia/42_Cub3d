@@ -90,6 +90,7 @@ clean:
 
 fclean:
 	make clean
+	make fclean -C ${LIBFT_PATH}
 	@printf "$(_INFO) $(NAME) removed.\n"
 
 re: fclean all
