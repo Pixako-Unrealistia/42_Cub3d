@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/05 17:42:47 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:57:36 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,6 +70,7 @@ typedef struct s_ray
 	float	dist;
 }	t_ray;
 
+// ty stands for texture_y .
 typedef struct s_raycast
 {
 	t_ray	ray[2];
@@ -78,6 +79,8 @@ typedef struct s_raycast
 	int		ray_dist;
 	int		seg_height;
 	int		seg_offset;
+	float	ty_step;
+	float	ty_offset;
 	t_pixel col_top;
 	t_pixel	col_wall_top;
 	t_pixel	col_floor_top;
@@ -96,14 +99,16 @@ typedef struct s_cub3d
 	int			no_key_pressed;
 	int			color_floor;
 	int			color_ceiling;
-	int			color_north;
-	int			color_west;
-	int			color_south;
-	int			color_east;
+	// int			color_north;
+	// int			color_west;
+	// int			color_south;
+	// int			color_east;
 	int			**texture_north;
 	int			**texture_west;
 	int			**texture_south;
 	int			**texture_east;
+	int			texture_width;
+	int			texture_height;
 }	t_cub3d;
 
 void	key_hook(void *cub3d);

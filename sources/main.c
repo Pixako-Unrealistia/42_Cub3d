@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:58:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/05 15:55:01 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/07 15:02:41 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,12 @@ void	init_map(t_cub3d *cub3d, t_parser *parser)
 			= parser->map.map[i / parser->map.width][i % parser->map.width];
 	cub3d->color_floor = 0x1f1f1fff;
 	cub3d->color_ceiling = 0x01babcff;
-	cub3d->color_north = 0xbfbf00ff;
-	cub3d->color_west = 0x0000ffff;
-	cub3d->color_south = 0x00ff00ff;
-	cub3d->color_east = 0xff0000ff;
+	// cub3d->color_north = 0xbfbf00ff;
+	// cub3d->color_west = 0x0000ffff;
+	// cub3d->color_south = 0x00ff00ff;
+	// cub3d->color_east = 0xff0000ff;
+	cub3d->texture_width = 32;
+	cub3d->texture_height = 32;
 }
 
 // Experimental/tutorial texture; again, CRUDE implementation... :p
@@ -51,12 +53,12 @@ void	init_texture(t_cub3d *cub3d)
 	{
 		{ 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
 		{ 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
- 	{ 0,0,0,0,0,1,1,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
- 	{ 0,0,1,1,1,1,1,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
- 	{ 0,0,1,1,1,1,1,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
- 	{ 0,0,0,0,0,1,1,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
- 	{ 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
- 	{ 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
+ 		{ 0,0,0,0,0,1,1,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
+ 		{ 0,0,1,1,1,1,1,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
+ 		{ 0,0,1,1,1,1,1,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
+ 		{ 0,0,0,0,0,1,1,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
+ 		{ 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
+ 		{ 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1 },
 
 		{ 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0 }, 
 		{ 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0, 1,1,1,1,1,1,1,1, 0,0,0,0,0,0,0,0 }, 
@@ -109,8 +111,8 @@ void	init_texture(t_cub3d *cub3d)
 
 void	init_player(t_cub3d *cub3d, t_parser *parser)
 {
-	cub3d->player.x = (parser->map.start_x - 1) * SUBUNITS + 32.0;
-	cub3d->player.y = (parser->map.start_y - 1) * SUBUNITS + 32.0;
+	cub3d->player.x = (parser->map.start_x - 1) * SUBUNITS + SUBUNITS / 2.0;
+	cub3d->player.y = (parser->map.start_y - 1) * SUBUNITS + SUBUNITS / 2.0;
 	cub3d->player.fov_deg = 60.0;
 	cub3d->player.orient_deg = 0.0;
 	if (parser->map.start_dir == 'N')
