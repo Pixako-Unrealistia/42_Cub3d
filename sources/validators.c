@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   validators.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/06 13:07:54 by schongte          #+#    #+#             */
-/*   Updated: 2024/07/06 13:07:54 by schongte         ###   ########.fr       */
+/*   Updated: 2024/07/07 21:28:38 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-#include "prototype.h"
 
 void	ft_validate_texture(t_parser *parser)
 {

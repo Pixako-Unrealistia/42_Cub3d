@@ -6,11 +6,11 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:38:44 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/07 16:19:33 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/07 21:55:02 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "prototype.h"
+#include "cub3d.h"
 
 static void raycast_1h_case(t_cub3d *cub3d, t_player p, t_ray *r)
 {

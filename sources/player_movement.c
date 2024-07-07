@@ -1,16 +1,17 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   player.c                                           :+:      :+:    :+:   */
+/*   player_movement.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/30 19:06:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/30 20:29:51 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/07 21:55:02 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "prototype.h"
+#include "cub3d.h"
+
 
 void	rotate_player(t_cub3d *cub3d, float angle, int clockwise)
 {

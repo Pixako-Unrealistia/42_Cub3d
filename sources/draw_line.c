@@ -6,13 +6,13 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/29 17:19:18 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/14 18:18:09 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/07 21:25:41 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 /* Lifted and adapted from fdf. */
 
-#include "prototype.h"
+#include "cub3d.h"
 
 static int		pixel_color(t_pixel step, t_pixel start, t_pixel end,
 					t_pixel delta);

@@ -6,11 +6,11 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/12 19:08:55 by tnualman          #+#    #+#             */
-/*   Updated: 2024/06/12 20:04:22 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/07 21:24:40 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "prototype.h"
+#include "cub3d.h"
 
 /* For INT_MIN (-2147483648), this function returns INT_MIN itself.
  */

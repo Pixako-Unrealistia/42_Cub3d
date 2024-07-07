@@ -6,7 +6,7 @@
 #    By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 14:39:46 by schongte          #+#    #+#              #
-#    Updated: 2024/07/05 17:42:47 by tnualman         ###   ########.fr        #
+#    Updated: 2024/07/07 22:58:35 by tnualman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,6 +43,7 @@ SRC_C         = main.c \
 				raycast_math_utils.c \
 				raycast_utils.c \
 				raycast_1ray.c \
+				raycast_wall.c \
 				raycast.c \
 				utils.c \
 				map_utils.c \

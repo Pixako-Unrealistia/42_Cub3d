@@ -6,11 +6,11 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:57:15 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/07 16:28:15 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/07 21:25:47 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "prototype.h"
+#include "cub3d.h"
 
 void    free_textures(t_cub3d *cub3d)
 {

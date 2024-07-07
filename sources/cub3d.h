@@ -3,107 +3,152 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/03/01 14:59:59 by schongte          #+#    #+#             */
-/*   Updated: 2024/06/09 17:28:59 by schongte         ###   ########.fr       */
+/*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
+/*   Updated: 2024/07/07 21:55:02 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+/* This is an attempt to create a basic raycaster, following the example from
+ * https://www.youtube.com/watch?v=gYRrGTC7GtA ,
+ * but using MLX42 instead of OpenGL (directly(?)). 
+ */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-//Allowed
-//• open, close, read, write,
-//printf, malloc, free, perror,
-//strerror, exit
-//• All functions of the math
-//library (-lm man man 3 math)
-//• All functions of the Minilib
+# include <unistd.h>
+# include <stdlib.h>
+# include <fcntl.h>
+# include <math.h>
+# include "../libft/libft.h"
+# include "MLX42.h"
+# include "cub3d_parser.h"
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <math.h>
-#include "../libft/libft.h"
+# include <stdio.h>
 
+# define PI 3.14159265358979323846
 
-// Height will be 1...n, for example if the height is 5, the map will be 5 lines high
-// Width will be 1...n+1, for example if the width is 5, the map will be 6 characters wide
-typedef struct s_map
+# define WIN_W			1920
+# define WIN_H			1080
+# define VIEW_W			1280
+# define VIEW_H			960
+
+# define SUBUNITS		64
+# define RAYS_PER_DEG	4
+# define MOVE_SPEED		2.0
+# define ROTATE_SPEED	1.0
+
+typedef struct s_player
 {
-	int     height;
-	int     width;
-	char    *no;
-	char    *so;
-	char    *we;
-	char    *ea;
-	int     *f;
-	int     *c;
-	char    **map;
-	int	 	start_x;
-	int	 	start_y;
-	char	start_dir;
-}           t_map;
+	float		x;
+	float		y;
+	float		fov_deg;
+	float		orient_deg;
+	float		delta_x;
+	float		delta_y;
+}	t_player;
 
-typedef struct s_parser
+typedef struct s_pixel
 {
-	t_map   map;
-	int     map_alloc;
-	char	*line;
-}           t_parser;
+	int	x;
+	int	y;
+	int	color;
+}	t_pixel;
 
-// Linux
- #  define KEY_W				119
- #  define KEY_A				97
- #  define KEY_S				115
- #  define KEY_D				100
+typedef struct s_ray
+{
+	float	x;
+	float	y;
+	float	angle_deg;
+	float	angle_tan;
+	float	x_offset;
+	float	y_offset;
+	int		x_map;
+	int		y_map;
+	int		step;
+	float	dist;
+}	t_ray;
 
- #  define KEY_UP  				65362
- #  define KEY_LEFT  			65361
- #  define KEY_RIGHT 			65363
- #  define KEY_DOWN  			65364
+// ty stands for texture_y .
+typedef struct s_raycast
+{
+	t_ray	ray[2];
+	int		selected_ray;
+	int		pix_per_seg;
+	int		ray_dist;
+	int		seg_height;
+	int		seg_offset;
+	float	ty_step;
+	float	ty_offset;
+	t_pixel col_top;
+	t_pixel	col_wall_top;
+	t_pixel	col_floor_top;
+}	t_raycast;
 
- #  define KEY_Q				113
- #  define KEY_ESC  			65307
+typedef struct s_cub3d
+{
+	mlx_t		*mlx;
+	mlx_image_t	*mlx_2dimg_playerdot;
+	mlx_image_t	*mlx_2dimg;
+	mlx_image_t	*mlx_3dimg;
+	char		**map;
+	int			map_width;
+	int			map_height;
+	t_player	player;
+	int			no_key_pressed;
+	int			color_floor;
+	int			color_ceiling;
+	// int			color_north;
+	// int			color_west;
+	// int			color_south;
+	// int			color_east;
+	int			**texture_north;
+	int			**texture_west;
+	int			**texture_south;
+	int			**texture_east;
+	int			texture_width;
+	int			texture_height;
+}	t_cub3d;
 
-// Macos
-//# define KEY_W				13
-//# define KEY_A				0
-//# define KEY_S				1
-//# define KEY_D				2
+void	key_hook(void *cub3d);
 
-//# define KEY_UP  				126
-//# define KEY_LEFT  			123
-//# define KEY_RIGHT 			124
-//# define KEY_DOWN  			125
+void	free_all(t_cub3d *cub3d);
 
-//# define KEY_Q				12
-//# define KEY_ESC  			53
+// player movement
+void	rotate_player(t_cub3d *cub3d, float angle, int clockwise);
+void    move_forward(t_cub3d *cub3d);
+void    move_backward(t_cub3d *cub3d);
+void	strafe_left(t_cub3d *cub3d);
+void	strafe_right(t_cub3d *cub3d);
 
-//# define FRONT				1
-//# define LEFT					2
-//# define RIGHT				3
-//# define BACK					4
+// draw_line
+void	draw_line(mlx_image_t *img, t_pixel start, t_pixel end);
+int		ft_abs_int(int value);
+int		diy_int_sign(int value);
 
-// utils.c
-int		ft_strlen_nonl(char *str);
-void	remove_one_nl(char **map);
-void	ft_remove_spaces(char *str);
-int		ft_abs(int n);
-int		ft_is_line_empty(char *line);
+// raycast_math_utils
+float	angle_inrange_deg(float angle);
+float	angle_inrange_rad(float angle);
+float	deg_to_rad(float angle);
+float   ray_distance(t_player p, t_ray r);
 
-// map_utils.c
-void	ft_safe_free(void *ptr);
-void	ft_map_free(t_parser *parser);
-void	ft_throw(char *str,t_parser *parser, char *line);
-void	ft_map_alloc(t_parser *parser, size_t size);
-void	ft_init_all(t_parser *parser);
+// raycast_utils.c
+void	draw_pixel_column(mlx_image_t *img, t_pixel pix, int len);
 
-// validators.c
-void	ft_validate_texture(t_parser *parser);
-void	ft_validate_containment(t_parser *parser);
+// raycast_1ray.c
+void	raycast_1h(t_cub3d *cub3d, t_ray *r, float a);
+void	raycast_1v(t_cub3d *cub3d, t_ray *r, float a);
+void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color);
 
+// raycast_wall.c
+void	draw_wall_column(t_cub3d *cub3d, t_raycast rc);
 
-// DO NOT MOVE THE REST OF INITIALISE_MAP
+// raycast.c
+void	raycast(t_cub3d *cub3d);
 
-#endif 
+// main.c
+int		cub3d_main(t_parser *parser);
+
+#endif
