@@ -50,6 +50,7 @@ typedef struct s_parser
 	t_map   map;
 	int     map_alloc;
 	char	*line;
+	char	*error;
 }           t_parser;
 
 /* KEY values from the old minilibx are not used. */

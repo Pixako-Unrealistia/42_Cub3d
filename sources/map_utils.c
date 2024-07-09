@@ -38,11 +38,11 @@ void ft_map_free(t_parser *parser)
 	parser->map_alloc = 0;
 }
 
-void	ft_throw(char *str,t_parser *parser, char *line)
+void	ft_throw(char *str,t_parser *parser, char *free_me)
 {
 	ft_printf("Error\n%s\n", str);
-	if (line != NULL)
-		free(line);
+	if (free_me != NULL)
+		free(free_me);
 	ft_map_free(parser);
 	exit(0);
 }
@@ -69,4 +69,5 @@ void	ft_init_all(t_parser *parser)
 	parser->map.map = NULL;
 	parser->map_alloc = 0;
 	parser->line = NULL;
+	parser->error = NULL;
 }

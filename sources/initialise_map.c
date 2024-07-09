@@ -36,7 +36,6 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 {
 	int i = 0;
 	int j = 0;
-	char *tmp;
 
 	if (*texture != NULL)
 		ft_throw("Texture already realised", parser, line);
@@ -46,15 +45,14 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 		i++;
 	while (line[i + j] != '\0')
 		j++;
-	tmp = malloc(sizeof(char) * (j + 1));
+	*texture = malloc(sizeof(char) * (j + 1));
 	j = 0;
 	while (line[i + j] != '\0')
 	{
-		tmp[j] = line[i + j];
+		(*texture)[j] = line[i + j];
 		j++;
 	}
-	tmp[j] = '\0';
-	*texture = tmp;
+	(*texture)[j] = '\0';
 }
 
 void ft_before_throw(char *word, t_parser *parser, char *line, char **to_free)
@@ -85,9 +83,9 @@ void ft_color_parser(t_parser *parser, char *line, int **color)
 		tmp = ft_atoi(split_tmp[valueCount]);
 		if (tmp < 0 || tmp > 255)
 			ft_before_throw("Invalid color range", parser, line, split_tmp);
-		(*color)[valueCount++] = tmp;
-		if (valueCount > 3)
+		if (valueCount > 2)
 			ft_before_throw("Too many values for RGB", parser, line, split_tmp);
+		(*color)[valueCount++] = tmp;
 	}
 	if (valueCount != 3)
 		ft_before_throw("Invalid number of values for RGB", parser, line, split_tmp);
@@ -334,29 +332,10 @@ int main(int argc, char **argv)
 
 	printf("argv[1] : %s\n", argv[1]);
 	fd = open(argv[1], O_RDONLY);
-	//while (super_get_next_line(fd, &line))
-	//{
-	//	if (line[0] == 'N' || line[0] == 'S' || line[0] == 'W' || line[0] == 'E' || line[0] == 'F' || line[0] == 'C')
-	//	{
-	//		if (ft_header_parser(&parser, line) == 0)
-	//			break;
-	//	}
-	//	else
-	//	{
-	//		if (ft_strlen_nonl(line) > 1)
-	//		{
-	//			printf("line : %s\n", line);
-	//			ft_map_reader(&parser, line, &found);
-	//		}
-	//		else if (found == 1)
-	//			break;
-	//	}
-	//	ft_safe_free(line);
-	//}
-
 	//parse header first
 	while (super_get_next_line(fd, &parser.line))
 	{
+		printf(">>>line : %s\n", parser.line);
 		if (ft_header_parser(&parser, parser.line) == 0)
 		{
 			//if line contain something other than 0, 1, N,S,E,W, or space, throw error
@@ -412,7 +391,7 @@ int main(int argc, char **argv)
 	}
 
 	//ft_schongte(&parser);
-	cub3d_main(&parser);
+	//cub3d_main(&parser);
 
 	ft_map_free(&parser);
 	return (0);
