@@ -101,6 +101,12 @@ void	ft_throw(char *str,t_parser *parser, char *line);
 void	ft_map_alloc(t_parser *parser, size_t size);
 void	ft_init_all(t_parser *parser);
 
+// map_corrections.c
+void flood_fill(t_parser *parser, int x, int y);
+void ft_width_realloc(t_parser *parser);
+void fill_irregular_map(t_parser *parser);
+void ft_width_realloc(t_parser *parser);
+
 // validators.c
 void	ft_validate_texture(t_parser *parser);
 void	ft_validate_containment(t_parser *parser);

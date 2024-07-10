@@ -48,7 +48,8 @@ SRC_C         = main.c \
 				utils.c \
 				map_utils.c \
 				initialise_map.c \
-				validators.c
+				validators.c \
+				map_corrections.c 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
 
