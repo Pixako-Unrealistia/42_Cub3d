@@ -23,18 +23,14 @@ void ft_map_free(t_parser *parser)
 		free(parser->map.map);
 		parser->map.map = NULL;
 	}
-	if (parser->map.no != NULL)
-		free(parser->map.no);
-	if (parser->map.so != NULL)
-		free(parser->map.so);
-	if (parser->map.we != NULL)
-		free(parser->map.we);
-	if (parser->map.ea != NULL)
-		free(parser->map.ea);
-	if (parser->map.f != NULL)
-		free(parser->map.f);
-	if (parser->map.c != NULL)
-		free(parser->map.c);
+	ft_safe_free(parser->map.no);
+	ft_safe_free(parser->map.so);
+	ft_safe_free(parser->map.we);
+	ft_safe_free(parser->map.ea);
+	ft_safe_free(parser->map.f);
+	ft_safe_free(parser->map.c);
+	parser->map.height = 0;
+	parser->map.width = 0;
 	parser->map_alloc = 0;
 }
 
@@ -44,6 +40,15 @@ void	ft_throw(char *str,t_parser *parser, char *free_me)
 	if (free_me != NULL)
 		free(free_me);
 	ft_map_free(parser);
+	if (parser->fd != -1)
+	{
+		while(super_get_next_line(parser->fd, &parser->line) > 0)
+		{
+			free(parser->line);
+		}
+		free(parser->line);
+		close(parser->fd);
+	}
 	exit(0);
 }
 
@@ -69,5 +74,5 @@ void	ft_init_all(t_parser *parser)
 	parser->map.map = NULL;
 	parser->map_alloc = 0;
 	parser->line = NULL;
-	parser->error = NULL;
+	parser->fd = -1;
 }

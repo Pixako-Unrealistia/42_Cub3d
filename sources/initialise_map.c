@@ -332,7 +332,7 @@ int main(int argc, char **argv)
 
 	printf("argv[1] : %s\n", argv[1]);
 	fd = open(argv[1], O_RDONLY);
-	//parse header first
+	parser.fd = fd;
 	while (super_get_next_line(fd, &parser.line))
 	{
 		printf(">>>line : %s\n", parser.line);
@@ -352,6 +352,7 @@ int main(int argc, char **argv)
 	ft_safe_free(parser.line);
 
 	close(fd);
+	parser.fd = -1;
 	ft_validate_texture(&parser);
 	
 	//to do next, FIX MAP ALLOC
