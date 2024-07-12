@@ -94,20 +94,19 @@ void	ft_remove_spaces(char *str);
 int		ft_abs(int n);
 int		ft_is_line_empty(char *line);
 
-// map_utils.c
+// parser_map_utils.c
 void	ft_safe_free(void *ptr);
 void	ft_map_free(t_parser *parser);
 void	ft_throw(char *str,t_parser *parser, char *line);
 void	ft_map_alloc(t_parser *parser, size_t size);
 void	ft_init_all(t_parser *parser);
 
-// map_corrections.c
-void flood_fill(t_parser *parser, int x, int y);
-void ft_width_realloc(t_parser *parser);
-void fill_irregular_map(t_parser *parser);
-void ft_width_realloc(t_parser *parser);
+// parser_map_corrections.c
+void	flood_fill(t_parser *parser, int x, int y);
+void	width_realloc(t_parser *parser);
+void	fill_irregular_map(t_parser *parser);
 
-// validators.c
+// parser_validators.c
 void	ft_validate_texture(t_parser *parser);
 void	ft_validate_containment(t_parser *parser);
 

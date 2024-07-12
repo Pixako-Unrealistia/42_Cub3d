@@ -72,7 +72,7 @@ void fill_irregular_map(t_parser *parser)
 	}
 }
 
-void ft_width_realloc(t_parser *parser)
+void width_realloc(t_parser *parser)
 {
 	int initial_width = 0;
 	for (int i = 0; i < parser->map.height; i++)

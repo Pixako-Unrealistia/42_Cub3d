@@ -45,11 +45,11 @@ SRC_C         = main.c \
 				raycast_1ray.c \
 				raycast_wall.c \
 				raycast.c \
-				utils.c \
-				map_utils.c \
+				parser_utils.c \
+				parser_map_utils.c \
 				initialise_map.c \
-				validators.c \
-				map_corrections.c 
+				parser_validators.c \
+				parser_map_corrections.c 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
 

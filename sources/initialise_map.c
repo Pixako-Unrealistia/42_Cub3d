@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   initialise_map.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
+/*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:17 by schongte          #+#    #+#             */
-/*   Updated: 2024/07/07 21:26:37 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/12 13:35:22 by schongte         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -132,6 +132,8 @@ void	ft_find_starting_position(t_parser *parser, char *line)
 	{
 		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
 		{
+			if (parser->map.start_x != -1 || parser->map.start_y != -1)
+				ft_throw("Multiple starting positions", parser, line);
 			parser->map.start_x = i;
 			parser->map.start_y = parser->map.height;
 			parser->map.start_dir = line[i];
@@ -266,8 +268,6 @@ int main(int argc, char **argv)
 	close(parser.fd);
 	parser.fd = -1;
 	ft_validate_texture(&parser);
-	
-	//to do next, FIX MAP ALLOC
 
 	//ft_validate_containment(&parser);
 
@@ -280,7 +280,7 @@ int main(int argc, char **argv)
 	}
 	printf("\n\n");
 
-	ft_width_realloc(&parser);
+	width_realloc(&parser);
 
 	//print map height
 	ft_printf("map height : %d\n", parser.map.height);

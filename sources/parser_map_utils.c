@@ -1,7 +1,7 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_utils.c                                        :+:      :+:    :+:   */
+/*   parser_map_utils.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
@@ -12,13 +12,17 @@
 
 #include "cub3d.h"
 
-void ft_map_free(t_parser *parser)
+void	ft_map_free(t_parser *parser)
 {
-	if (parser->map.map) {
-		for (int i = 0; i < parser->map.height; i++) {
-			if (parser->map.map[i] != NULL) {
-				free(parser->map.map[i]);
-			}
+	int	i;
+
+	i = 0;
+	if (parser->map.map)
+	{
+		while (parser->map.map[i] != NULL)
+		{
+			free(parser->map.map[i]);
+			i++;
 		}
 		free(parser->map.map);
 		parser->map.map = NULL;
@@ -34,20 +38,18 @@ void ft_map_free(t_parser *parser)
 	parser->map_alloc = 0;
 }
 
-void	ft_throw(char *str,t_parser *parser, char *free_me)
+void	ft_throw(char *str, t_parser *parser, char *free_me)
 {
 	ft_printf("Error\n%s\n", str);
 	if (free_me != NULL)
-		free(free_me);
+		free (free_me);
 	ft_map_free(parser);
 	if (parser->fd != -1)
 	{
-		while(super_get_next_line(parser->fd, &parser->line) > 0)
-		{
-			free(parser->line);
-		}
-		free(parser->line);
-		close(parser->fd);
+		while (super_get_next_line(parser->fd, &parser->line) > 0)
+			free (parser->line);
+		free (parser->line);
+		close (parser->fd);
 	}
 	exit(0);
 }
@@ -75,4 +77,7 @@ void	ft_init_all(t_parser *parser)
 	parser->map_alloc = 0;
 	parser->line = NULL;
 	parser->fd = -1;
+	parser->map.start_x = -1;
+	parser->map.start_y = -1;
+	parser->map.start_dir = '0';
 }
