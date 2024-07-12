@@ -53,10 +53,31 @@ void	fill_irregular_map(t_parser *parser)
 		util_irregular(parser, i++, parser->map.width - 2);
 }
 
+void	width_utils(t_parser *parser, t_for_loop f, int initial_width)
+{
+	char	*tmp;
+
+	tmp = malloc(sizeof(char) * (parser->map.width + 1));
+	while (f.j < initial_width)
+	{
+		tmp[f.j] = parser->map.map[f.i][f.j];
+		f.j++;
+	}
+	while (f.j < parser->map.width)
+	{
+		tmp[f.j] = 'd';
+		f.j++;
+	}
+	tmp[parser->map.width] = '\0';
+	free(parser->map.map[f.i]);
+	parser->map.map[f.i] = malloc(sizeof(char) * (parser->map.width));
+	ft_strlcpy(parser->map.map[f.i], tmp, parser->map.width);
+	free(tmp);
+}
+
 void	width_realloc(t_parser *parser)
 {
 	int			initial_width;
-	char		*tmp;
 	t_for_loop	f;
 
 	initial_width = 0;
@@ -66,23 +87,8 @@ void	width_realloc(t_parser *parser)
 		initial_width = ft_strlen_nonl(parser->map.map[f.i]);
 		if (initial_width != parser->map.width)
 		{
-			tmp = malloc(sizeof(char) * (parser->map.width + 1));
 			f.j = 0;
-			while (f.j < initial_width)
-			{
-				tmp[f.j] = parser->map.map[f.i][f.j];
-				f.j++;
-			}
-			while (f.j < parser->map.width)
-			{
-				tmp[f.j] = 'd';
-				f.j++;
-			}
-			tmp[parser->map.width] = '\0';
-			free(parser->map.map[f.i]);
-			parser->map.map[f.i] = malloc(sizeof(char) * (parser->map.width));
-			ft_strlcpy(parser->map.map[f.i], tmp, parser->map.width);
-			free(tmp);
+			width_utils(parser, f, initial_width);
 		}
 		else if (initial_width == parser->map.width)
 			parser->map.map[f.i][parser->map.width] = '\0';
