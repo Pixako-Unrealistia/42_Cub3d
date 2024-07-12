@@ -14,23 +14,6 @@
 
 // Seperate to initialise_map.c
 //./cub3d ../maps/mandatory.cub
-void	ft_map_alloc(t_parser *parser, size_t size)
-{
-	parser->map.map = malloc(sizeof(char *) * 2);
-	if (parser->map.map == NULL)
-	{
-		ft_throw("Memory allocation failed", parser, NULL);
-	}
-	parser->map.map[0] = malloc(sizeof(char) * (size + 1));
-	if (parser->map.map[0] == NULL)
-	{
-		ft_throw("Memory allocation failed", parser, NULL);
-	}
-	parser->map.map[0][size] = '\0';
-	parser->map.map[1] = NULL;
-	parser->map_alloc = 1;
-}
-
 
 void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 {
@@ -123,7 +106,7 @@ int	ft_header_parser(t_parser *parser, char *line)
 	return (1);
 }
 
-void	ft_find_starting_position(t_parser *parser, char *line)
+void	find_starting_position(t_parser *parser, char *line)
 {
 	int i;
 
@@ -148,8 +131,6 @@ void	ft_map_reader(t_parser *parser)
 	char	**tmp;
 	int		i;
 
-	//if (ft_strlen_nonl(line) == 0 && parser->map_alloc == 0)
-	//	return ;
 	if (parser->map_alloc == 0)
 		ft_map_alloc(parser, ft_strlen_nonl(parser->line));
 	else
@@ -185,7 +166,7 @@ void	ft_map_reader(t_parser *parser)
 
 	//THIS WHOLE FUNCTION WILL BE REWRITTEN HERE'S A BANDAGE
 	//loop through ever char of line, if the char is NSEW, set the start_x and start_y
-	ft_find_starting_position(parser, parser->line);
+	find_starting_position(parser, parser->line);
 }
 
 // End of Seperation //

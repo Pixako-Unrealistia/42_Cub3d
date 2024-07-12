@@ -40,7 +40,7 @@ void	ft_map_free(t_parser *parser)
 
 void	ft_throw(char *str, t_parser *parser, char *free_me)
 {
-	ft_printf("Error\n%s\n", str);
+	ft_printf("Error\n\033[0;31m%s\033[0m\n", str);
 	if (free_me != NULL)
 		free (free_me);
 	ft_map_free(parser);
@@ -80,4 +80,21 @@ void	ft_init_all(t_parser *parser)
 	parser->map.start_x = -1;
 	parser->map.start_y = -1;
 	parser->map.start_dir = '0';
+}
+
+void	ft_map_alloc(t_parser *parser, size_t size)
+{
+	parser->map.map = malloc(sizeof(char *) * 2);
+	if (parser->map.map == NULL)
+	{
+		ft_throw("Memory allocation failed", parser, NULL);
+	}
+	parser->map.map[0] = malloc(sizeof(char) * (size + 1));
+	if (parser->map.map[0] == NULL)
+	{
+		ft_throw("Memory allocation failed", parser, NULL);
+	}
+	parser->map.map[0][size] = '\0';
+	parser->map.map[1] = NULL;
+	parser->map_alloc = 1;
 }

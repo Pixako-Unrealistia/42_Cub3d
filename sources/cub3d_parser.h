@@ -53,6 +53,12 @@ typedef struct s_parser
 	int		fd;
 }           t_parser;
 
+typedef struct s_for_loop
+{
+	int i;
+	int j;
+}           t_for_loop;
+
 /* KEY values from the old minilibx are not used. */
 // Linux
 //  #  define KEY_W				119
