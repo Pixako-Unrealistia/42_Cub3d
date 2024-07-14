@@ -50,7 +50,8 @@ SRC_C         = main.c \
 				initialise_map.c \
 				parser_validators.c \
 				parser_map_corrections.c \
-				parser_color.c
+				parser_color.c \
+				parser_map_reader.c
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
 

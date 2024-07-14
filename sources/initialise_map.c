@@ -15,123 +15,6 @@
 // Seperate to initialise_map.c
 //./cub3d ../maps/mandatory.cub
 
-void	ft_texture_parser(t_parser *parser, char *line, char **texture)
-{
-	int	i;
-	int	j;
-
-	i = 0;
-	j = 0;
-	if (*texture != NULL)
-		ft_throw("Texture already realised", parser, line);
-	while (line[i] != ' ')
-		i++;
-	while (line[i] == ' ')
-		i++;
-	while (line[i + j] != '\0')
-		j++;
-	*texture = malloc(sizeof(char) * (j + 1));
-	j = 0;
-	while (line[i + j] != '\0')
-	{
-		(*texture)[j] = line[i + j];
-		j++;
-	}
-	(*texture)[j] = '\0';
-}
-
-int	ft_header_parser(t_parser *parser, char *line)
-{
-	if (line[0] == 'N' && line[1] == 'O')
-		ft_texture_parser(parser, line, &parser->map.no);
-	else if (line[0] == 'S' && line[1] == 'O')
-		ft_texture_parser(parser, line, &parser->map.so);
-	else if (line[0] == 'W' && line[1] == 'E')
-		ft_texture_parser(parser, line, &parser->map.we);
-	else if (line[0] == 'E' && line[1] == 'A')
-		ft_texture_parser(parser, line, &parser->map.ea);
-	else if (line[0] == 'F')
-		ft_color_parser(parser, line, &parser->map.f);
-	else if (line[0] == 'C')
-		ft_color_parser(parser, line, &parser->map.c);
-	else if (line[0] == '\n')
-		return (1);
-	else if (line[0] == '\r')
-		return (1);
-	else if (line[0] == '\0')
-		return (0);
-	else
-	{
-		ft_printf(">%s<", line);
-		//ft_throw("Invalid map parameter", parser, line);
-		return (0);
-	}
-	return (1);
-}
-
-void	find_starting_position(t_parser *parser, char *line)
-{
-	int i;
-
-	i = 0;
-	while (line[i] != '\0')
-	{
-		if (line[i] == 'N' || line[i] == 'S' || line[i] == 'E' || line[i] == 'W')
-		{
-			if (parser->map.start_x != -1 || parser->map.start_y != -1)
-				ft_throw("Multiple starting positions", parser, line);
-			parser->map.start_x = i;
-			parser->map.start_y = parser->map.height;
-			parser->map.start_dir = line[i];
-			return ;
-		}
-		i++;
-	}
-}
-
-void	ft_map_reader(t_parser *parser)
-{
-	char	**tmp;
-	int		i;
-
-	if (parser->map_alloc == 0)
-		ft_map_alloc(parser, ft_strlen_nonl(parser->line));
-	else
-	{
-		tmp = malloc(sizeof(char *) * (parser->map.height + 2));
-		if (tmp == NULL)
-			ft_throw("Memory allocation failed", parser, parser->line);
-		i = 0;
-		while (i < parser->map.height)
-		{
-			tmp[i] = parser->map.map[i];
-			i++;
-		}
-		tmp[parser->map.height] = malloc(sizeof(char) * (ft_strlen_nonl(parser->line) + 1));
-		if (tmp[parser->map.height] == NULL)
-			ft_throw("Memory allocation failed", parser, parser->line);
-		tmp[parser->map.height][ft_strlen_nonl(parser->line)] = '\0';
-		tmp[parser->map.height + 1] = NULL;
-		free(parser->map.map);
-		parser->map.map = tmp;
-	}
-
-	if (parser->map.map[parser->map.height] != NULL)
-	{
-		free(parser->map.map[parser->map.height]);
-		parser->map.map[parser->map.height] = NULL;
-	}
-	parser->map.map[parser->map.height] = ft_strdup(parser->line);
-	parser->map.map[parser->map.height + 1] = NULL;
-	parser->map.height++;
-	if (parser->map.width < ft_strlen_nonl(parser->line))
-		parser->map.width = ft_strlen_nonl(parser->line);
-
-	//THIS WHOLE FUNCTION WILL BE REWRITTEN HERE'S A BANDAGE
-	//loop through ever char of line, if the char is NSEW, set the start_x and start_y
-	find_starting_position(parser, parser->line);
-}
-
 // End of Seperation //
 // Seperate to validate_map.c
 
@@ -151,20 +34,18 @@ void	ft_cube_argv(int argc, char **argv, t_parser *parser)
 
 void	ft_schongte(t_parser *parser)
 {
-	//print NO SO EA WE
 	ft_printf("NO : %s", parser->map.no);
 	ft_printf("SO : %s", parser->map.so);
 	ft_printf("EA : %s", parser->map.ea);
 	ft_printf("WE : %s", parser->map.we);
-	////print F C
-	ft_printf("F : %d %d %d\n", parser->map.f[0], parser->map.f[1], parser->map.f[2]);
-	ft_printf("C : %d %d %d\n", parser->map.c[0], parser->map.c[1], parser->map.c[2]);
+	ft_printf("F : %d %d %d\n", parser->map.f[0],
+		parser->map.f[1], parser->map.f[2]);
+	ft_printf("C : %d %d %d\n", parser->map.c[0],
+		parser->map.c[1], parser->map.c[2]);
 	ft_printf("start_x : %d\n", parser->map.start_x);
 	ft_printf("start_y : %d\n", parser->map.start_y);
 	ft_printf("start_dir : %c\n", parser->map.start_dir);
-	//printf("line count : %d\n", i);
 }
-
 
 //void ft_validate_no_empty_line(t_parser *parser)
 //{
@@ -180,7 +61,7 @@ void	ft_schongte(t_parser *parser)
 //	ft_throw("Map contains empty lines", parser, NULL);
 //}
 
-int main(int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_parser	parser;
 

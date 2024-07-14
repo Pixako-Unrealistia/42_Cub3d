@@ -121,5 +121,11 @@ void	color_alloc(t_parser *parser, int **color);
 void	color_loop(char **split_tmp, int **color, t_parser *parser, char *line);
 void	ft_color_parser(t_parser *parser, char *line, int **color);
 
+//parser_map_reader.c
+void	ft_texture_parser(t_parser *parser, char *line, char **texture);
+int		ft_header_parser(t_parser *parser, char *line);
+void	find_starting_position(t_parser *parser, char *line);
+void	map_reader_tmp(t_parser *parser, int line_len);
+void	ft_map_reader(t_parser *parser);
 
-#endif 
+#endif
