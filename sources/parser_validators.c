@@ -18,7 +18,6 @@ void	ft_validate_texture(t_parser *parser)
 		|| parser->map.we == NULL || parser->map.ea == NULL
 		|| parser->map.f == NULL || parser->map.c == NULL)
 		ft_throw("Missing texture", parser, NULL);
-
 	if (parser->map.start_x == -1 || parser->map.start_y == -1)
 		ft_throw("Missing starting location", parser, NULL);
 }

@@ -17,9 +17,11 @@
 
 void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 {
-	int i = 0;
-	int j = 0;
+	int	i;
+	int	j;
 
+	i = 0;
+	j = 0;
 	if (*texture != NULL)
 		ft_throw("Texture already realised", parser, line);
 	while (line[i] != ' ')
@@ -36,45 +38,6 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 		j++;
 	}
 	(*texture)[j] = '\0';
-}
-
-void ft_before_throw(char *word, t_parser *parser, char *line, char **to_free)
-{
-	for (int i = 0; to_free[i] != NULL; i++)
-		free(to_free[i]);
-	free(to_free);
-	ft_throw(word, parser, line);
-}
-
-void ft_color_parser(t_parser *parser, char *line, int **color)
-{
-	int i = 0, valueCount = 0, tmp;
-	char **split_tmp;
-
-	if (*color != NULL)
-		ft_throw("Color already realised", parser, line);
-	*color = (int *)malloc(3 * sizeof(int));
-	if (*color == NULL)
-		ft_throw("Memory allocation failed", parser, line);
-	while (line[i] == ' ')
-		i++;
-	split_tmp = ft_split(line, ',');
-	if (split_tmp == NULL)
-		ft_throw("Memory allocation failed", parser, line);
-	while (split_tmp[valueCount] != NULL)
-	{
-		tmp = ft_atoi(split_tmp[valueCount]);
-		if (tmp < 0 || tmp > 255)
-			ft_before_throw("Invalid color range", parser, line, split_tmp);
-		if (valueCount > 2)
-			ft_before_throw("Too many values for RGB", parser, line, split_tmp);
-		(*color)[valueCount++] = tmp;
-	}
-	if (valueCount != 3)
-		ft_before_throw("Invalid number of values for RGB", parser, line, split_tmp);
-	for (int i = 0; split_tmp[i] != NULL; i++)
-		free(split_tmp[i]);
-	free(split_tmp);
 }
 
 int	ft_header_parser(t_parser *parser, char *line)

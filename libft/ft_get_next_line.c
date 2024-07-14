@@ -99,16 +99,16 @@ char	*main_reader(int fd, char *tmp)
 
 int	super_get_next_line(int fd, char **line)
 {
-    static char		*tempo;
-    char			*str;
+	static char		*tempo;
+	char			*str;
 
-    if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
-        return (-1);
-    tempo = main_reader(fd, tempo);
-    if (!tempo)
-        return (-1);
-    str = main_parse_line(tempo);
-    tempo = main_parse_next(tempo);
-    *line = str;
-    return (ft_strlen(*line));
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
+		return (-1);
+	tempo = main_reader(fd, tempo);
+	if (!tempo)
+		return (-1);
+	str = main_parse_line(tempo);
+	tempo = main_parse_next(tempo);
+	*line = str;
+	return (ft_strlen(*line));
 }

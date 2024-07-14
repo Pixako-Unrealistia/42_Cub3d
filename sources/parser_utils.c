@@ -22,9 +22,9 @@ int	ft_strlen_nonl(char *str)
 	return (i);
 }
 
-int ft_is_line_empty(char *line)
+int	ft_is_line_empty(char *line)
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (line[i])

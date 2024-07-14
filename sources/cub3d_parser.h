@@ -116,7 +116,10 @@ void	fill_irregular_map(t_parser *parser);
 void	ft_validate_texture(t_parser *parser);
 void	ft_validate_containment(t_parser *parser);
 
+//parser_color.c
+void	color_alloc(t_parser *parser, int **color);
+void	color_loop(char **split_tmp, int **color, t_parser *parser, char *line);
+void	ft_color_parser(t_parser *parser, char *line, int **color);
 
-// DO NOT MOVE THE REST OF INITIALISE_MAP
 
 #endif 
