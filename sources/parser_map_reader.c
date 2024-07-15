@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   parser_map_reader.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 15:44:53 by schongte          #+#    #+#             */
-/*   Updated: 2024/07/14 15:44:53 by schongte         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:12:20 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-# include "cub3d.h"
+#include "cub3d.h"
 
 void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 {

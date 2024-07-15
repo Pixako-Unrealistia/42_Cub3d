@@ -6,58 +6,52 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/01 14:59:59 by schongte          #+#    #+#             */
-/*   Updated: 2024/07/07 21:30:20 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:10:33 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_PARSER_H
-# define CUB3D_H
+# define CUB3D_PARSER_H
 
-//Allowed
-//• open, close, read, write,
-//printf, malloc, free, perror,
-//strerror, exit
-//• All functions of the math
-//library (-lm man man 3 math)
-//• All functions of the Minilib
+# include <unistd.h>
+# include <fcntl.h>
+# include <math.h>
+# include "../libft/libft.h"
 
-#include <unistd.h>
-#include <fcntl.h>
-#include <math.h>
-#include "../libft/libft.h"
-
-
-// Height will be 1...n, for example if the height is 5, the map will be 5 lines high
-// Width will be 1...n+1, for example if the width is 5, the map will be 6 characters wide
+/* Height will be 1...n, for example if the height is 5,
+ * the map will be 5 lines high
+ * Width will be 1...n+1, for example if the width is 5,
+ * the map will be 6 characters wide
+ */
 typedef struct s_map
 {
-	int     height;
-	int     width;
-	char    *no;
-	char    *so;
-	char    *we;
-	char    *ea;
-	int     *f;
-	int     *c;
-	char    **map;
-	int	 	start_x;
-	int	 	start_y;
+	int		height;
+	int		width;
+	char	*no;
+	char	*so;
+	char	*we;
+	char	*ea;
+	int		*f;
+	int		*c;
+	char	**map;
+	int		start_x;
+	int		start_y;
 	char	start_dir;
-}           t_map;
+}	t_map;
 
 typedef struct s_parser
 {
-	t_map   map;
-	int     map_alloc;
+	t_map	map;
+	int		map_alloc;
 	char	*line;
 	int		fd;
-}           t_parser;
+}	t_parser;
 
 typedef struct s_for_loop
 {
-	int i;
-	int j;
-}           t_for_loop;
+	int	i;
+	int	j;
+}	t_for_loop;
 
 /* KEY values from the old minilibx are not used. */
 // Linux
@@ -103,7 +97,7 @@ int		ft_is_line_empty(char *line);
 // parser_map_utils.c
 void	ft_safe_free(void *ptr);
 void	ft_map_free(t_parser *parser);
-void	ft_throw(char *str,t_parser *parser, char *line);
+void	ft_throw(char *str, t_parser *parser, char *line);
 void	ft_map_alloc(t_parser *parser, size_t size);
 void	ft_init_all(t_parser *parser);
 

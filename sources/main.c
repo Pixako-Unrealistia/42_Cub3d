@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:58:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/07 23:07:01 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:21:08 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -276,8 +276,6 @@ void	init_mlx_stuff(t_cub3d *cub3d)
 	mlx_image_to_window(cub3d->mlx, cub3d->mlx_2dimg_playerdot, 0, 0);
 	mlx_image_to_window(cub3d->mlx, cub3d->mlx_3dimg,
 		SUBUNITS * cub3d->map_width , 0);
-	// mlx_set_instance_depth(cub3d->mlx_2dimg_playerdot->instances, 1);
-	// mlx_set_instance_depth(cub3d->mlx_2dimg->instances, 2);
 }
 
 

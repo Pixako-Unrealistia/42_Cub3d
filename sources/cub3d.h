@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/07 21:55:02 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:40:39 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,7 @@ typedef struct s_raycast
 	int		seg_offset;
 	float	ty_step;
 	float	ty_offset;
-	t_pixel col_top;
+	t_pixel	col_top;
 	t_pixel	col_wall_top;
 	t_pixel	col_floor_top;
 }	t_raycast;
@@ -118,8 +118,8 @@ void	free_all(t_cub3d *cub3d);
 
 // player movement
 void	rotate_player(t_cub3d *cub3d, float angle, int clockwise);
-void    move_forward(t_cub3d *cub3d);
-void    move_backward(t_cub3d *cub3d);
+void	move_forward(t_cub3d *cub3d);
+void	move_backward(t_cub3d *cub3d);
 void	strafe_left(t_cub3d *cub3d);
 void	strafe_right(t_cub3d *cub3d);
 
@@ -132,7 +132,7 @@ int		diy_int_sign(int value);
 float	angle_inrange_deg(float angle);
 float	angle_inrange_rad(float angle);
 float	deg_to_rad(float angle);
-float   ray_distance(t_player p, t_ray r);
+float	ray_distance(t_player p, t_ray r);
 
 // raycast_utils.c
 void	draw_pixel_column(mlx_image_t *img, t_pixel pix, int len);

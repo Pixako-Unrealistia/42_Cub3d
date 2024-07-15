@@ -6,40 +6,38 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:57:15 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/07 21:25:47 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/15 19:41:54 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
 
-void    free_textures(t_cub3d *cub3d)
+void	free_textures(t_cub3d *cub3d)
 {
-    int i;
-    
-    i = -1;
-    while (++i < 32)
-    {
-        free(cub3d->texture_north[i]);
-        free(cub3d->texture_west[i]);
-        free(cub3d->texture_south[i]);
-        free(cub3d->texture_east[i]);
-    }
-    free(cub3d->texture_north);
-    free(cub3d->texture_west);
-    free(cub3d->texture_south);
-    free(cub3d->texture_east);
+	int	i;
+
+	i = -1;
+	while (++i < 32)
+	{
+		free(cub3d->texture_north[i]);
+		free(cub3d->texture_west[i]);
+		free(cub3d->texture_south[i]);
+		free(cub3d->texture_east[i]);
+	}
+	free(cub3d->texture_north);
+	free(cub3d->texture_west);
+	free(cub3d->texture_south);
+	free(cub3d->texture_east);
 }
 
 void	free_all(t_cub3d *cub3d)
 {
-    int i;
+	int	i;
 
-    free_textures(cub3d);
-    i = -1;
-    while (++i < cub3d->map_height)
-        free(cub3d->map[i]);
-    free(cub3d->map);
-    free(cub3d);
+	free_textures(cub3d);
+	i = -1;
+	while (++i < cub3d->map_height)
+		free(cub3d->map[i]);
+	free(cub3d->map);
+	free(cub3d);
 }
-
-

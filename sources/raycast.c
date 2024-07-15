@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:43:15 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/07 23:07:38 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/15 20:18:46 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ static void	draw_segment(t_cub3d *cub3d, t_raycast rc, float a);
 static void	set_pixels(t_cub3d *cub3d, t_raycast *rc, float a, int i);
 
 void	raycast(t_cub3d *cub3d)
-{	
+{
 	t_raycast	rc;
 	float		a;
 
@@ -44,7 +44,7 @@ void	raycast(t_cub3d *cub3d)
 // ty stands for texture_y
 static void	draw_segment(t_cub3d *cub3d, t_raycast rc, float a)
 {
-	int     i;
+	int	i;
 
 	rc.ray_dist = rc.ray[rc.selected_ray].dist * cos(deg_to_rad((float)a));
 	a += (int)(cub3d->player.fov_deg / 2);
@@ -52,7 +52,7 @@ static void	draw_segment(t_cub3d *cub3d, t_raycast rc, float a)
 	rc.ty_step = (float)cub3d->texture_height / rc.seg_height;
 	rc.ty_offset = 0.0;
 	if (rc.seg_height > VIEW_H)
-	{	
+	{
 		rc.ty_offset = (rc.seg_height - VIEW_H) / 2.0;
 		rc.seg_height = VIEW_H;
 	}
