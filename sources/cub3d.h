@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/15 19:40:39 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:33:53 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 # include <stdio.h>
 
 # define PI 3.14159265358979323846
+# define SQRT_HALF 0.70710678118
 
 # define WIN_W			1920
 # define WIN_H			1080
@@ -42,12 +43,15 @@
 
 typedef struct s_player
 {
-	float		x;
-	float		y;
-	float		fov_deg;
-	float		orient_deg;
-	float		delta_x;
-	float		delta_y;
+	float	x;
+	float	y;
+	float	fov_deg;
+	float	orient_deg;
+	float	delta_x;
+	float	delta_y;
+	int		move_dir;
+	int		strafe_dir;
+	int		rotate_dir;	
 }	t_player;
 
 typedef struct s_pixel
@@ -97,7 +101,7 @@ typedef struct s_cub3d
 	int			map_width;
 	int			map_height;
 	t_player	player;
-	int			no_key_pressed;
+	int			new_frame;
 	int			color_floor;
 	int			color_ceiling;
 	// int			color_north;
@@ -118,10 +122,10 @@ void	free_all(t_cub3d *cub3d);
 
 // player movement
 void	rotate_player(t_cub3d *cub3d, float angle, int clockwise);
-void	move_forward(t_cub3d *cub3d);
-void	move_backward(t_cub3d *cub3d);
-void	strafe_left(t_cub3d *cub3d);
-void	strafe_right(t_cub3d *cub3d);
+void	move_forward(t_cub3d *cub3d, float factor);
+void	move_backward(t_cub3d *cub3d, float factor);
+void	strafe_left(t_cub3d *cub3d, float factor);
+void	strafe_right(t_cub3d *cub3d, float factor);
 
 // draw_line
 void	draw_line(mlx_image_t *img, t_pixel start, t_pixel end);

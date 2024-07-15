@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:58:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/15 19:21:08 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/15 22:37:25 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,17 +222,23 @@ void	init_texture(t_cub3d *cub3d)
 
 void	init_player(t_cub3d *cub3d, t_parser *parser)
 {
-	cub3d->player.x = (parser->map.start_x - 1) * SUBUNITS + SUBUNITS / 2.0;
-	cub3d->player.y = (parser->map.start_y - 1) * SUBUNITS + SUBUNITS / 2.0;
-	cub3d->player.fov_deg = 60.0;
-	cub3d->player.orient_deg = 0.0;
+	t_player	*player;
+	
+	player = &cub3d->player;
+	player->x = (parser->map.start_x - 1) * SUBUNITS + SUBUNITS / 2.0;
+	player->y = (parser->map.start_y - 1) * SUBUNITS + SUBUNITS / 2.0;
+	player->fov_deg = 60.0;
+	player->orient_deg = 0.0;
 	if (parser->map.start_dir == 'N')
-		cub3d->player.orient_deg = 270.0;
+		player->orient_deg = 270.0;
 	if (parser->map.start_dir == 'W')
-		cub3d->player.orient_deg = 180.0;
+		player->orient_deg = 180.0;
 	if (parser->map.start_dir == 'S')
-		cub3d->player.orient_deg = 90.0;
+		player->orient_deg = 90.0;
 	rotate_player(cub3d, 0, 0);
+	player->move_dir = 0;
+	player->strafe_dir = 0;
+	player->rotate_dir = 0;
 }
 
 void	draw_2d_map(t_cub3d *cub3d)
@@ -267,8 +273,7 @@ void	init_mlx_stuff(t_cub3d *cub3d)
 	cub3d->mlx_2dimg_playerdot = mlx_new_image(cub3d->mlx, 16, 16);
 	i = -1;
 	while (++i < 16 * 16)
-		mlx_put_pixel(cub3d->mlx_2dimg_playerdot, i / 16, i % 16,
-			255 << 24 | 255 << 16 | 255);
+		mlx_put_pixel(cub3d->mlx_2dimg_playerdot, i / 16, i % 16, 0xffff00ff);
 	cub3d->mlx_2dimg = mlx_new_image(cub3d->mlx, SUBUNITS * cub3d->map_width,
 		SUBUNITS * cub3d->map_height);
 	cub3d->mlx_3dimg = mlx_new_image(cub3d->mlx, VIEW_W, VIEW_H);
@@ -278,21 +283,19 @@ void	init_mlx_stuff(t_cub3d *cub3d)
 		SUBUNITS * cub3d->map_width , 0);
 }
 
-
-
 void	game_loop(void *param)
 {
 	t_cub3d	*cub3d;
 	
 	cub3d = param;
-	if (cub3d->no_key_pressed == 0)
+	if (cub3d->new_frame == 1)
 	{
 		cub3d->mlx_2dimg_playerdot->instances[0].x = cub3d->player.x - 8;
 		cub3d->mlx_2dimg_playerdot->instances[0].y = cub3d->player.y - 8;
 		draw_2d_map(cub3d);
 		raycast(cub3d);
 	}
-	cub3d->no_key_pressed = 1;
+	cub3d->new_frame = 0;
 }
 
 int	cub3d_main(t_parser *parser)
