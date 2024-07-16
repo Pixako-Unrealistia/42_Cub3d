@@ -74,7 +74,7 @@ int	main(int argc, char **argv)
 	parser.fd = open(argv[1], O_RDONLY);
 	while (super_get_next_line(parser.fd, &parser.line))
 	{
-		printf(">>>line : %s\n", parser.line);
+		printf(">line : %s", parser.line);
 		if (ft_header_parser(&parser, parser.line) == 0)
 		{
 			//if line contain something other than 0, 1, N,S,E,W, or space, throw error
@@ -129,7 +129,7 @@ int	main(int argc, char **argv)
 	}
 
 	//ft_schongte(&parser);
-	cub3d_main(&parser);
+	//cub3d_main(&parser);
 
 	ft_map_free(&parser);
 	return (0);

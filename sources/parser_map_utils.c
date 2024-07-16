@@ -42,10 +42,11 @@ void	ft_throw(char *str, t_parser *parser, char *free_me)
 {
 	ft_printf("Error\n\033[0;31m%s\033[0m\n", str);
 	if (free_me != NULL)
-		free (free_me);
+		ft_safe_free (free_me);
 	ft_map_free(parser);
 	if (parser->fd != -1)
 	{
+		printf("Closing file descriptor\n");
 		while (super_get_next_line(parser->fd, &parser->line) > 0)
 			free (parser->line);
 		free (parser->line);

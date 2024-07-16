@@ -52,6 +52,21 @@ SRC_C         = main.c \
 				parser_map_corrections.c \
 				parser_color.c \
 				parser_map_reader.c
+
+# Map Files:
+MAP_DIR			= ./maps
+MAP_C			= invalid_bad_letter.cub \
+				invalid_basic.cub \
+				invalid_double_colour.cub \
+				invalid_double_declare.cub \
+				invalid_double_start.cub \
+				invalid_empty_middle.cub \
+				invalid_no_border.cub \
+				invalid_no_border_non-edges.cub \
+				invalid_no_header.cub \
+				invalid_four_colour.cub \
+				invalid_two_colour.cub
+
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
 
@@ -98,7 +113,18 @@ fclean:
 
 re: fclean all
 
-valgrind: all
-	$(VALGRIND) ./$(NAME) ./maps/basic.cub
-
 .PHONY: all clean fclean
+
+test: all
+	@printf "$(_INFO) Testing maps...\n"
+	@for map in $(MAP_C); do \
+		printf "$(_INFO) Testing $$map\n"; \
+		./$(NAME) $(MAP_DIR)/$$map; \
+	done
+
+v_test: all
+	@printf "$(_INFO) Testing maps...\n"
+	@for map in $(MAP_C); do \
+		printf "$(_INFO) Testing $$map\n"; \
+		$(VALGRIND) ./$(NAME) $(MAP_DIR)/$$map; \
+	done

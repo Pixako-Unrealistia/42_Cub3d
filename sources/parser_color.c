@@ -22,14 +22,16 @@ void	before_throw(char *w, t_parser *parser, char *line, char **to_free)
 		free(to_free[i]);
 		i++;
 	}
-	free(to_free);
-	ft_throw(w, parser, line);
+	if (to_free != NULL)
+		free(to_free);
+	printf("\033[31m%s\033[0m\n", line);
+	ft_throw(w, parser, parser->line);
 }
 
 void	color_alloc(t_parser *parser, int **color)
 {
 	if (*color != NULL)
-		ft_throw("Color already realised", parser, NULL);
+		ft_throw("Color already realised", parser, parser->line);
 	*color = (int *)malloc(3 * sizeof(int));
 	if (*color == NULL)
 		ft_throw("Memory allocation failed", parser, NULL);

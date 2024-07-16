@@ -58,10 +58,7 @@ int	ft_header_parser(t_parser *parser, char *line)
 	else if (line[0] == '\0')
 		return (0);
 	else
-	{
-		ft_printf(">%s<", line);
 		return (0);
-	}
 	return (1);
 }
 
@@ -79,7 +76,11 @@ void	find_starting_position(t_parser *parser, char *line)
 			parser->map.start_x = i;
 			parser->map.start_y = parser->map.height;
 			parser->map.start_dir = line[i];
-			return ;
+		}
+		if (ft_strchr("01dNSEW \n\r", line[i]) == NULL)
+		{
+			printf("line[%d] : >\033[31m%c\033[0m<\n", i, line[i]);
+			ft_throw("Invalid character in map", parser, line);
 		}
 		i++;
 	}
