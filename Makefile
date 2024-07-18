@@ -6,7 +6,7 @@
 #    By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 14:39:46 by schongte          #+#    #+#              #
-#    Updated: 2024/07/07 22:58:35 by tnualman         ###   ########.fr        #
+#    Updated: 2024/07/18 19:51:59 by tnualman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,6 +27,7 @@ INCLUDES 		= -Imlx -I$(MLX_PATH)
 # Compiling Variables:
 CC 				= gcc
 CFLAGS 			= -Wall -Werror -Wextra -g
+#CFLAGS			+= -fsanitize=address
 RM 				= rm -f
 VALGRIND		= valgrind --leak-check=full --show-leak-kinds=all \
 				--track-origins=yes --tool=memcheck
@@ -37,6 +38,7 @@ OBJ_DIR       = ./objects
 SRC_C         = main.c \
 				key_hook.c \
 				free_utils.c \
+				init_cub3d.c \
 				player_movement.c \
 				draw_line.c \
 				draw_line_utils.c \

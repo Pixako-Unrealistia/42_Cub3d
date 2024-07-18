@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:43:15 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/15 20:18:46 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/18 19:34:16 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,8 @@ static void	draw_segment(t_cub3d *cub3d, t_raycast rc, float a)
 
 	rc.ray_dist = rc.ray[rc.selected_ray].dist * cos(deg_to_rad((float)a));
 	a += (int)(cub3d->player.fov_deg / 2);
-	rc.seg_height = SUBUNITS * VIEW_H / (rc.ray_dist + 1.0);
-	rc.ty_step = (float)cub3d->texture_height / rc.seg_height;
+	rc.seg_height = SUBUNITS * VIEW_H / (rc.ray_dist + 0.00015625);
+	rc.ty_step = 1.0 / rc.seg_height;
 	rc.ty_offset = 0.0;
 	if (rc.seg_height > VIEW_H)
 	{
