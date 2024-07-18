@@ -34,7 +34,9 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 		(*texture)[j] = line[i + j];
 		j++;
 	}
-	(*texture)[j - 2] = '\0';
+	(*texture)[j] = '\0';
+	if ((*texture)[j - 1] == '\n' || (*texture)[j - 1] == '\r')
+		(*texture)[j - 1] = '\0';
 }
 
 int	ft_header_parser(t_parser *parser, char *line)

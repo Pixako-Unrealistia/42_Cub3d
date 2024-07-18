@@ -133,7 +133,7 @@ int	main(int argc, char **argv)
 	//ft_schongte(&parser);
 	cub3d_main(&parser);
 
-	ft_printf("NO : %s %s", parser.map.no, parser.map.no);
+	printf("NO : %s\n%s", parser.map.no, parser.map.no);
 	ft_map_free(&parser);
 	return (0);
 }
