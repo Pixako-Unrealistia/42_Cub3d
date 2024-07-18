@@ -6,17 +6,11 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/18 14:03:28 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/15 20:16:22 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/18 18:24:54 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "cub3d.h"
-
-// Not sure if this will be useful...
-void	cub3d_put_pixel(mlx_image_t *img, t_pixel pix)
-{
-	mlx_put_pixel(img, pix.x, pix.y, pix.color);
-}
 
 void	draw_pixel_column(mlx_image_t *img, t_pixel pix, int len)
 {

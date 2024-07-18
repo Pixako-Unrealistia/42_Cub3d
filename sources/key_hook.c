@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:51:34 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/15 22:33:53 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/18 20:13:23 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	key_hook(void *param)
 	mlx = cub3d->mlx;
 	player = &cub3d->player;
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-	{	
+	{
 		mlx_close_window(mlx);
 		return ;
 	}
