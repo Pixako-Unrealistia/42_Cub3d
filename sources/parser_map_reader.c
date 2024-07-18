@@ -72,7 +72,12 @@ void	find_starting_position(t_parser *parser, char *line)
 		if (ft_strchr("NSEW", line[i]) != NULL)
 		{
 			if (parser->map.start_x != -1 || parser->map.start_y != -1)
+			{
+				printf("Encountered %s", line);
+				printf("Found first at x: %d y: %d\n",
+					parser->map.start_x, parser->map.start_y);
 				ft_throw("Multiple starting positions", parser, line);
+			}
 			parser->map.start_x = i;
 			parser->map.start_y = parser->map.height;
 			parser->map.start_dir = line[i];
