@@ -34,10 +34,10 @@ void	ft_cube_argv(int argc, char **argv, t_parser *parser)
 
 void	ft_schongte(t_parser *parser)
 {
-	ft_printf("NO : %s", parser->map.no);
-	ft_printf("SO : %s", parser->map.so);
-	ft_printf("EA : %s", parser->map.ea);
-	ft_printf("WE : %s", parser->map.we);
+	ft_printf("NO : %s\n", parser->map.no);
+	ft_printf("SO : %s\n", parser->map.so);
+	ft_printf("EA : %s\n", parser->map.ea);
+	ft_printf("WE : %s\n", parser->map.we);
 	ft_printf("F : %d %d %d\n", parser->map.f[0],
 		parser->map.f[1], parser->map.f[2]);
 	ft_printf("C : %d %d %d\n", parser->map.c[0],
@@ -133,6 +133,7 @@ int	main(int argc, char **argv)
 	//ft_schongte(&parser);
 	//cub3d_main(&parser);
 
+	ft_printf("NO : %s %s", parser.map.no, parser.map.no);
 	ft_map_free(&parser);
 	return (0);
 }
