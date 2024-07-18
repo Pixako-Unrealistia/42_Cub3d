@@ -72,6 +72,8 @@ int	main(int argc, char **argv)
 
 	printf("argv[1] : %s\n", argv[1]);
 	parser.fd = open(argv[1], O_RDONLY);
+	if (parser.fd == -1)
+		ft_throw("No such file", &parser, NULL);
 	while (super_get_next_line(parser.fd, &parser.line))
 	{
 		printf(">line : %s", parser.line);
