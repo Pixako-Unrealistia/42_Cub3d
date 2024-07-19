@@ -21,6 +21,7 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 	j = 0;
 	if (*texture != NULL)
 		ft_throw("Texture already realised", parser, line);
+	line[ft_strlen(line) - 2] = '\0';
 	while (line[i] != ' ')
 		i++;
 	while (line[i] == ' ')
@@ -35,8 +36,6 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 		j++;
 	}
 	(*texture)[j] = '\0';
-	if ((*texture)[j - 1] == '\n' || (*texture)[j - 1] == '\r')
-		(*texture)[j - 1] = '\0';
 }
 
 int	ft_header_parser(t_parser *parser, char *line)
