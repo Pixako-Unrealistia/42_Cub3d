@@ -32,6 +32,9 @@ RM 				= rm -f
 VALGRIND		= valgrind --leak-check=full --show-leak-kinds=all \
 				--track-origins=yes --tool=memcheck
 
+# Build MLX:
+BUILD_MLX_PATH = ./MLX42
+
 # Source Files:
 SRC_DIR       = ./sources
 OBJ_DIR       = ./objects
@@ -148,3 +151,9 @@ v_test: all
 		echo "$(RED)Leaks detected see dump.tmp for details$(RESET)"; \
 	fi
 	rm -f valgrind_out.tmp
+
+mlx:
+	@printf "$(_INFO) Building MLX...\n"
+	@cmake -C $(BUILD_MLX_PATH)
+	@cp $(BUILD_MLX_PATH)/$(MLX) $(MLX_PATH)
+	@printf "$(_SUCCESS) MLX built.\n"
