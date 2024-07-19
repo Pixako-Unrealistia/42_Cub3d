@@ -67,7 +67,8 @@ MAP_C			= invalid_bad_letter.cub \
 				invalid_no_border_non-edges.cub \
 				invalid_no_header.cub \
 				invalid_four_colour.cub \
-				invalid_two_colour.cub
+				invalid_two_colour.cub \
+				this_map_doesnt_exist.cub
 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
@@ -126,7 +127,24 @@ test: all
 
 v_test: all
 	@printf "$(_INFO) Testing maps...\n"
-	@for map in $(MAP_C); do \
+	@pass_count=0; \
+	fail_count=0; \
+	for map in $(MAP_C); do \
 		printf "$(_INFO) Testing $$map\n"; \
-		$(VALGRIND) ./$(NAME) $(MAP_DIR)/$$map; \
-	done
+		$(VALGRIND) --log-file=valgrind_out.tmp ./$(NAME) $(MAP_DIR)/$$map; \
+		if grep -q "ERROR SUMMARY: 0 errors" valgrind_out.tmp; then \
+			echo "$(GREEN)OK$(RESET)"; \
+			pass_count=$$((pass_count + 1)); \
+		else \
+			echo "$(RED)KO$(RESET)"; \
+			fail_count=$$((fail_count + 1)); \
+			cat valgrind_out.tmp >> dump.tmp; \
+		fi; \
+	done; \
+	echo "Summary: PASS=$$pass_count, FAIL=$$fail_count"; \
+	if [ $$fail_count -eq 0 ]; then \
+			echo "$(GREEN)No leaks detected$(RESET)"; \
+	else \
+		echo "$(RED)Leaks detected see dump.tmp for details$(RESET)"; \
+	fi
+	rm -f valgrind_out.tmp

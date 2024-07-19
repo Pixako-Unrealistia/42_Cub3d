@@ -32,7 +32,7 @@ void	ft_cube_argv(int argc, char **argv, t_parser *parser)
 
 // End of Seperation //
 
-void	ft_schongte(t_parser *parser)
+void	display_stat(t_parser *parser)
 {
 	ft_printf("NO : %s\n", parser->map.no);
 	ft_printf("SO : %s\n", parser->map.so);
@@ -114,7 +114,7 @@ int	main(int argc, char **argv)
 	//print map width
 	ft_printf("map width : %d\n", parser.map.width);
 
-	ft_schongte(&parser);
+	display_stat(&parser);
 
 	for (int i = 0; i < parser.map.height; i++)
 	{
@@ -130,7 +130,7 @@ int	main(int argc, char **argv)
 		printf("%s\n", parser.map.map[i]);
 	}
 
-	//ft_schongte(&parser);
+	//display_stat(&parser);
 	cub3d_main(&parser);
 
 	printf("NO : %s\n%s", parser.map.no, parser.map.no);

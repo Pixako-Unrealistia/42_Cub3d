@@ -75,7 +75,7 @@ void	find_starting_position(t_parser *parser, char *line)
 		{
 			if (parser->map.start_x != -1 || parser->map.start_y != -1)
 			{
-				printf("Encountered %s", line);
+				printf("Encountered %s\n", line);
 				printf("Found first at x: %d y: %d\n",
 					parser->map.start_x, parser->map.start_y);
 				ft_throw("Multiple starting positions", parser, line);

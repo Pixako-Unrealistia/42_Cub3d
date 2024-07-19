@@ -2,3 +2,4 @@
 .vscode
 *cub3D
 *libft.a
+*.tmp
