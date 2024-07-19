@@ -18,7 +18,7 @@
 # include <fcntl.h>
 # include <math.h>
 # include "../libft/libft.h"
-# include "MLX42.h"
+# include "../MLX42/include/MLX42/MLX42.h"
 # include "cub3d_parser.h"
 
 # include <stdio.h>
