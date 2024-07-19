@@ -34,6 +34,9 @@ void	ft_cube_argv(int argc, char **argv, t_parser *parser)
 
 void	display_stat(t_parser *parser)
 {
+	int	iter;
+
+	iter = 0;
 	ft_printf("NO : %s\n", parser->map.no);
 	ft_printf("SO : %s\n", parser->map.so);
 	ft_printf("EA : %s\n", parser->map.ea);
@@ -45,6 +48,11 @@ void	display_stat(t_parser *parser)
 	ft_printf("start_x : %d\n", parser->map.start_x);
 	ft_printf("start_y : %d\n", parser->map.start_y);
 	ft_printf("start_dir : %c\n", parser->map.start_dir);
+	while (iter < parser->map.height)
+	{
+		ft_printf("> %s\n", parser->map.map[iter]);
+		iter++;
+	}
 }
 
 //void ft_validate_no_empty_line(t_parser *parser)
@@ -61,6 +69,31 @@ void	display_stat(t_parser *parser)
 //	ft_throw("Map contains empty lines", parser, NULL);
 //}
 
+void	open_and_parse(t_parser *parser, char *path)
+{
+	parser->fd = open(path, O_RDONLY);
+	if (parser->fd == -1)
+		ft_throw("No such file", parser, NULL);
+	while (super_get_next_line(parser->fd, &parser->line))
+	{
+		printf(">line : %s", parser->line);
+		if (ft_header_parser(parser, parser->line) == 0)
+		{
+			ft_map_reader(parser);
+			ft_safe_free(parser->line);
+			while (super_get_next_line(parser->fd, &parser->line))
+			{
+				ft_map_reader(parser);
+				ft_safe_free(parser->line);
+			}
+		}
+		ft_safe_free(parser->line);
+	}
+	ft_safe_free(parser->line);
+	close(parser->fd);
+	parser->fd = -1;
+}
+
 int	main(int argc, char **argv)
 {
 	t_parser	parser;
@@ -69,72 +102,15 @@ int	main(int argc, char **argv)
 	ft_cube_argv(argc, argv, &parser);
 	parser.map.map = NULL;
 	parser.map_alloc = 0;
-
 	printf("argv[1] : %s\n", argv[1]);
-	parser.fd = open(argv[1], O_RDONLY);
-	if (parser.fd == -1)
-		ft_throw("No such file", &parser, NULL);
-	while (super_get_next_line(parser.fd, &parser.line))
-	{
-		printf(">line : %s", parser.line);
-		if (ft_header_parser(&parser, parser.line) == 0)
-		{
-			//if line contain something other than 0, 1, N,S,E,W, or space, throw error
-			ft_map_reader(&parser);
-			ft_safe_free(parser.line);
-			while (super_get_next_line(parser.fd, &parser.line))
-			{
-				ft_map_reader(&parser);
-				ft_safe_free(parser.line);
-			}
-		}
-		ft_safe_free(parser.line);
-	}
-	ft_safe_free(parser.line);
-
-	close(parser.fd);
-	parser.fd = -1;
+	open_and_parse(&parser, argv[1]);
 	ft_validate_texture(&parser);
-
-	//ft_validate_containment(&parser);
-
-	//Intregity check
-	//ft_printf("\n\n");
-
-	for (int i = 0; i < parser.map.height; i++)
-	{
-		printf(">%s", parser.map.map[i]);
-	}
-	printf("\n\n");
-
 	width_realloc(&parser);
-
-	//print map height
 	ft_printf("map height : %d\n", parser.map.height);
-	//print map width
 	ft_printf("map width : %d\n", parser.map.width);
-
 	display_stat(&parser);
-
-	for (int i = 0; i < parser.map.height; i++)
-	{
-		printf(">%s\n", parser.map.map[i]);
-	}
 	printf("\n\n");
-
 	fill_irregular_map(&parser);
-
-	//printf("\n\n");
-	for (int i = 0; i < parser.map.height; i++)
-	{
-		printf("%s\n", parser.map.map[i]);
-	}
-
-	//display_stat(&parser);
-	cub3d_main(&parser);
-
-	printf("NO : %s\n%s", parser.map.no, parser.map.no);
 	ft_map_free(&parser);
 	return (0);
 }
-
