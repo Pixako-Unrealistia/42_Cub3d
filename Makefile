@@ -6,7 +6,7 @@
 #    By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 14:39:46 by schongte          #+#    #+#              #
-#    Updated: 2024/07/20 14:39:02 by tnualman         ###   ########.fr        #
+#    Updated: 2024/07/20 16:21:50 by tnualman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,11 +17,11 @@ NAME			= cub3D
 
 # Libft
 LIBFT_PATH 		= ./libft
-LIBFT		= $(LIBFT_PATH)/libft.a
+LIBFT			= $(LIBFT_PATH)/libft.a
 
 # MLX Variables:
-MLX				= libmlx42.a
-MLX_PATH		= ./
+MLX_PATH		= ./MLX42
+MLX				= $(MLX_PATH)/build/libmlx42.a
 INCLUDES 		= -Imlx -I$(MLX_PATH)
 
 # Compiling Variables:
@@ -104,10 +104,15 @@ $(OBJ_DIR):
 $(LIBFT):
 	make -C $(LIBFT_PATH)
 
+$(MLX):
+	cmake -B $(MLX_PATH)/build -S $(MLX_PATH)
+	cmake --build $(MLX_PATH)/build -j4
+
 all: ${NAME} ${BONUS_NAME} ${LIBFT}
 
 clean:
 	make clean -C ${LIBFT_PATH}
+	${RM} -rf MLX42/build
 	${RM} ${NAME}
 	${RM} -r ${OBJ_DIR}
 	@printf "$(_INFO) object files removed.\n"
