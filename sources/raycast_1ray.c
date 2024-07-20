@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/06/21 15:38:44 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/15 21:49:03 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:45:49 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -118,11 +118,11 @@ void	draw_1ray(mlx_image_t *img, t_player p, t_ray r, int color)
 {
 	t_pixel	pixel[2];
 
-	pixel[0].x = p.x;
-	pixel[0].y = p.y;
+	pixel[0].x = p.x / 2;
+	pixel[0].y = p.y / 2;
 	pixel[0].color = color;
-	pixel[1].x = r.x;
-	pixel[1].y = r.y;
+	pixel[1].x = r.x / 2;
+	pixel[1].y = r.y / 2;
 	pixel[1].color = color;
 	draw_line(img, pixel[0], pixel[1]);
 }

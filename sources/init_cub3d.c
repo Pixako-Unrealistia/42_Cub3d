@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 19:04:33 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/20 16:40:06 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/20 20:49:46 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,8 @@ void	init_mlx_stuff(t_cub3d *cub3d)
 	i = -1;
 	while (++i < 16 * 16)
 		mlx_put_pixel(cub3d->mlx_2dimg_playerdot, i / 16, i % 16, 0xffff00ff);
-	cub3d->mlx_2dimg = mlx_new_image(cub3d->mlx, SUBUNITS * cub3d->map_width,
-			SUBUNITS * cub3d->map_height);
+	cub3d->mlx_2dimg = mlx_new_image(cub3d->mlx, SUBUNITS / 2
+			* cub3d->map_width, SUBUNITS / 2 * cub3d->map_height);
 	cub3d->mlx_3dimg = mlx_new_image(cub3d->mlx, VIEW_W, VIEW_H);
 	mlx_image_to_window(cub3d->mlx, cub3d->mlx_3dimg, 0, 0);
 	mlx_image_to_window(cub3d->mlx, cub3d->mlx_2dimg, 0, VIEW_H);
