@@ -108,6 +108,8 @@ void	final_step(t_parser *parser)
 		{
 			if (parser->map.map[iter][iter2] == ' ')
 				parser->map.map[iter][iter2] = '0';
+			if (parser->map.map[iter][iter2] == 'd')
+				parser->map.map[iter][iter2] = '1';
 			iter2++;
 		}
 		iter++;

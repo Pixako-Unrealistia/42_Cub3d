@@ -70,8 +70,8 @@ void	width_utils(t_parser *parser, t_for_loop f, int initial_width)
 	}
 	tmp[parser->map.width] = '\0';
 	free(parser->map.map[f.i]);
-	parser->map.map[f.i] = malloc(sizeof(char) * (parser->map.width));
-	ft_strlcpy(parser->map.map[f.i], tmp, parser->map.width);
+	parser->map.map[f.i] = malloc(sizeof(char) * (parser->map.width + 1));
+	ft_strlcpy(parser->map.map[f.i], tmp, parser->map.width + 1);
 	free(tmp);
 }
 
