@@ -65,7 +65,7 @@ void	width_utils(t_parser *parser, t_for_loop f, int initial_width)
 	}
 	while (f.j < parser->map.width)
 	{
-		tmp[f.j] = 'd';
+		tmp[f.j] = ' ';
 		f.j++;
 	}
 	tmp[parser->map.width] = '\0';
