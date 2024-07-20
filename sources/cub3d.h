@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/20 14:39:45 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:37:36 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # define PI 3.14159265358979323846
 # define SQRT_HALF 0.70710678118
 
-# define WIN_W			1920
-# define WIN_H			1080
-# define VIEW_W			1600
-# define VIEW_H			1200
+# define WIN_W			3200
+# define WIN_H			2400
+# define VIEW_W			1920
+# define VIEW_H			1440
 
 # define DEFAULT_FOV	60.0
 # define SUBUNITS		64

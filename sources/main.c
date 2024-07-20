@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:58:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/20 14:37:07 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/20 16:42:06 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ void	game_loop(void *param)
 	if (cub3d->new_frame == 1)
 	{
 		cub3d->mlx_2dimg_playerdot->instances[0].x = cub3d->player.x - 8;
-		cub3d->mlx_2dimg_playerdot->instances[0].y = cub3d->player.y - 8;
+		cub3d->mlx_2dimg_playerdot->instances[0].y = cub3d->player.y - 8
+			+ VIEW_H;
 		draw_2d_map(cub3d);
 		raycast(cub3d);
 	}

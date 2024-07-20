@@ -1,7 +1,7 @@
-NO ./maps/wall-1.png
-SO ./maps/wall-1.png
-WE ./maps/wall-1.png
-EA ./maps/wall-1.png
+NO ./wall-1.png
+SO ./wall-1.png
+WE ./wall-1.png
+EA ./wall-1.png
 
 F 31,31,31
 C 1,186,188
