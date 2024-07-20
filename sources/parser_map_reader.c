@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/14 15:44:53 by schongte          #+#    #+#             */
-/*   Updated: 2024/07/15 20:12:20 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:23:56 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 	j = 0;
 	if (*texture != NULL)
 		ft_throw("Texture already realised", parser, line);
-	line[ft_strlen(line) - 2] = '\0';
+	line[ft_strlen(line) - 1] = '\0';
 	while (line[i] != ' ')
 		i++;
 	while (line[i] == ' ')

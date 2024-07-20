@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/18 20:06:41 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:39:45 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define DEFAULT_FOV	60.0
 # define SUBUNITS		64
 # define RAYS_PER_DEG	4
-# define MOVE_SPEED		2.0
+# define MOVE_SPEED		4.0
 # define ROTATE_SPEED	1.5
 
 typedef struct s_player
@@ -148,7 +148,7 @@ void	draw_wall_column(t_cub3d *cub3d, t_raycast rc);
 // raycast.c
 void	raycast(t_cub3d *cub3d);
 
-// main.c
-int		cub3d_main(t_parser *parser);
+// parser_main.c
+int		parser_main(int argc, char **argv, t_parser *parser);
 
 #endif
