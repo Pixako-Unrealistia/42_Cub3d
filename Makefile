@@ -71,7 +71,8 @@ MAP_C			= invalid_bad_letter.cub \
 				invalid_no_header.cub \
 				invalid_four_colour.cub \
 				invalid_two_colour.cub \
-				this_map_doesnt_exist.cub
+				this_map_doesnt_exist.cub \
+				invalid_empty_right.cub 
 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
