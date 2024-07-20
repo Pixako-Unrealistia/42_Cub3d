@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:57:15 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/18 17:44:01 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/20 14:20:46 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,4 @@ void	free_cub3d(t_cub3d *cub3d)
 	while (++i < cub3d->map_height)
 		free(cub3d->map[i]);
 	free(cub3d->map);
-	free(cub3d);
 }

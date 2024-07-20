@@ -6,7 +6,7 @@
 #    By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 14:39:46 by schongte          #+#    #+#              #
-#    Updated: 2024/07/18 19:51:59 by tnualman         ###   ########.fr        #
+#    Updated: 2024/07/20 14:39:02 by tnualman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,7 +52,7 @@ SRC_C         = main.c \
 				raycast.c \
 				parser_utils.c \
 				parser_map_utils.c \
-				initialise_map.c \
+				parser_main.c \
 				parser_validators.c \
 				parser_map_corrections.c \
 				parser_color.c \
