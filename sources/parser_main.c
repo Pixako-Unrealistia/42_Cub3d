@@ -94,6 +94,26 @@ void	open_and_parse(t_parser *parser, char *path)
 	parser->fd = -1;
 }
 
+void	final_step(t_parser *parser)
+{
+	int	iter;
+	int	iter2;
+
+	iter = 0;
+	iter2 = 0;
+	while (iter < parser->map.height)
+	{
+		iter2 = 0;
+		while (parser->map.map[iter][iter2] != '\0')
+		{
+			if (parser->map.map[iter][iter2] == ' ')
+				parser->map.map[iter][iter2] = '0';
+			iter2++;
+		}
+		iter++;
+	}
+}
+
 int	parser_main(int argc, char **argv, t_parser *parser)
 {
 	ft_init_all(parser);
@@ -106,8 +126,9 @@ int	parser_main(int argc, char **argv, t_parser *parser)
 	width_realloc(parser);
 	ft_printf("map height : %d\n", parser->map.height);
 	ft_printf("map width : %d\n", parser->map.width);
-	display_stat(parser);
 	printf("\n\n");
 	fill_irregular_map(parser);
+	final_step(parser);
+	display_stat(parser);
 	return (0);
 }
