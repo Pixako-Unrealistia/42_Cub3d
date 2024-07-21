@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/27 14:51:34 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/18 20:13:23 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:15:55 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,11 +23,6 @@ void	key_hook(void *param)
 	cub3d = param;
 	mlx = cub3d->mlx;
 	player = &cub3d->player;
-	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-	{
-		mlx_close_window(mlx);
-		return ;
-	}
 	if (mlx_is_key_down(mlx, MLX_KEY_UP) || mlx_is_key_down(mlx, MLX_KEY_W))
 		player->move_dir += 1;
 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN) || mlx_is_key_down(mlx, MLX_KEY_S))
@@ -41,6 +36,24 @@ void	key_hook(void *param)
 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT) || mlx_is_key_down(mlx, MLX_KEY_E))
 		player->rotate_dir += 1;
 	do_movement(cub3d);
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
+}
+
+void	key_hook_l(mlx_key_data_t keydata, void *param)
+{
+	t_cub3d	*cub3d;
+
+	cub3d = param;
+	if (keydata.key == MLX_KEY_L && keydata.action == MLX_PRESS)
+	{
+		if (cub3d->mouselook_mode)
+			mlx_set_cursor_mode(cub3d->mlx, MLX_MOUSE_NORMAL);
+		else
+			mlx_set_cursor_mode(cub3d->mlx, MLX_MOUSE_DISABLED);
+		mlx_set_mouse_pos(cub3d->mlx, VIEW_W / 2, VIEW_H / 2);
+		cub3d->mouselook_mode = !(cub3d->mouselook_mode);
+	}
 }
 
 static void	do_movement(t_cub3d *cub3d)

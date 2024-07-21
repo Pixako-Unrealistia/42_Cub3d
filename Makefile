@@ -6,7 +6,7 @@
 #    By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 14:39:46 by schongte          #+#    #+#              #
-#    Updated: 2024/07/20 16:21:50 by tnualman         ###   ########.fr        #
+#    Updated: 2024/07/21 19:54:21 by tnualman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ SRC_DIR       = ./sources
 OBJ_DIR       = ./objects
 SRC_C         = main.c \
 				key_hook.c \
+				cursor_hook.c \
 				free_utils.c \
 				init_cub3d.c \
 				player_movement.c \

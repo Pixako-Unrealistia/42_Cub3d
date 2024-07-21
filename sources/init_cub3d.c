@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/18 19:04:33 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/20 20:49:46 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:10:16 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,4 +92,8 @@ void	init_mlx_stuff(t_cub3d *cub3d)
 	mlx_image_to_window(cub3d->mlx, cub3d->mlx_3dimg, 0, 0);
 	mlx_image_to_window(cub3d->mlx, cub3d->mlx_2dimg, 0, VIEW_H);
 	mlx_image_to_window(cub3d->mlx, cub3d->mlx_2dimg_playerdot, 0, VIEW_H);
+	mlx_create_std_cursor(MLX_CURSOR_CROSSHAIR);
+	mlx_set_cursor_mode(cub3d->mlx, MLX_MOUSE_NORMAL);
+	mlx_set_mouse_pos(cub3d->mlx, VIEW_W / 2, VIEW_H / 2);
+	cub3d->mouselook_mode = 0;
 }

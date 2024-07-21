@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/20 16:37:36 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:09:52 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,9 +104,13 @@ typedef struct s_cub3d
 	mlx_texture_t	*texture_west;
 	mlx_texture_t	*texture_south;
 	mlx_texture_t	*texture_east;
+	int				mouselook_mode;
 }	t_cub3d;
 
+// Hooks
 void	key_hook(void *cub3d);
+void	key_hook_l(mlx_key_data_t keydata, void *param);
+void	cursor_hook(double xpos, double ypos, void *param);
 
 void	free_cub3d(t_cub3d *cub3d);
 

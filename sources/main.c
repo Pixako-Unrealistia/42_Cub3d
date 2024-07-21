@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 16:58:16 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/20 20:52:01 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/21 21:07:35 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,8 @@ int	main(int argc, char **argv)
 	init_mlx_stuff(&cub3d);
 	ft_map_free(&parser);
 	mlx_loop_hook(cub3d.mlx, &key_hook, &cub3d);
+	mlx_cursor_hook(cub3d.mlx, &cursor_hook, &cub3d);
+	mlx_key_hook(cub3d.mlx, &key_hook_l, &cub3d);
 	mlx_loop_hook(cub3d.mlx, &game_loop, &cub3d);
 	mlx_loop(cub3d.mlx);
 	mlx_terminate(cub3d.mlx);
