@@ -74,7 +74,10 @@ MAP_C			= invalid_bad_letter.cub \
 				invalid_two_colour.cub \
 				this_map_doesnt_exist.cub \
 				invalid_empty_right.cub \
-				invalid_outside.cub
+				invalid_outside.cub \
+				invalid_vertical.cub \
+				invalid_bad_header.cub \
+				invalid_worse_header.cub
 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h
@@ -130,18 +133,16 @@ re: fclean all
 .PHONY: all clean fclean
 
 test: all
-	@printf "$(_INFO) Testing maps...\n"
 	@for map in $(MAP_C); do \
-		printf "$(_INFO) Testing $$map\n"; \
+		printf "$(_INFO) $(GREEN)Testing $$map$(RESET)\n"; \
 		./$(NAME) $(MAP_DIR)/$$map; \
 	done
 
 v_test: all
-	@printf "$(_INFO) Testing maps...\n"
 	@pass_count=0; \
 	fail_count=0; \
 	for map in $(MAP_C); do \
-		printf "$(_INFO) Testing $$map\n"; \
+		printf "$(_INFO) $(GREEN)Testing $$map$(RESET)\n"; \
 		$(VALGRIND) --log-file=valgrind_out.tmp ./$(NAME) $(MAP_DIR)/$$map; \
 		if grep -q "ERROR SUMMARY: 0 errors" valgrind_out.tmp; then \
 			echo "$(GREEN)OK$(RESET)"; \

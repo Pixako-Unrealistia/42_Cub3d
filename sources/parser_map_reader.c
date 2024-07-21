@@ -17,11 +17,16 @@ void	ft_texture_parser(t_parser *parser, char *line, char **texture)
 	int	i;
 	int	j;
 
-	i = 0;
+	i = 2;
 	j = 0;
 	if (*texture != NULL)
 		ft_throw("Texture already realised", parser, line);
-	line[ft_strlen(line) - 1] = '\0';
+	line[ft_strlen(line) 1] = '\0';
+	if (line[i] != ' ')
+	{
+		printf("-> \033[31m%c\033[0m\n", line[i]);
+		ft_throw("Invalid texture path", parser, line);
+	}
 	while (line[i] != ' ')
 		i++;
 	while (line[i] == ' ')

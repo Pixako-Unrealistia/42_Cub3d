@@ -61,8 +61,13 @@ void	ft_color_parser(t_parser *parser, char *line, int **color)
 	int		i;
 	char	**split_tmp;
 
-	i = 0;
+	i = 1;
 	color_alloc(parser, color);
+	if (line[i] != ' ')
+	{
+		printf("-> \033[31m%c\033[0m\n", line[i]);
+		ft_throw("Invalid color format", parser, line);
+	}
 	while (line[i] == ' ' || !ft_isdigit(line[i]))
 		i++;
 	line = &line[i];
