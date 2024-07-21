@@ -57,7 +57,8 @@ SRC_C         = main.c \
 				parser_validators.c \
 				parser_map_corrections.c \
 				parser_color.c \
-				parser_map_reader.c
+				parser_map_reader.c \
+				parser_atoi.c
 
 # Map Files:
 MAP_DIR			= ./maps
@@ -77,7 +78,9 @@ MAP_C			= invalid_bad_letter.cub \
 				invalid_outside.cub \
 				invalid_vertical.cub \
 				invalid_bad_header.cub \
-				invalid_worse_header.cub
+				invalid_worse_header.cub \
+				invalid_bad_color.cub \
+				invalid_bad_color2.cub
 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h

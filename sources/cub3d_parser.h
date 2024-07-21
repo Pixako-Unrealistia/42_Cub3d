@@ -122,4 +122,7 @@ void	find_starting_position(t_parser *parser, char *line);
 void	map_reader_tmp(t_parser *parser, int line_len);
 void	ft_map_reader(t_parser *parser);
 
+//parser_atoi.c
+int		atoi_strict(char *str);
+
 #endif

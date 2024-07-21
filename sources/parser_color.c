@@ -45,7 +45,7 @@ void	color_loop(char **split_tmp, int **color, t_parser *parser, char *line)
 	valuecount = 0;
 	while (split_tmp[valuecount] != NULL)
 	{
-		tmp = ft_atoi(split_tmp[valuecount]);
+		tmp = atoi_strict(split_tmp[valuecount]);
 		if (tmp < 0 || tmp > 255)
 			before_throw("Invalid color range", parser, line, split_tmp);
 		if (valuecount > 2)
