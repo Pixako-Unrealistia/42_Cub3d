@@ -6,7 +6,7 @@
 /*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/05/20 17:08:22 by tnualman          #+#    #+#             */
-/*   Updated: 2024/07/21 21:09:52 by tnualman         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:30:14 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,8 @@
 
 # define WIN_W			2200
 # define WIN_H			1400
-# define VIEW_W			920
-# define VIEW_H			440
+# define VIEW_W			1920
+# define VIEW_H			1440
 
 # define DEFAULT_FOV	60.0
 # define SUBUNITS		64

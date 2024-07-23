@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_corrections.c                                  :+:      :+:    :+:   */
+/*   parser_map_corrections.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:42:38 by schongte          #+#    #+#             */
-/*   Updated: 2024/07/10 17:42:38 by schongte         ###   ########.fr       */
+/*   Updated: 2024/07/23 18:34:04 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	fill_irregular_map(t_parser *parser)
 		util_irregular(parser, i++, 0);
 	i = 0;
 	while (i < parser->map.height)
-		util_irregular(parser, i++, parser->map.width - 2);
+		util_irregular(parser, i++, parser->map.width - 1);
 }
 
 void	width_utils(t_parser *parser, t_for_loop f, int initial_width)
