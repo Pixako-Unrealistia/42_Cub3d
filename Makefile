@@ -6,7 +6,7 @@
 #    By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2024/03/01 14:39:46 by schongte          #+#    #+#              #
-#    Updated: 2024/07/21 19:54:21 by tnualman         ###   ########.fr        #
+#    Updated: 2024/07/23 16:26:00 by tnualman         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -81,7 +81,9 @@ MAP_C			= invalid_bad_letter.cub \
 				invalid_bad_header.cub \
 				invalid_worse_header.cub \
 				invalid_bad_color.cub \
-				invalid_bad_color2.cub
+				invalid_bad_color2.cub \
+				invalid_spatial.cub \
+				invalid_bad_header2.cub
 
 SRC_O         = $(addprefix $(OBJ_DIR)/, $(SRC_C:.c=.o))
 HEADER    	  = cub3d.h

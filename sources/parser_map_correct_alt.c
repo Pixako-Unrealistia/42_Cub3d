@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_map_correct_alt.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: schongte <schongte@student.42.fr>          +#+  +:+       +#+        */
+/*   By: tnualman <tnualman@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/07/10 17:42:38 by schongte          #+#    #+#             */
-/*   Updated: 2024/07/10 17:42:38 by schongte         ###   ########.fr       */
+/*   Updated: 2024/07/23 16:32:32 by tnualman         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,9 @@ static void	alt_fill(t_parser *parser, int x, int y)
 
 void	fill_from_start(t_parser *parser)
 {
-	printf("start_x = %d, start_y = %d\n", parser->map.start_x, parser->map.start_y);
-	printf("map[start_x][start_y] = %c\n", parser->map.map[parser->map.start_y][parser->map.start_x]);
+	printf("start_x = %d, start_y = %d\n", parser->map.start_x,
+		parser->map.start_y);
+	printf("map[start_x][start_y] = %c\n",
+		parser->map.map[parser->map.start_y][parser->map.start_x]);
 	alt_fill(parser, parser->map.start_x, parser->map.start_y);
 }
