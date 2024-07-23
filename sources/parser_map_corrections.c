@@ -16,7 +16,7 @@ void	flood_fill(t_parser *parser, int x, int y)
 {
 	if (x < 0 || x >= parser->map.height || y < 0 || y >= parser->map.width)
 		return ;
-	if (parser->map.map[x][y] == '0')
+	if (ft_strchr("0NSEW", parser->map.map[x][y]) != NULL)
 		ft_throw("Map is not surrounded by walls", parser, NULL);
 	if (parser->map.map[x][y] != ' ')
 		return ;
@@ -29,7 +29,7 @@ void	flood_fill(t_parser *parser, int x, int y)
 
 void	util_irregular(t_parser *parser, int i, int j)
 {
-	if (parser->map.map[i][j] == '0')
+	if (ft_strchr("0NSEW", parser->map.map[i][j]) != NULL)
 		ft_throw("Map is not surrounded by walls", parser, NULL);
 	if (parser->map.map[i][j] == ' ')
 		flood_fill(parser, i, j);

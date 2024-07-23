@@ -1,0 +1,33 @@
+C 225,30,0
+
+
+EA ./sprites/wall/lightwolf-1.png
+
+
+NO ./sprites/wall/wolf-1.png
+
+
+
+SO ./sprites/wall/wall-1.png
+
+
+
+WE ./sprites/wall/wall-2.png
+
+
+
+
+
+F 220,100,0
+
+
+
+
+1 1 1 1 1 1 1 1
+0
+1      1      1
+      1N1
+1      1      1
+
+1 1 1 1 1 1 1 1 
+
