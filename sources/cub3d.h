@@ -26,10 +26,10 @@
 # define PI 3.14159265358979323846
 # define SQRT_HALF 0.70710678118
 
-# define WIN_W			3200
-# define WIN_H			2400
-# define VIEW_W			1920
-# define VIEW_H			1440
+# define WIN_W			2200
+# define WIN_H			1400
+# define VIEW_W			920
+# define VIEW_H			440
 
 # define DEFAULT_FOV	60.0
 # define SUBUNITS		64

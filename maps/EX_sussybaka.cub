@@ -1,0 +1,13 @@
+NO ./sprites/wall/wolf-1.png
+SO ./sprites/wall/wall-1.png
+WE ./sprites/wall/wall-2.png
+EA ./sprites/wall/lightwolf-1.png
+
+F 220,100,0
+C 225,30,0
+
+0         0
+     1
+    1E1
+     1
+0         0

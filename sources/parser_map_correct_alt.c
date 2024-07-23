@@ -20,6 +20,7 @@ static void	alt_fill(t_parser *parser, int x, int y)
 	if (ft_strchr("d1", parser->map.map[x][y]) != NULL)
 		return ;
 	printf("map[x][y] = %d %d\n", x, y);
+	printf("map[x] = %s\n", parser->map.map[x]);
 	if (x == 0 && parser->map.map[x][y] != '1')
 		ft_throw("Map is not surrounded by walls", parser, NULL);
 	if (x == parser->map.height - 1 && parser->map.map[x][y] != '1')
@@ -37,9 +38,6 @@ static void	alt_fill(t_parser *parser, int x, int y)
 
 void	fill_from_start(t_parser *parser)
 {
-	printf("start_x = %d, start_y = %d\n", parser->map.start_x,
-		parser->map.start_y);
-	printf("map[start_x][start_y] = %c\n",
-		parser->map.map[parser->map.start_y][parser->map.start_x]);
-	alt_fill(parser, parser->map.start_x, parser->map.start_y);
+	parser->map.map[parser->map.start_y][parser->map.start_x] = '0';
+	alt_fill(parser, parser->map.start_y, parser->map.start_x);
 }

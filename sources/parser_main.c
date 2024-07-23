@@ -62,13 +62,14 @@ void	open_and_parse(t_parser *parser, char *path)
 		ft_throw("No such file", parser, NULL);
 	while (super_get_next_line(parser->fd, &parser->line))
 	{
-		printf(">line : %s", parser->line);
 		if (ft_header_parser(parser, parser->line) == 0)
 		{
 			ft_map_reader(parser);
 			ft_safe_free(parser->line);
 			while (super_get_next_line(parser->fd, &parser->line))
 			{
+				if (parser->line[0] == '\n' || parser->line[0] == '\r')
+					ft_throw("Empty Line", parser, parser->line);
 				ft_map_reader(parser);
 				ft_safe_free(parser->line);
 			}
@@ -81,7 +82,7 @@ void	open_and_parse(t_parser *parser, char *path)
 }
 
 // Suppose you want to use alt cases, use this.
-//void	final_step(t_parser *parser)
+//void	final_step2(t_parser *parser)
 //{
 //	int	iter;
 //	int	iter2;
@@ -96,11 +97,13 @@ void	open_and_parse(t_parser *parser, char *path)
 //			if (parser->map.map[iter][iter2] == ' ')
 //				parser->map.map[iter][iter2] = '0';
 //			if (parser->map.map[iter][iter2] == 'd')
-//				parser->map.map[iter][iter2] = '1';
+//				parser->map.map[iter][iter2] = '0';
 //			iter2++;
 //		}
 //		iter++;
 //	}
+//	parser->map.map[parser->map.start_y][parser->map.start_x]
+//		= parser->map.start_dir;
 //}
 
 void	final_step(t_parser *parser)
@@ -123,6 +126,8 @@ void	final_step(t_parser *parser)
 		}
 		iter++;
 	}
+	parser->map.map[parser->map.start_y][parser->map.start_x]
+		= parser->map.start_dir;
 }
 
 int	parser_main(int argc, char **argv, t_parser *parser)
@@ -135,9 +140,8 @@ int	parser_main(int argc, char **argv, t_parser *parser)
 	open_and_parse(parser, argv[1]);
 	ft_validate_texture(parser);
 	width_realloc(parser);
-	ft_printf("map height : %d\n", parser->map.height);
-	ft_printf("map width : %d\n", parser->map.width);
-	printf("\n\n");
+	printf("\n");
+	display_stat(parser);
 	fill_irregular_map(parser);
 	final_step(parser);
 	display_stat(parser);
