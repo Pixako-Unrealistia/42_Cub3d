@@ -125,4 +125,7 @@ void	ft_map_reader(t_parser *parser);
 //parser_atoi.c
 int		atoi_strict(char *str);
 
+//parser_map_correct_alt.c
+void	fill_from_start(t_parser *parser);
+
 #endif

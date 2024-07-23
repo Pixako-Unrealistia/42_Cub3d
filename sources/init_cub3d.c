@@ -61,8 +61,8 @@ void	init_player(t_cub3d *cub3d, t_parser *parser)
 	t_player	*player;
 
 	player = &cub3d->player;
-	player->x = (parser->map.start_x - 1) * SUBUNITS + SUBUNITS / 2.0;
-	player->y = (parser->map.start_y - 1) * SUBUNITS + SUBUNITS / 2.0;
+	player->x = (parser->map.start_x) * SUBUNITS + SUBUNITS / 2.0;
+	player->y = (parser->map.start_y) * SUBUNITS + SUBUNITS / 2.0;
 	player->fov_deg = DEFAULT_FOV;
 	player->orient_deg = 0.0;
 	if (parser->map.start_dir == 'N')

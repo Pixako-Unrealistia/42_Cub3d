@@ -58,7 +58,8 @@ SRC_C         = main.c \
 				parser_map_corrections.c \
 				parser_color.c \
 				parser_map_reader.c \
-				parser_atoi.c
+				parser_atoi.c\
+				parser_map_correct_alt.c
 
 # Map Files:
 MAP_DIR			= ./maps

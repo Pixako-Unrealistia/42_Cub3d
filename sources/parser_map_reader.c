@@ -82,7 +82,7 @@ void	find_starting_position(t_parser *parser, char *line)
 				ft_throw("Multiple starting positions", parser, line);
 			}
 			parser->map.start_x = i;
-			parser->map.start_y = parser->map.height;
+			parser->map.start_y = parser->map.height - 1;
 			parser->map.start_dir = line[i];
 		}
 		if (ft_strchr("01dNSEW \n\r", line[i]) == NULL)

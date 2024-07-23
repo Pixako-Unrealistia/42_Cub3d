@@ -55,20 +55,6 @@ void	display_stat(t_parser *parser)
 	}
 }
 
-//void ft_validate_no_empty_line(t_parser *parser)
-//{
-//	int i;
-
-//	i = 0;
-//	while (i < parser->map.height)
-//	{
-//		if (parser->map.map[i][0] != '\r' && parser->map.map[i][0] != '\n')
-//			return ;
-//		i++;
-//	}
-//	ft_throw("Map contains empty lines", parser, NULL);
-//}
-
 void	open_and_parse(t_parser *parser, char *path)
 {
 	parser->fd = open(path, O_RDONLY);
@@ -93,6 +79,29 @@ void	open_and_parse(t_parser *parser, char *path)
 	close(parser->fd);
 	parser->fd = -1;
 }
+
+// Suppose you want to use alt cases, use this.
+//void	final_step(t_parser *parser)
+//{
+//	int	iter;
+//	int	iter2;
+
+//	iter = 0;
+//	iter2 = 0;
+//	while (iter < parser->map.height)
+//	{
+//		iter2 = 0;
+//		while (parser->map.map[iter][iter2] != '\0')
+//		{
+//			if (parser->map.map[iter][iter2] == ' ')
+//				parser->map.map[iter][iter2] = '0';
+//			if (parser->map.map[iter][iter2] == 'd')
+//				parser->map.map[iter][iter2] = '1';
+//			iter2++;
+//		}
+//		iter++;
+//	}
+//}
 
 void	final_step(t_parser *parser)
 {
